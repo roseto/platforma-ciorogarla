@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "app",
-    "slug": "app",
+    "name": "Ciorogârla Unită",
+    "slug": "ciorogarlaunita",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -25,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "9cdc3ff1-e459-421b-b84f-5cf7f2d124ba"
+      }
+    },
+    "owner": "ciorogarlaunita"
   }
 }
