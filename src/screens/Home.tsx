@@ -54,7 +54,7 @@ export default function Home() {
 					style={{
 						marginBottom: 8, 
 						paddingVertical: 16,
-						backgroundColor: module.disabled ? theme.colors.surfaceDisabled : undefined,
+						backgroundColor: module.disabled ? theme.colors.surfaceDisabled : theme.colors.elevation.level1,
 					}} 
 					// @ts-ignore
 					onPress={module?.to && (() => navigation.navigate(module.to))}
