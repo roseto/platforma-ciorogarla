@@ -1,10 +1,10 @@
 import React from "react";
 import { NativeStackHeaderProps } from "@react-navigation/native-stack";
-import { Appbar, useTheme } from "react-native-paper";
+import { Appbar, Chip, useTheme } from "react-native-paper";
 import { Animated } from "react-native";
 
 interface AppBarProps {
-	mode?: "large" | "small",
+	mode?: "medium" | "small",
 	scrollPosition?: Animated.Value,
 	transparent?: boolean
 }
@@ -50,6 +50,7 @@ export default function AppBar({ back, route, options, navigation, mode, scrollP
 					:
 					<Appbar.Content title={options.title || route.name} />
 				}
+				<Chip style={{ marginRight: 4 }} compact>ALPHA</Chip>
 			</Appbar.Header>
 		</Animated.View>
 	)

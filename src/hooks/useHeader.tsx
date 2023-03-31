@@ -5,7 +5,7 @@ import { Animated } from "react-native";
 import AppBar from "../components/AppBar";
 
 interface UseHeaderProps {
-	mode?: "large" | "small",
+	mode?: "medium" | "small",
 	animated?: boolean,
 	title?: string,
 	transparent?: boolean,
