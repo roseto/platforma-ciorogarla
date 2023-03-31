@@ -36,5 +36,11 @@ module.exports = {
 			"apiVersion": "2021-10-25",
 		}
 	},
-	"owner": "ciorogarlaunita"
+	"owner": "ciorogarlaunita",
+	"updates": {
+		"url": "https://u.expo.dev/9cdc3ff1-e459-421b-b84f-5cf7f2d124ba"
+	},
+	"runtimeVersion": {
+		"policy": "sdkVersion"
+	}
 }
