@@ -118,6 +118,27 @@ export interface Business extends SanityDocument {
   >;
 
   /**
+   * Prices — `string`
+   *
+   * The price range of the business
+   */
+  prices?: "$" | "$$" | "$$$" | "$$$$";
+
+  /**
+   * Prices link — `url`
+   *
+   * The link to the prices page
+   */
+  pricesLink?: string;
+
+  /**
+   * Is sponsor — `boolean`
+   *
+   * Is the business a sponsor of Ciorogarla Unita
+   */
+  isSponsor?: boolean;
+
+  /**
    * Location — `object`
    *
    * The location of the business

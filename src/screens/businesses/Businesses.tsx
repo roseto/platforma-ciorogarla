@@ -8,7 +8,7 @@ import { Business } from "../../types/SanitySchema";
 import { useNavigation } from "@react-navigation/native";
 
 const getBusinesses = async () => {
-	const res = await sanityClient.fetch<Business[] | undefined>(`*[_type == "business"] {name, logo, description, slug}`);
+	const res = await sanityClient.fetch<Business[] | undefined>(`*[_type == "business"] {name, logo, description, slug, type}`);
 
 	return res;
 }

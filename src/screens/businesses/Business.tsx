@@ -1,5 +1,5 @@
-import { Button, Chip, List, Text, useTheme } from "react-native-paper";
-import { Animated, Dimensions, Image, ImageBackground, Linking, View } from "react-native";
+import { Button, Card, Chip, List, Text, useTheme } from "react-native-paper";
+import { Animated, Dimensions, Image, ImageBackground, Linking, ScrollView, View } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import Container from "../../components/Container";
 import { sanityClient, urlFor } from "../../lib/sanity";
@@ -155,9 +155,44 @@ export default function BusinessPage() {
 							Deschide site-ul
 						</Button>
 					}
-					<Text>
-						{data?.description}
-					</Text>
+					<Card>
+						<Card.Title
+							title="Descriere"
+						/>
+						<Card.Content>
+							<Text>
+								{data?.description}
+							</Text>
+						</Card.Content>
+					</Card>
+					<ScrollView
+						horizontal
+						contentContainerStyle={{
+							flex: 1,
+							gap: 8
+						}}
+					>
+						{!isLoading && data.prices && (
+							<Chip mode="outlined" compact>
+								Nivel de preturi: <Text style={{ color: theme.colors.primary }}>{data.prices}</Text>
+							</Chip>
+						)}
+						{!isLoading && data.pricesLink && (
+							<Chip 
+								mode="outlined" 
+								compact
+								icon="clipboard-outline"
+								onPress={() => {
+									Linking.openURL(data.pricesLink)
+								}}
+								textStyle={{
+									color: theme.colors.primary
+								}}
+							>
+									Link preturi
+							</Chip>
+						)}
+					</ScrollView>
 					<List.Section>
 						<List.Subheader>
 							Contact
