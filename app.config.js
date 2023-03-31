@@ -15,9 +15,11 @@ module.exports = {
 		"**/*"
 	],
 	"ios": {
-		"supportsTablet": true
+		"supportsTablet": true,
+		"bundleIdentifier": "org.eu.ciorogarlaunita",
 	},
 	"android": {
+		"package": "org.eu.ciorogarlaunita",
 		"adaptiveIcon": {
 			"foregroundImage": "./assets/adaptive-icon.png",
 			"backgroundColor": "#ffffff"
