@@ -118,28 +118,26 @@ export interface Business extends SanityDocument {
   >;
 
   /**
-   * Locations — `array`
+   * Location — `object`
    *
-   * The locations of the business
+   * The location of the business
    */
-  locations?: Array<
-    SanityKeyed<{
-      _type: "location";
-      /**
-       * Address — `string`
-       *
-       * A human readable address
-       */
-      address?: string;
+  location?: {
+    _type: "location";
+    /**
+     * Address — `string`
+     *
+     * A human readable address
+     */
+    address?: string;
 
-      /**
-       * Coordinates — `geopoint`
-       *
-       * The coordinates of the location
-       */
-      coordinates?: SanityGeoPoint;
-    }>
-  >;
+    /**
+     * Coordinates — `geopoint`
+     *
+     * The coordinates of the location
+     */
+    coordinates?: SanityGeoPoint;
+  };
 
   /**
    * Contact — `object`

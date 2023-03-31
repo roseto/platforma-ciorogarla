@@ -1,4 +1,4 @@
-import { Button, List, Text, useTheme } from "react-native-paper";
+import { Button, Chip, List, Text, useTheme } from "react-native-paper";
 import { Animated, Dimensions, Image, ImageBackground, Linking, View } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import Container from "../../components/Container";
@@ -6,10 +6,18 @@ import { sanityClient, urlFor } from "../../lib/sanity";
 import { useQuery } from "react-query"; 
 import { Business } from "../../types/SanitySchema";
 import { useHeader } from "../../hooks/useHeader";
-import {useSafeAreaInsets} from "react-native-safe-area-context";
 import Stack from "../../components/Stack";
 import {queryClient} from "../../lib/queryClient";
 
+const businessTypes = new Map([
+	["market", { name: "Magazin", icon: "shopping" } as const],
+	["restaurant", { name: "Restaurant", icon: "food" } as const],
+	["pub", { name: "Pub", icon: "glass-mug" } as const],
+	["barbershop", { name: "Frizerie", icon: "scissors-cutting" } as const],
+	["itp", { name: "ITP", icon: "car" } as const],
+	["pizza", { name: "Pizzerie", icon: "pizza" } as const],
+	["cafe", { name: "Cafenea", icon: "coffee" } as const],
+])
 
 const getBusiness = async (slug: string) => {
 	const res = await sanityClient.fetch<Business | undefined>(`*[_type == "business" && slug.current == $slug][0] {
@@ -22,10 +30,9 @@ const getBusiness = async (slug: string) => {
 export default function BusinessPage() {
 	const theme = useTheme();
 	const screenWidth = Dimensions.get("window").width;
-	const topPadding = useSafeAreaInsets().top;
 	const route = useRoute();
 	const { id } = route.params as { id: string };
-	const { data, isLoading } = useQuery(`business.${id}`, () => getBusiness(id), {
+	const { data, isLoading } = useQuery(`businesses.${id}`, () => getBusiness(id), {
 		initialData: () => {
 			return queryClient.getQueryData<Business[] | undefined>("businesses")
 				?.find((business: Business) => business.slug.current === id);
@@ -109,26 +116,45 @@ export default function BusinessPage() {
 					>
 						{data?.name}
 					</Text>
-					<Button
-						mode="contained"
-						onPress={() => {
-							Linking.openURL(`https://www.google.com/maps/search/?api=1&query=${data.locations?.[0].coordinates?.lat},${data.locations?.[0].coordinates?.lng}`)
+					<View
+						style={{
+							flexDirection: "row",
+							alignItems: "center",
+							justifyContent: "center",
+							gap: 4,
 						}}
-						icon="map-marker"
-						disabled={isLoading}
 					>
-						Deschide locatia
-					</Button>
-					<Button
-						mode="contained-tonal"
-						onPress={() => {
-							Linking.openURL(data.contact.website)
-						}}
-						icon="web"
-						disabled={isLoading}
-					>
-						Deschide site-ul
-					</Button>
+						<Chip
+							icon={businessTypes.get(data.type)?.icon}
+							mode="outlined"
+						>
+							{businessTypes.get(data.type)?.name}
+						</Chip>
+					</View>
+					{(isLoading || data?.location) && 
+						<Button
+							mode="contained"
+							onPress={() => {
+								Linking.openURL(`https://www.google.com/maps/search/?api=1&query=${data.location.coordinates.lat},${data.location.coordinates.lng}`)
+							}}
+							icon="map-marker"
+							disabled={isLoading}
+						>
+							Arata locatia
+						</Button>
+					}
+					{(isLoading || data.contact?.website) && 
+						<Button
+							mode="contained-tonal"
+							onPress={() => {
+								Linking.openURL(data.contact.website)
+							}}
+							icon="web"
+							disabled={isLoading}
+						>
+							Deschide site-ul
+						</Button>
+					}
 					<Text>
 						{data?.description}
 					</Text>
