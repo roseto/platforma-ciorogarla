@@ -44,12 +44,12 @@ export default function Home() {
 
 	return (
 		<Container.ScrollView onScroll={onScroll}>
-			<Text
-				variant="displayMedium"
-			>
-				Acasa
-			</Text>
 			<Stack>
+				<Text
+					variant="displayMedium"
+				>
+					Acasa
+				</Text>
 				{modules.map((module, index) => (
 					<Card 
 						key={index} 

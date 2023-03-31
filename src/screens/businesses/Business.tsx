@@ -1,5 +1,5 @@
 import { Button, List, Text, useTheme } from "react-native-paper";
-import { Animated, Dimensions, Image, ImageBackground, View } from "react-native";
+import { Animated, Dimensions, Image, ImageBackground, Linking, View } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import Container from "../../components/Container";
 import { sanityClient, urlFor } from "../../lib/sanity";
@@ -8,6 +8,8 @@ import { Business } from "../../types/SanitySchema";
 import { useHeader } from "../../hooks/useHeader";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import Stack from "../../components/Stack";
+import {queryClient} from "../../lib/queryClient";
+
 
 const getBusiness = async (slug: string) => {
 	const res = await sanityClient.fetch<Business | undefined>(`*[_type == "business" && slug.current == $slug][0] {
@@ -23,107 +25,137 @@ export default function BusinessPage() {
 	const topPadding = useSafeAreaInsets().top;
 	const route = useRoute();
 	const { id } = route.params as { id: string };
-	const { data, isLoading } = useQuery(`business.${id}`, () => getBusiness(id));
+	const { data, isLoading } = useQuery(`business.${id}`, () => getBusiness(id), {
+		initialData: () => {
+			return queryClient.getQueryData<Business[] | undefined>("businesses")
+				?.find((business: Business) => business.slug.current === id);
+		}
+	});
 	const { onScroll } = useHeader({
 		animated: true,
 		title: data?.name,
 		transparent: true,
 	})
 
-	if (isLoading) {
-		return (
-			<Container>
-				<Text>Loading...</Text>
-			</Container>
-		)
-	}
-
 	return (
 		<Animated.ScrollView onScroll={onScroll}>
-			{/*@ts-ignore */}
-			<ImageBackground 
-				source={{ uri: data.cover.asset.metadata.lqip }}
-				style={{
-					width: screenWidth,
-					height: 128,
-					backgroundColor: theme.colors.elevation.level1
-				}}
-			>
-				<Image
-					source={{ uri: urlFor(data.cover).height(256).width(screenWidth * 2).url() }}
-					style={{ 
-						width: screenWidth, 
+			{isLoading || !data.cover ?
+				<View
+					style={{
+						width: screenWidth,
 						height: 128,
-						resizeMode: "cover",
+						backgroundColor: theme.colors.elevation.level1
 					}}
 				/>
-			</ImageBackground>
+				:
+				<ImageBackground 
+					source={{ uri: data?.cover.asset.metadata.lqip }}
+					style={{
+						width: screenWidth,
+						height: 128,
+						backgroundColor: theme.colors.elevation.level1
+					}}
+				>
+					<Image
+						source={{ uri: urlFor(data.cover).height(256).width(screenWidth * 2).url() }}
+						style={{ 
+							width: screenWidth, 
+							height: 128,
+							resizeMode: "cover",
+						}}
+					/>
+				</ImageBackground>
+			}
 			<View
 				style={{
 					position: "absolute",
-					top: 48 + 8 + topPadding,
+					top: 64 + 8,
 					left: screenWidth / 2 - 48 - 8,
 					backgroundColor: theme.colors.background,
 					padding: 8,
 					borderRadius: 16,
 				}}
 			>
-				<Image
-					source={{ uri: urlFor(data.logo).height(128).width(128).url() }}
-					style={{
-						width: 96,
-						height: 96,
-						resizeMode: "contain",
-						borderRadius: 12
-					}}
-				/>
+				{isLoading || !data.logo ?
+					<View
+						style={{
+							width: 96,
+							height: 96,
+							borderRadius: 12,
+							backgroundColor: theme.colors.elevation.level1,
+						}}
+					/>
+					:
+					<Image
+						source={{ uri: urlFor(data.logo).height(128).width(128).url() }}
+						style={{
+							width: 96,
+							height: 96,
+							resizeMode: "contain",
+							borderRadius: 12,
+							backgroundColor: theme.colors.elevation.level1
+						}}
+					/>
+				}
 			</View>
 			<Container>
 				<Stack>
 					<Text 
 						style={{
-							marginTop: 48 + 8,
+							marginTop: 64,
 							textAlign: "center",
 						}}
 						variant="headlineLarge"
 					>
-						{data.name}
+						{data?.name}
 					</Text>
 					<Button
 						mode="contained"
-						onPress={() => {}}
+						onPress={() => {
+							Linking.openURL(`https://www.google.com/maps/search/?api=1&query=${data.locations?.[0].coordinates?.lat},${data.locations?.[0].coordinates?.lng}`)
+						}}
 						icon="map-marker"
+						disabled={isLoading}
 					>
 						Deschide locatia
 					</Button>
 					<Button
 						mode="contained-tonal"
-						onPress={() => {}}
+						onPress={() => {
+							Linking.openURL(data.contact.website)
+						}}
 						icon="web"
+						disabled={isLoading}
 					>
 						Deschide site-ul
 					</Button>
 					<Text>
-						{data.description}
+						{data?.description}
 					</Text>
 					<List.Section>
 						<List.Subheader>
 							Contact
 						</List.Subheader>
-						{data.contact.phone && (
+						{!isLoading && data.contact?.phone && (
 							<List.Item
 								title="Telefon"
 								description={data.contact.phone}
 								left={(props) => <List.Icon icon="phone" {...props} />}
-								onPress={() => {}}
+								onPress={() => {
+									Linking.openURL(`tel:${data.contact.phone}`)
+										.catch(() => null)
+								}}
 							/>
 						)}
-						{data.contact.email && (
+						{!isLoading && data.contact?.email && (
 							<List.Item
 								title="Email"
 								description={data.contact.email}
 								left={(props) => <List.Icon icon="email" {...props} />}
-								onPress={() => {}}
+								onPress={() => {
+									Linking.openURL(`mailto:${data.contact.email}`)
+										.catch(() => null)
+								}}
 							/>
 						)}
 					</List.Section>

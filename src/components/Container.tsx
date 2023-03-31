@@ -23,11 +23,9 @@ Container.ScrollView = function ContainerScrollView(props: ScrollViewProps) {
 
 
 const styles = StyleSheet.create({
-	// Create styles for a container that has 8 px of padding on left and right
-	// Make it max 600 px wide and center it
 	container: {
 		paddingHorizontal: 10,
-		maxWidth: 1024,
+		maxWidth: 768,
 		width: "100%",
 		alignSelf: "center",
 	},
@@ -37,7 +35,7 @@ const styles = StyleSheet.create({
 		display: "flex",
 	},
 	scrollViewContainerContent: {
-		maxWidth: 1024,
+		maxWidth: 768,
 		width: "100%",
 		alignSelf: "center",
 	}

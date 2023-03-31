@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { useTheme, Text, List, Button } from "react-native-paper";
+import { Text, List, Button } from "react-native-paper";
 import Container from "../../components/Container";
 import { useHeader } from "../../hooks/useHeader";
 import { sanityClient, urlFor } from "../../lib/sanity";
@@ -8,7 +8,7 @@ import { Business } from "../../types/SanitySchema";
 import { useNavigation } from "@react-navigation/native";
 
 const getBusinesses = async () => {
-	const res = await sanityClient.fetch<Business[] | undefined>(`*[_type == "business" && !(_id in path("drafts.**"))]`);
+	const res = await sanityClient.fetch<Business[] | undefined>(`*[_type == "business"] {name, logo, description, slug}`);
 
 	return res;
 }
@@ -56,16 +56,16 @@ export default function Businesses() {
 						description={business.description}
 						onPress={() => {
 							navigation.navigate("Business", {
-								id: business.slug.current
+								id: business.slug.current,
 							})
 						}}
 						left={(props) => (
 							<List.Image
-								source={{ uri: urlFor(business.logo).width(72).height(72).url() }}
-								style={{
-									borderRadius: 8,
-								}}
 								{...props}
+								source={{ uri: urlFor(business.logo).width(72).height(72).url() }}
+								style={[{
+									borderRadius: 8,
+								}, props.style]}
 							/>
 						)}
 					/>
