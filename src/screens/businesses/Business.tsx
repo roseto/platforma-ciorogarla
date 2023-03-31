@@ -1,4 +1,6 @@
+import React from "react";
 import { Button, Card, Chip, List, Text, useTheme } from "react-native-paper";
+import { LinearGradient } from "expo-linear-gradient";
 import { Animated, Dimensions, Image, ImageBackground, Linking, ScrollView, View } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import Container from "../../components/Container";
@@ -8,16 +10,8 @@ import { Business } from "../../types/SanitySchema";
 import { useHeader } from "../../hooks/useHeader";
 import Stack from "../../components/Stack";
 import {queryClient} from "../../lib/queryClient";
-
-const businessTypes = new Map([
-	["market", { name: "Magazin", icon: "shopping" } as const],
-	["restaurant", { name: "Restaurant", icon: "food" } as const],
-	["pub", { name: "Pub", icon: "glass-mug" } as const],
-	["barbershop", { name: "Frizerie", icon: "scissors-cutting" } as const],
-	["itp", { name: "ITP", icon: "car" } as const],
-	["pizza", { name: "Pizzerie", icon: "pizza" } as const],
-	["cafe", { name: "Cafenea", icon: "coffee" } as const],
-])
+import Icon from "@expo/vector-icons/MaterialIcons"
+import {businessTypes} from "../../lib/business";
 
 const getBusiness = async (slug: string) => {
 	const res = await sanityClient.fetch<Business | undefined>(`*[_type == "business" && slug.current == $slug][0] {
@@ -46,7 +40,7 @@ export default function BusinessPage() {
 
 	return (
 		<Animated.ScrollView onScroll={onScroll}>
-			{isLoading || !data.cover ?
+			{isLoading || !data?.cover ?
 				<View
 					style={{
 						width: screenWidth,
@@ -56,7 +50,7 @@ export default function BusinessPage() {
 				/>
 				:
 				<ImageBackground 
-					source={{ uri: data?.cover.asset.metadata.lqip }}
+					source={{ uri: data.cover.asset.metadata.lqip }}
 					style={{
 						width: screenWidth,
 						height: 128,
@@ -64,11 +58,10 @@ export default function BusinessPage() {
 					}}
 				>
 					<Image
-						source={{ uri: urlFor(data.cover).height(256).width(screenWidth * 2).url() }}
+						source={{ uri: urlFor(data.cover).height(128).width(screenWidth).url() }}
 						style={{ 
 							width: screenWidth, 
 							height: 128,
-							resizeMode: "cover",
 						}}
 					/>
 				</ImageBackground>
@@ -83,7 +76,7 @@ export default function BusinessPage() {
 					borderRadius: 16,
 				}}
 			>
-				{isLoading || !data.logo ?
+				{isLoading || !data?.logo ?
 					<View
 						style={{
 							width: 96,
@@ -109,7 +102,7 @@ export default function BusinessPage() {
 				<Stack>
 					<Text 
 						style={{
-							marginTop: 64,
+							marginTop: 56,
 							textAlign: "center",
 						}}
 						variant="headlineLarge"
@@ -125,10 +118,10 @@ export default function BusinessPage() {
 						}}
 					>
 						<Chip
-							icon={businessTypes.get(data.type)?.icon}
+							icon={businessTypes.get(data?.type)?.icon}
 							mode="outlined"
 						>
-							{businessTypes.get(data.type)?.name}
+							{businessTypes.get(data?.type)?.name}
 						</Chip>
 					</View>
 					{(isLoading || data?.location) && 
@@ -143,7 +136,7 @@ export default function BusinessPage() {
 							Arata locatia
 						</Button>
 					}
-					{(isLoading || data.contact?.website) && 
+					{(isLoading || data?.contact?.website) && 
 						<Button
 							mode="contained-tonal"
 							onPress={() => {
@@ -155,6 +148,34 @@ export default function BusinessPage() {
 							Deschide site-ul
 						</Button>
 					}
+					{!isLoading && data?.isSponsor && (
+						<LinearGradient
+							colors={[theme.colors.primaryContainer, theme.colors.tertiaryContainer]}
+							start={{ x: 0.5, y: 0 }}
+							end={{ x: 0.6, y: 1 }}
+							style={{
+								borderRadius: theme.roundness * 2
+							}}
+						>
+							<Card
+								style={{
+									backgroundColor: "transparent",
+									paddingVertical: 16
+								}}
+								mode="contained"
+								onPress={() => {
+									Linking.openURL("https://opencollective.com/ciorogarlaunita")
+								}}
+							>
+								<Card.Title
+									title="Sponsor Ciorogarla Unita!"
+									subtitle="Aceasta afacere este sponsorul nostru. Daca doresti sa devii si tu sponsor, apasa aici!"
+									subtitleNumberOfLines={5}
+									left={(props) => <Icon name="stars" {...props} color={theme.colors.primary} />}
+								/>
+							</Card>
+						</LinearGradient>
+					)}
 					<Card>
 						<Card.Title
 							title="Descriere"
@@ -172,12 +193,12 @@ export default function BusinessPage() {
 							gap: 8
 						}}
 					>
-						{!isLoading && data.prices && (
+						{!isLoading && data?.prices && (
 							<Chip mode="outlined" compact>
 								Nivel de preturi: <Text style={{ color: theme.colors.primary }}>{data.prices}</Text>
 							</Chip>
 						)}
-						{!isLoading && data.pricesLink && (
+						{!isLoading && data?.pricesLink && (
 							<Chip 
 								mode="outlined" 
 								compact
@@ -197,7 +218,7 @@ export default function BusinessPage() {
 						<List.Subheader>
 							Contact
 						</List.Subheader>
-						{!isLoading && data.contact?.phone && (
+						{!isLoading && data?.contact?.phone && (
 							<List.Item
 								title="Telefon"
 								description={data.contact.phone}
@@ -208,7 +229,7 @@ export default function BusinessPage() {
 								}}
 							/>
 						)}
-						{!isLoading && data.contact?.email && (
+						{!isLoading && data?.contact?.email && (
 							<List.Item
 								title="Email"
 								description={data.contact.email}

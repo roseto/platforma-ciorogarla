@@ -1,15 +1,19 @@
 import React from "react";
 import { NativeStackHeaderProps } from "@react-navigation/native-stack";
-import { Appbar, Chip, useTheme } from "react-native-paper";
+import { Appbar, useTheme } from "react-native-paper";
 import { Animated } from "react-native";
 
 interface AppBarProps {
-	mode?: "medium" | "small",
+	mode?: "large" | "small",
 	scrollPosition?: Animated.Value,
-	transparent?: boolean
+	transparent?: boolean,
+	actions?: {
+		icon: string,
+		onPress: () => void,
+	}[],
 }
 
-export default function AppBar({ back, route, options, navigation, mode, scrollPosition, transparent }: AppBarProps & NativeStackHeaderProps) {
+export default function AppBar({ back, route, options, navigation, mode, scrollPosition, transparent, actions }: AppBarProps & NativeStackHeaderProps) {
 	const theme = useTheme();
 
 	return (
@@ -19,7 +23,8 @@ export default function AppBar({ back, route, options, navigation, mode, scrollP
 					inputRange: [0, 100],
 					outputRange: [0, 4],
 					extrapolate: "clamp"
-				}) : undefined,
+				}) : 0,
+				shadowOpacity: 0,
 				backgroundColor: scrollPosition ? scrollPosition.interpolate({
 					inputRange: [0, 100],
 					outputRange: [transparent ? "transparent" : theme.colors.background, theme.colors.elevation.level1],
@@ -30,8 +35,11 @@ export default function AppBar({ back, route, options, navigation, mode, scrollP
 			<Appbar.Header
 				mode={mode ?? "small"} 
 				style={{
-					backgroundColor: "transparent"
+					backgroundColor: mode === "large" ? theme.colors.elevation.level1 : "transparent",
+					elevation: 0,
+					shadowOpacity: 0
 				}}
+				elevated={false}
 			>
 				{back && <Appbar.BackAction onPress={navigation.goBack} />}
 				{scrollPosition !== undefined ?
@@ -50,7 +58,13 @@ export default function AppBar({ back, route, options, navigation, mode, scrollP
 					:
 					<Appbar.Content title={options.title || route.name} />
 				}
-				<Chip style={{ marginRight: 4 }} compact>ALPHA</Chip>
+				{actions && actions.map((action, idx) => (
+					<Appbar.Action
+						key={idx}
+						icon={action.icon}
+						onPress={action.onPress}
+					/>
+				))}
 			</Appbar.Header>
 		</Animated.View>
 	)

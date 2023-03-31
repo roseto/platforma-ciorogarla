@@ -1,7 +1,8 @@
-import { setupURLPolyfill } from 'react-native-url-polyfill';
 import { registerRootComponent } from "expo";
+import { setupURLPolyfill } from 'react-native-url-polyfill';
 import { Provider as PaperProvider } from "react-native-paper";
 import { NavigationContainer, LinkingOptions } from "@react-navigation/native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useColorScheme, Platform, LogBox } from "react-native";
 import { darkTheme, lightTheme } from "./lib/theme";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -14,12 +15,17 @@ import { QueryClientProvider } from "react-query";
 
 if (Platform.OS !== "web") {
 	setupURLPolyfill();
-} else {
-	LogBox.ignoreLogs(["REACT_NATIVE_URL_POLYFILL"])
 }
+
+LogBox.ignoreLogs([
+	"REACT_NATIVE_URL_POLYFILL",
+	"has a shadow set but cannot calculate shadow efficiently"
+])
 
 export type RootStackParamList = {
 	Home: undefined;
+	Settings: undefined;
+
 	Businesses: undefined;
 	Business: {
 		id: string;
@@ -33,6 +39,8 @@ export const linking: LinkingOptions<RootStackParamList> = {
 		initialRouteName: "Home",
 		screens: {
 			Home: "",
+			Settings: "settings",
+
 			Businesses: "businesses",
 			Business: "businesses/:id"
 		}
@@ -42,6 +50,7 @@ export const linking: LinkingOptions<RootStackParamList> = {
 
 // Pages
 import Home from "./screens/Home";
+import Settings from "./screens/Settings";
 import Businesses from "./screens/businesses/Businesses";
 import Business from "./screens/businesses/Business";
 import AppBar from "./components/AppBar";
@@ -57,6 +66,8 @@ function App() {
 			}}
 		>
 			<Stack.Screen name="Home" component={Home} options={{ title: "Acasa" }} />
+			<Stack.Screen name="Settings" component={Settings} options={{ title: "Setari" }} />
+
 			<Stack.Screen name="Businesses" component={Businesses} options={{ title: "Afaceri locale & altele" }} />
 			<Stack.Screen name="Business" component={Business} />
 		</Stack.Navigator>
@@ -70,23 +81,30 @@ function EntryPoint() {
 
 	return (
 		<SafeAreaProvider>
-			<NavigationContainer 
-				documentTitle={{ 
-					enabled: true,
-					formatter: (options, route) => {
-						return `${options.title ?? route.name} · Ciorogârla Unită`;
-					}
-				}} 
-				theme={theme} 
-				linking={linking}
+			<GestureHandlerRootView
+				style={{
+					flex: 1,
+					backgroundColor: theme.colors.background
+				}}
 			>
-				<QueryClientProvider client={queryClient}>
-					<PaperProvider theme={theme}>
-						<App />
-						<StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
-					</PaperProvider>
-				</QueryClientProvider>
-			</NavigationContainer>
+				<NavigationContainer 
+					documentTitle={{ 
+						enabled: true,
+						formatter: (options, route) => {
+							return `${options.title ?? route.name} · Ciorogârla Unită`;
+						}
+					}} 
+					theme={theme} 
+					linking={linking}
+				>
+					<QueryClientProvider client={queryClient}>
+						<PaperProvider theme={theme}>
+							<App />
+							<StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
+						</PaperProvider>
+					</QueryClientProvider>
+				</NavigationContainer>
+			</GestureHandlerRootView>
 		</SafeAreaProvider>
 	)
 }

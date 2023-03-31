@@ -5,10 +5,14 @@ import { Animated } from "react-native";
 import AppBar from "../components/AppBar";
 
 interface UseHeaderProps {
-	mode?: "medium" | "small",
+	mode?: "large" | "small",
 	animated?: boolean,
 	title?: string,
 	transparent?: boolean,
+	actions?: {
+		icon: string,
+		onPress: () => void,
+	}[],
 }
 
 export const useHeader = (props?: UseHeaderProps) => {
@@ -22,6 +26,7 @@ export const useHeader = (props?: UseHeaderProps) => {
 					scrollPosition={props?.animated ? scrollPosition : undefined} 
 					mode={props?.mode ?? "small"} 
 					transparent={props?.transparent ?? false}
+					actions={props?.actions}
 				/>,
 			headerTransparent: props?.transparent ?? false,
 		} as NativeStackNavigationOptions)

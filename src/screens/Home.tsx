@@ -1,9 +1,10 @@
-import { Card, Text, useTheme } from "react-native-paper";
+import { Card, Text } from "react-native-paper";
 import Icon from "@expo/vector-icons/MaterialIcons"
 import Container from "../components/Container";
 import { useHeader } from "../hooks/useHeader";
 import {useNavigation} from "@react-navigation/native";
 import Stack from "../components/Stack";
+import {useTheme} from "../hooks/useTheme";
 
 
 const modules = [
@@ -39,7 +40,13 @@ export default function Home() {
 	const theme = useTheme()
 	const navigation = useNavigation();
 	const { onScroll } = useHeader({
-		animated: true
+		animated: true,
+		actions: [
+			{
+				icon: "cog",
+				onPress: () => navigation.navigate("Settings")
+			}
+		]
 	})
 
 	return (
@@ -55,8 +62,9 @@ export default function Home() {
 						key={index} 
 						style={{
 							paddingVertical: 16,
-							backgroundColor: module.disabled ? theme.colors.surfaceDisabled : theme.colors.elevation.level1,
+							backgroundColor: module.disabled ? theme.colors.border : theme.colors.elevation.level1,
 						}} 
+						mode={module.disabled ? "contained" : "elevated"}
 						// @ts-ignore
 						onPress={module?.to && (() => navigation.navigate(module.to))}
 					>

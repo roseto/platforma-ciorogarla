@@ -1,4 +1,4 @@
-import { Animated, ScrollView, ScrollViewProps, StyleSheet, View, type ViewProps } from "react-native";
+import { Animated, ScrollViewProps, StyleSheet, View, type ViewProps } from "react-native";
 
 function Container(props: ViewProps) {
 	return (
