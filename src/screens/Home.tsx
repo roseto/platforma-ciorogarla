@@ -3,6 +3,7 @@ import Icon from "@expo/vector-icons/MaterialIcons"
 import Container from "../components/Container";
 import { useHeader } from "../hooks/useHeader";
 import {useNavigation} from "@react-navigation/native";
+import Stack from "../components/Stack";
 
 
 const modules = [
@@ -48,38 +49,39 @@ export default function Home() {
 			>
 				Acasa
 			</Text>
-			{modules.map((module, index) => (
-				<Card 
-					key={index} 
-					style={{
-						marginBottom: 8, 
-						paddingVertical: 16,
-						backgroundColor: module.disabled ? theme.colors.surfaceDisabled : theme.colors.elevation.level1,
-					}} 
-					// @ts-ignore
-					onPress={module?.to && (() => navigation.navigate(module.to))}
-				>
-					<Icon
-						name={module.icon}
-						size={32}
-						color={module.disabled ? theme.colors.onSurfaceDisabled : theme.colors.primary}
-						style={{ marginLeft: 16, marginBottom: 16 }}
-					/>
-					<Card.Title 
-						title={module.name} 
-						subtitle={module.description} 
-						titleNumberOfLines={3}
-						subtitleNumberOfLines={3}
-						titleVariant="titleLarge"
-						titleStyle={{
-							color: module.disabled ? theme.colors.onSurfaceDisabled : theme.colors.onSurface,
-						}}
-						subtitleStyle={{
-							color: module.disabled ? theme.colors.onSurfaceDisabled : theme.colors.onSurface,
-						}}
-					/>
-				</Card>
-			))}
+			<Stack>
+				{modules.map((module, index) => (
+					<Card 
+						key={index} 
+						style={{
+							paddingVertical: 16,
+							backgroundColor: module.disabled ? theme.colors.surfaceDisabled : theme.colors.elevation.level1,
+						}} 
+						// @ts-ignore
+						onPress={module?.to && (() => navigation.navigate(module.to))}
+					>
+						<Icon
+							name={module.icon}
+							size={32}
+							color={module.disabled ? theme.colors.onSurfaceDisabled : theme.colors.primary}
+							style={{ marginLeft: 16, marginBottom: 16 }}
+						/>
+						<Card.Title 
+							title={module.name} 
+							subtitle={module.description} 
+							titleNumberOfLines={3}
+							subtitleNumberOfLines={3}
+							titleVariant="titleLarge"
+							titleStyle={{
+								color: module.disabled ? theme.colors.onSurfaceDisabled : theme.colors.onSurface,
+							}}
+							subtitleStyle={{
+								color: module.disabled ? theme.colors.onSurfaceDisabled : theme.colors.onSurface,
+							}}
+						/>
+					</Card>
+				))}
+			</Stack>
 		</Container.ScrollView>
 	)
 }

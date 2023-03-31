@@ -1,4 +1,4 @@
-import { Text, useTheme } from "react-native-paper";
+import { Button, List, Text, useTheme } from "react-native-paper";
 import { Animated, Dimensions, Image, ImageBackground, View } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import Container from "../../components/Container";
@@ -7,6 +7,7 @@ import { useQuery } from "react-query";
 import { Business } from "../../types/SanitySchema";
 import { useHeader } from "../../hooks/useHeader";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
+import Stack from "../../components/Stack";
 
 const getBusiness = async (slug: string) => {
 	const res = await sanityClient.fetch<Business | undefined>(`*[_type == "business" && slug.current == $slug][0] {
@@ -78,18 +79,55 @@ export default function BusinessPage() {
 				/>
 			</View>
 			<Container>
-				<Text 
-					style={{
-						marginTop: 48 + 8,
-						textAlign: "center",
-					}}
-					variant="headlineLarge"
-				>
-					{data.name}
-				</Text>
-				<Text>
-					{data.description}
-				</Text>
+				<Stack>
+					<Text 
+						style={{
+							marginTop: 48 + 8,
+							textAlign: "center",
+						}}
+						variant="headlineLarge"
+					>
+						{data.name}
+					</Text>
+					<Button
+						mode="contained"
+						onPress={() => {}}
+						icon="map-marker"
+					>
+						Deschide locatia
+					</Button>
+					<Button
+						mode="contained-tonal"
+						onPress={() => {}}
+						icon="web"
+					>
+						Deschide site-ul
+					</Button>
+					<Text>
+						{data.description}
+					</Text>
+					<List.Section>
+						<List.Subheader>
+							Contact
+						</List.Subheader>
+						{data.contact.phone && (
+							<List.Item
+								title="Telefon"
+								description={data.contact.phone}
+								left={(props) => <List.Icon icon="phone" {...props} />}
+								onPress={() => {}}
+							/>
+						)}
+						{data.contact.email && (
+							<List.Item
+								title="Email"
+								description={data.contact.email}
+								left={(props) => <List.Icon icon="email" {...props} />}
+								onPress={() => {}}
+							/>
+						)}
+					</List.Section>
+				</Stack>
 			</Container>
 		</Animated.ScrollView>
 	)

@@ -3,11 +3,9 @@ import { Animated, ScrollView, ScrollViewProps, StyleSheet, View, type ViewProps
 function Container(props: ViewProps) {
 	return (
 		<View
-			style={styles.container}
 			{...props}
-		>
-			{props.children}
-		</View>
+			style={[styles.container, props.style]}
+		/>
 	)
 }
 
@@ -16,12 +14,10 @@ Container.ScrollView = function ContainerScrollView(props: ScrollViewProps) {
 		// We use this since we are going to use
 		// stuff with animation often
 		<Animated.ScrollView
-			style={styles.scrollViewContainer}
-			contentContainerStyle={styles.scrollViewContainerContent}
 			{...props}
-		>
-			{props.children}
-		</Animated.ScrollView>
+			style={[styles.scrollViewContainer, props.style]}
+			contentContainerStyle={[styles.scrollViewContainerContent, props.contentContainerStyle]}
+		/>
 	)
 }
 

@@ -59,12 +59,13 @@ export default function Businesses() {
 								id: business.slug.current
 							})
 						}}
-						left={() => (
+						left={(props) => (
 							<List.Image
 								source={{ uri: urlFor(business.logo).width(72).height(72).url() }}
 								style={{
 									borderRadius: 8,
 								}}
+								{...props}
 							/>
 						)}
 					/>
