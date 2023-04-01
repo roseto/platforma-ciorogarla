@@ -5,6 +5,8 @@ import { useHeader } from "../hooks/useHeader";
 import {useNavigation} from "@react-navigation/native";
 import Stack from "../components/Stack";
 import {useTheme} from "../hooks/useTheme";
+import {useEffect} from "react";
+import {useStoreState} from "../lib/store";
 
 
 const modules = [
@@ -37,7 +39,8 @@ const modules = [
 
 
 export default function Home() {
-	const theme = useTheme()
+	const theme = useTheme();
+	const hasSeenLanding = useStoreState(state => state.hasSeenLanding);
 	const navigation = useNavigation();
 	const { onScroll } = useHeader({
 		animated: true,
@@ -47,6 +50,15 @@ export default function Home() {
 				onPress: () => navigation.navigate("Settings")
 			}
 		]
+	})
+
+	useEffect(() => {
+		if (!hasSeenLanding) {
+			navigation.reset({
+				index: 0,
+				routes: [{ name: "Landing" }],
+			})
+		}
 	})
 
 	return (

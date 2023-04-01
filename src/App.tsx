@@ -4,15 +4,17 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
 import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister'
 import { Provider as PaperProvider } from "react-native-paper";
-import { NavigationContainer, LinkingOptions } from "@react-navigation/native";
+import { NavigationContainer, LinkingOptions, useNavigation, useRoute } from "@react-navigation/native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useColorScheme, Platform, LogBox } from "react-native";
 import { darkTheme, lightTheme } from "./lib/theme";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StatusBar } from "expo-status-bar";
-import React, {useEffect} from "react";
 import { queryClient } from "./lib/queryClient";
+import {StoreProvider} from "easy-peasy";
+import {store, useStoreState} from "./lib/store";
+import AppBar from "./components/AppBar";
 
 
 if (Platform.OS !== "web") {
@@ -63,7 +65,6 @@ import Contribute from "./screens/Contribute";
 import Landing from "./screens/Landing";
 import Businesses from "./screens/businesses/Businesses";
 import Business from "./screens/businesses/Business";
-import AppBar from "./components/AppBar";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -72,21 +73,7 @@ const asyncStoragePersister = createAsyncStoragePersister({
 })
 
 function App() {
-	const [hasSeenLanding, setHasSeenLanding] = React.useState(undefined);
-
-	useEffect(() => {
-		AsyncStorage.getItem("hasSeenLanding").then((value) => {
-			if (value === "true") {
-				setHasSeenLanding(true);
-			} else {
-				setHasSeenLanding(false);
-			}
-		})
-	}, [])
-
-	if (hasSeenLanding === undefined) {
-		return null;
-	}
+	const hasSeenLanding = useStoreState((state) => state.hasSeenLanding);
 
 	return (
 		<Stack.Navigator 
@@ -95,10 +82,10 @@ function App() {
 				header: (props) => <AppBar {...props} />,
 			}}
 		>
+			<Stack.Screen name="Landing" component={Landing} options={{ title: "Bine ai venit" }} />
 			<Stack.Screen name="Home" component={Home} options={{ title: "Acasa" }} />
 			<Stack.Screen name="Settings" component={Settings} options={{ title: "Setari" }} />
 			<Stack.Screen name="Contribute" component={Contribute} options={{ title: "Contribuie" }} />
-			<Stack.Screen name="Landing" component={Landing} options={{ title: "Bine ai venit" }} />
 
 			<Stack.Screen name="Businesses" component={Businesses} options={{ title: "Afaceri locale & altele" }} />
 			<Stack.Screen name="Business" component={Business} />
@@ -119,23 +106,25 @@ function EntryPoint() {
 					backgroundColor: theme.colors.background
 				}}
 			>
-				<NavigationContainer 
-					documentTitle={{ 
-						enabled: true,
-						formatter: (options, route) => {
-							return `${options.title ?? route.name} · Ciorogârla Unită`;
-						}
-					}} 
-					theme={theme} 
-					linking={linking}
-				>
-					<PersistQueryClientProvider persistOptions={{ persister: asyncStoragePersister }} client={queryClient}>
-						<PaperProvider theme={theme}>
-							<App />
-							<StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
-						</PaperProvider>
-					</PersistQueryClientProvider>
-				</NavigationContainer>
+				<StoreProvider store={store}>
+					<NavigationContainer 
+						documentTitle={{ 
+							enabled: true,
+							formatter: (options, route) => {
+								return `${options?.title ?? route?.name ?? "Loading..."} · Ciorogârla Unită`;
+							}
+						}} 
+						theme={theme} 
+						linking={linking}
+					>
+						<PersistQueryClientProvider persistOptions={{ persister: asyncStoragePersister }} client={queryClient}>
+							<PaperProvider theme={theme}>
+								<App />
+								<StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
+							</PaperProvider>
+						</PersistQueryClientProvider>
+					</NavigationContainer>
+				</StoreProvider>
 			</GestureHandlerRootView>
 		</SafeAreaProvider>
 	)

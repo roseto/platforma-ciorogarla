@@ -1,4 +1,3 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import {useNavigation} from "@react-navigation/native";
 import {Avatar, Button, Card, Text} from "react-native-paper";
 import Container from "../components/Container";
@@ -7,8 +6,10 @@ import {useHeader} from "../hooks/useHeader";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import {View} from "react-native";
 import {useTheme} from "../hooks/useTheme";
+import {useStoreActions} from "../lib/store";
 
 export default function Landing() {
+	const setHasSeenLanding = useStoreActions(actions => actions.setHasSeenLanding);
 	const navigation = useNavigation();
 	const theme = useTheme();
 	useHeader({
@@ -16,10 +17,10 @@ export default function Landing() {
 	})
 
 	const onButtonPress = () => {
-		AsyncStorage.setItem("hasSeenLanding", "true");
+		setHasSeenLanding(true)
 		navigation.reset({
 			index: 0,
-			routes: [{ name: "Home" }]
+			routes: [{ name: "Home" }],
 		})
 	}
 
