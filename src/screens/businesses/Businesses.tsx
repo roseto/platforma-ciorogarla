@@ -1,25 +1,40 @@
 import { useQuery } from "react-query";
-import { Text, List, Button } from "react-native-paper";
+import { Text, List, Chip } from "react-native-paper";
 import Container from "../../components/Container";
 import { useHeader } from "../../hooks/useHeader";
 import { sanityClient, urlFor } from "../../lib/sanity";
-import { View } from "react-native";
+import { businessTypes } from "../../lib/business";
+import { ScrollView, View } from "react-native";
 import { Business } from "../../types/SanitySchema";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import {useEffect, useState} from "react";
+import {useTheme} from "../../hooks/useTheme";
 
-const getBusinesses = async () => {
-	const res = await sanityClient.fetch<Business[] | undefined>(`*[_type == "business"] {name, logo, description, slug, type}`);
+const getBusinesses = async (types?: string[]) => {
+	const groqQuery = `*[_type == "business" ${types.length ? `&& type in ${JSON.stringify(types)}` : ""}] {name, logo, description, slug, type}`;
+
+	const res = await sanityClient.fetch<Business[] | undefined>(groqQuery);
 
 	return res;
 }
 
 
 export default function Businesses() {
+	const theme = useTheme();
+	const route = useRoute();
+	const params = route.params as { sortByTypes?: string[] }
+	const [sortByTypes, setSortByTypes] = useState(params?.sortByTypes ?? []);
 	const navigation = useNavigation();
-	const { data } = useQuery("businesses", getBusinesses);
+	const { data, isLoading } = useQuery(`businesses.by.types.${sortByTypes.join(";")}`, () => getBusinesses(sortByTypes));
 	const { onScroll } = useHeader({
 		animated: true
 	});
+
+	useEffect(() => {
+		if (params?.sortByTypes) {
+			setSortByTypes(params.sortByTypes);
+		}
+	}, [params?.sortByTypes])
 
 	return (
 		<Container.ScrollView onScroll={onScroll}>
@@ -28,28 +43,71 @@ export default function Businesses() {
 			>
 				Afaceri locale & altele
 			</Text>
-			<View
-				style={{
-					flexDirection: "row",
+			<ScrollView
+				horizontal
+				contentContainerStyle={{
+					gap: 4
 				}}
+				showsHorizontalScrollIndicator={false}
 			>
-				<Button
-					style={{ flex: 1, marginRight: 4 }}
-					mode="contained"
-					icon="magnify"
-				>
-					Exploreaza
-				</Button>
-				<Button
-					style={{ flex: 1, marginLeft: 4 }}
-					mode="contained-tonal"
-					icon="plus"
-				>
-					Adauga
-				</Button>
-			</View>
+				{Array.from(businessTypes)
+					// Sort by types in sortByTypes
+					.sort(([keyA], [keyB]) => {
+						const indexA = sortByTypes.indexOf(keyA);
+						const indexB = sortByTypes.indexOf(keyB);
+
+						if (indexA === -1 && indexB === -1) {
+							return 0;
+						}
+
+						if (indexA === -1) {
+							return 1;
+						}
+
+						if (indexB === -1) {
+							return -1;
+						}
+
+						return indexA - indexB;
+					})
+					.map(([key, value]) => (
+					<Chip
+						key={key}
+						icon={value.icon}
+						mode={sortByTypes.includes(key) ? "flat" : "outlined"}
+						onPress={() => {
+							if (sortByTypes.includes(key)) {
+								setSortByTypes(sortByTypes.filter((type) => type !== key));
+							} else {
+								setSortByTypes([...sortByTypes, key]);
+							}
+						}}
+					>
+						{value.name}
+					</Chip>
+				))}	
+			</ScrollView>
 			<List.Section>
-				{data?.map((business, index) => (
+				{isLoading
+					? Array(5).fill(null).map((_, idx) => (
+						<List.Item
+							key={idx}
+							title="Loading"
+							description="Loading..."
+							left={(props) => (
+								<View
+									{...props}
+									style={[{
+										borderRadius: 8,
+										width: 48,
+										height: 48,
+										backgroundColor: theme.colors.border
+									}, props.style]}
+								/>
+							)}
+						/>
+					))
+					: data?.map((business, index) => (
 					<List.Item
 						key={index}
 						title={business.name}

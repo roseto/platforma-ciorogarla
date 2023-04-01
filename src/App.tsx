@@ -26,7 +26,9 @@ export type RootStackParamList = {
 	Home: undefined;
 	Settings: undefined;
 
-	Businesses: undefined;
+	Businesses: {
+		sortByTypes: string[]
+	};
 	Business: {
 		id: string;
 	}

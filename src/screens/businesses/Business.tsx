@@ -1,8 +1,9 @@
 import React from "react";
 import { Button, Card, Chip, List, Text, useTheme } from "react-native-paper";
 import { LinearGradient } from "expo-linear-gradient";
-import { Animated, Dimensions, Image, ImageBackground, Linking, ScrollView, View } from "react-native";
-import { useRoute } from "@react-navigation/native";
+import { Animated, Dimensions, Image, ImageBackground, Linking, Platform, ScrollView, View } from "react-native";
+import * as WebBrowser from "expo-web-browser";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import Container from "../../components/Container";
 import { sanityClient, urlFor } from "../../lib/sanity";
 import { useQuery } from "react-query"; 
@@ -23,6 +24,7 @@ const getBusiness = async (slug: string) => {
 
 export default function BusinessPage() {
 	const theme = useTheme();
+	const navigation = useNavigation();
 	const screenWidth = Dimensions.get("window").width;
 	const route = useRoute();
 	const { id } = route.params as { id: string };
@@ -120,6 +122,13 @@ export default function BusinessPage() {
 						<Chip
 							icon={businessTypes.get(data?.type)?.icon}
 							mode="outlined"
+							onPress={() => {
+								navigation.navigate({
+									name: "Businesses",
+									params: { sortByTypes: [data?.type] },
+									merge: true
+								})
+							}}
 						>
 							{businessTypes.get(data?.type)?.name}
 						</Chip>
@@ -140,7 +149,9 @@ export default function BusinessPage() {
 						<Button
 							mode="contained-tonal"
 							onPress={() => {
-								Linking.openURL(data.contact.website)
+								Platform.OS === "web"
+								? Linking.openURL(data.contact.website)
+								: WebBrowser.openBrowserAsync(data.contact.website)
 							}}
 							icon="web"
 							disabled={isLoading}
@@ -204,7 +215,9 @@ export default function BusinessPage() {
 								compact
 								icon="clipboard-outline"
 								onPress={() => {
-									Linking.openURL(data.pricesLink)
+									Platform.OS === "web"
+									? Linking.openURL(data.pricesLink)
+									: WebBrowser.openBrowserAsync(data.pricesLink)
 								}}
 								textStyle={{
 									color: theme.colors.primary
