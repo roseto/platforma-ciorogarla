@@ -1,4 +1,4 @@
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { Text, List, Chip } from "react-native-paper";
 import Container from "../../components/Container";
 import { useHeader } from "../../hooks/useHeader";
@@ -25,7 +25,7 @@ export default function Businesses() {
 	const params = route.params as { sortByTypes?: string[] }
 	const [sortByTypes, setSortByTypes] = useState(params?.sortByTypes ?? []);
 	const navigation = useNavigation();
-	const { data, isLoading } = useQuery(`businesses.by.types.${sortByTypes.join(";")}`, () => getBusinesses(sortByTypes));
+	const { data, isLoading } = useQuery([`businesses.${sortByTypes.join(";")}`], () => getBusinesses(sortByTypes));
 	const { onScroll } = useHeader({
 		animated: true
 	});

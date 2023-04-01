@@ -1,5 +1,8 @@
 import { registerRootComponent } from "expo";
 import { setupURLPolyfill } from 'react-native-url-polyfill';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
+import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister'
 import { Provider as PaperProvider } from "react-native-paper";
 import { NavigationContainer, LinkingOptions } from "@react-navigation/native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -10,7 +13,6 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { queryClient } from "./lib/queryClient";
-import { QueryClientProvider } from "react-query";
 
 
 if (Platform.OS !== "web") {
@@ -59,6 +61,10 @@ import AppBar from "./components/AppBar";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
+const asyncStoragePersister = createAsyncStoragePersister({
+	storage: AsyncStorage,
+})
+
 function App() {
 	return (
 		<Stack.Navigator 
@@ -99,12 +105,12 @@ function EntryPoint() {
 					theme={theme} 
 					linking={linking}
 				>
-					<QueryClientProvider client={queryClient}>
+					<PersistQueryClientProvider persistOptions={{ persister: asyncStoragePersister }} client={queryClient}>
 						<PaperProvider theme={theme}>
 							<App />
 							<StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
 						</PaperProvider>
-					</QueryClientProvider>
+					</PersistQueryClientProvider>
 				</NavigationContainer>
 			</GestureHandlerRootView>
 		</SafeAreaProvider>

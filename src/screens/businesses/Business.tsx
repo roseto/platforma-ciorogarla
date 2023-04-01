@@ -6,7 +6,7 @@ import * as WebBrowser from "expo-web-browser";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import Container from "../../components/Container";
 import { sanityClient, urlFor } from "../../lib/sanity";
-import { useQuery } from "react-query"; 
+import { useQuery } from "@tanstack/react-query"; 
 import { Business } from "../../types/SanitySchema";
 import { useHeader } from "../../hooks/useHeader";
 import Stack from "../../components/Stack";
@@ -28,9 +28,9 @@ export default function BusinessPage() {
 	const screenWidth = Dimensions.get("window").width;
 	const route = useRoute();
 	const { id } = route.params as { id: string };
-	const { data, isLoading } = useQuery(`businesses.${id}`, () => getBusiness(id), {
+	const { data, isLoading } = useQuery([`businesses.${id}`], () => getBusiness(id), {
 		initialData: () => {
-			return queryClient.getQueryData<Business[] | undefined>("businesses")
+			return queryClient.getQueryData<Business[] | undefined>(["businesses"])
 				?.find((business: Business) => business.slug.current === id);
 		}
 	});
