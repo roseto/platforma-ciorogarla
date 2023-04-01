@@ -1,8 +1,11 @@
+import * as Updates from "expo-updates";
 import {Divider, List} from "react-native-paper";
 import Constants from "expo-constants";
 import Container from "../components/Container";
 import {useHeader} from "../hooks/useHeader";
 import {Platform} from "react-native";
+import {useNavigation} from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 const platform = (() => {
@@ -19,9 +22,15 @@ const platform = (() => {
 })();
 
 export default function Settings() {
+	const navigation = useNavigation();
 	useHeader({
 		mode: "large"
 	});
+
+	const clearStorage = async () => {
+		await AsyncStorage.clear();
+		Updates.reloadAsync();
+	}
 
 	return (
 		<Container.ScrollView>
@@ -30,6 +39,13 @@ export default function Settings() {
 					title="Contributie"
 					description="Afla cum poti contribui la dezvoltarea aplicatiei"
 					left={props => <List.Icon {...props} icon="hand-coin" />}
+					onPress={() => navigation.navigate("Contribute")}
+				/>
+				<List.Item
+					title="Resetare"
+					description="Reseteaza aplicatia"
+					left={props => <List.Icon {...props} icon="restart" />}
+					onPress={clearStorage}
 				/>
 				<Divider />
 				<List.Item

@@ -11,7 +11,7 @@ import { darkTheme, lightTheme } from "./lib/theme";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, {useEffect} from "react";
 import { queryClient } from "./lib/queryClient";
 
 
@@ -27,6 +27,8 @@ LogBox.ignoreLogs([
 export type RootStackParamList = {
 	Home: undefined;
 	Settings: undefined;
+	Contribute: undefined;
+	Landing: undefined;
 
 	Businesses: {
 		sortByTypes: string[]
@@ -44,6 +46,8 @@ export const linking: LinkingOptions<RootStackParamList> = {
 		screens: {
 			Home: "",
 			Settings: "settings",
+			Contribute: "contribute",
+			Landing: "landing",
 
 			Businesses: "businesses",
 			Business: "businesses/:id"
@@ -52,9 +56,11 @@ export const linking: LinkingOptions<RootStackParamList> = {
 }
 
 
-// Pages
+// Screens
 import Home from "./screens/Home";
 import Settings from "./screens/Settings";
+import Contribute from "./screens/Contribute";
+import Landing from "./screens/Landing";
 import Businesses from "./screens/businesses/Businesses";
 import Business from "./screens/businesses/Business";
 import AppBar from "./components/AppBar";
@@ -66,15 +72,33 @@ const asyncStoragePersister = createAsyncStoragePersister({
 })
 
 function App() {
+	const [hasSeenLanding, setHasSeenLanding] = React.useState(undefined);
+
+	useEffect(() => {
+		AsyncStorage.getItem("hasSeenLanding").then((value) => {
+			if (value === "true") {
+				setHasSeenLanding(true);
+			} else {
+				setHasSeenLanding(false);
+			}
+		})
+	}, [])
+
+	if (hasSeenLanding === undefined) {
+		return null;
+	}
+
 	return (
 		<Stack.Navigator 
-			initialRouteName="Home"
+			initialRouteName={hasSeenLanding ? "Home" : "Landing"}
 			screenOptions={{
 				header: (props) => <AppBar {...props} />,
 			}}
 		>
 			<Stack.Screen name="Home" component={Home} options={{ title: "Acasa" }} />
 			<Stack.Screen name="Settings" component={Settings} options={{ title: "Setari" }} />
+			<Stack.Screen name="Contribute" component={Contribute} options={{ title: "Contribuie" }} />
+			<Stack.Screen name="Landing" component={Landing} options={{ title: "Bine ai venit" }} />
 
 			<Stack.Screen name="Businesses" component={Businesses} options={{ title: "Afaceri locale & altele" }} />
 			<Stack.Screen name="Business" component={Business} />

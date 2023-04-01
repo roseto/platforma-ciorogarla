@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Card, Chip, List, Text, useTheme } from "react-native-paper";
+import { Button, Card, Chip, IconButton, List, Text, useTheme } from "react-native-paper";
 import { LinearGradient } from "expo-linear-gradient";
 import { Animated, Dimensions, Image, ImageBackground, Linking, Platform, ScrollView, View } from "react-native";
 import * as WebBrowser from "expo-web-browser";
@@ -28,7 +28,7 @@ export default function BusinessPage() {
 	const screenWidth = Dimensions.get("window").width;
 	const route = useRoute();
 	const { id } = route.params as { id: string };
-	const { data, isLoading } = useQuery([`businesses.${id}`], () => getBusiness(id), {
+	const { data, isLoading } = useQuery(["businesses", id], () => getBusiness(id), {
 		initialData: () => {
 			return queryClient.getQueryData<Business[] | undefined>(["businesses"])
 				?.find((business: Business) => business.slug.current === id);
@@ -175,7 +175,7 @@ export default function BusinessPage() {
 								}}
 								mode="contained"
 								onPress={() => {
-									Linking.openURL("https://opencollective.com/ciorogarlaunita")
+									navigation.navigate("Contribute")
 								}}
 							>
 								<Card.Title
@@ -187,6 +187,30 @@ export default function BusinessPage() {
 							</Card>
 						</LinearGradient>
 					)}
+					<View
+						style={{
+							flexDirection: "row",
+							justifyContent: "center",
+							alignItems: "center"
+						}}
+					>
+						{!isLoading && data?.contact?.facebook && (
+							<IconButton 
+								icon="facebook"
+								onPress={() => {
+									Linking.openURL(data.contact.facebook)
+								}}
+							/>
+						)}
+						{!isLoading && data?.contact?.instagram && (
+							<IconButton 
+								icon="instagram"
+								onPress={() => {
+									Linking.openURL(data.contact.instagram)
+								}}
+							/>
+						)}
+					</View>
 					<Card>
 						<Card.Title
 							title="Descriere"

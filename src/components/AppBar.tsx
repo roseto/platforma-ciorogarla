@@ -56,7 +56,14 @@ export default function AppBar({ back, route, options, navigation, mode, scrollP
 						}}
 					/>
 					:
-					<Appbar.Content title={options.title || route.name} />
+					<Appbar.Content 
+						title={options.title || route.name}
+						style={{
+							maxWidth: 768,
+							width: "100%",
+							alignSelf: "center"
+						}}
+					/>
 				}
 				{actions && actions.map((action, idx) => (
 					<Appbar.Action
