@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "71203725400",
+    "project_id": "ciorogarlaunita",
+    "storage_bucket": "ciorogarlaunita.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:71203725400:android:f6f446c9fb98d5afd3aa2d",
+        "android_client_info": {
+          "package_name": "org.eu.ciorogarlaunita"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "71203725400-mvf1vdbpfqe88p9roen4kc2uuebtj62r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.eu.ciorogarlaunita",
+            "certificate_hash": "85be75f8cb1c4613cd8a4947d3e07ee22d12bb7e"
+          }
+        },
+        {
+          "client_id": "71203725400-5bu0av3isd039d63i6rrrhvkin26k618.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGQXeTPxWGNkT2YqBXqTy-KNWj6jkMhOE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "71203725400-5bu0av3isd039d63i6rrrhvkin26k618.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "71203725400-ur47udha0bb4f500ts6hh700ja2742s1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "eu.org.ciorogarlaunita"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

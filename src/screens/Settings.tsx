@@ -35,8 +35,14 @@ export default function Settings() {
 	return (
 		<Container.ScrollView>
 			<List.Section>
+				<List.Item 
+					title="Cont"
+					description="Conecteaza-te la contul de Ciorogârla Unită"
+					left={props => <List.Icon {...props} icon="account" />}
+					onPress={() => navigation.navigate("Login")}
+				/>
 				<List.Item
-					title="Contributie"
+					title="Contribuie"
 					description="Afla cum poti contribui la dezvoltarea aplicatiei"
 					left={props => <List.Icon {...props} icon="hand-coin" />}
 					onPress={() => navigation.navigate("Contribute")}

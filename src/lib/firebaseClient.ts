@@ -1,19 +1,17 @@
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getPerformance } from "firebase/performance";
+import { Platform } from 'react-native';
+import Constants from 'expo-constants';
+import fb from 'firebase/compat/app';
 
+let fbInstance: typeof fb;
+let fbAuth: typeof fb.auth;
+if (Platform.OS !== "web" && Constants.appOwnership !== "expo") {
+	fbInstance = require("@react-native-firebase/app").default;
+	fbAuth = require("@react-native-firebase/auth").default;
+} else {
+	fbInstance = require("firebase/compat/app").default;
+}
 
-const firebaseConfig = {
-	apiKey: "AIzaSyBQ2DqvmWbpJCb9rN_srrLQsMy6jdCWJ_k",
-	authDomain: "ciorogarlaunita.firebaseapp.com",
-	projectId: "ciorogarlaunita",
-	storageBucket: "ciorogarlaunita.appspot.com",
-	messagingSenderId: "71203725400",
-	appId: "1:71203725400:web:583a8d9c43e29ef4d3aa2d",
-	measurementId: "G-4FWZL89RBV"
-};
-
-// Initialize Firebase
-export const app = initializeApp(firebaseConfig);
-// export const analytics = getAnalytics(app);
-// export const performance = getPerformance(app);
+export const Firebase = fbInstance;
+console.log(Constants.expoConfig.web.config.firebase);
+export const firebase = fbInstance.initializeApp(Constants.expoConfig.web.config.firebase);
+export const auth = fbAuth ? fbAuth : fbInstance.auth;

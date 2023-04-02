@@ -1,45 +1,24 @@
 import "./lib/firebaseClient";
-import { registerRootComponent } from "expo";
-import { setupURLPolyfill } from 'react-native-url-polyfill';
-import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
-import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister'
-import { Provider as PaperProvider } from "react-native-paper";
-import { NavigationContainer, LinkingOptions } from "@react-navigation/native";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { useColorScheme, Platform, LogBox } from "react-native";
-import { darkTheme, lightTheme } from "./lib/theme";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { StatusBar } from "expo-status-bar";
-import { queryClient } from "./lib/queryClient";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { store, useStoreState } from "./lib/store";
 import AppBar from "./components/AppBar";
+import {createNativeStackNavigator} from "@react-navigation/native-stack";
+import {useStoreState} from "./lib/store";
 
-
-if (Platform.OS !== "web") {
-	setupURLPolyfill();
-}
-
-LogBox.ignoreLogs([
-	"REACT_NATIVE_URL_POLYFILL",
-	"has a shadow set but cannot calculate shadow efficiently"
-])
 
 export type RootStackParamList = {
 	Home: undefined;
 	Settings: undefined;
 	Contribute: undefined;
 	Landing: undefined;
+	Login: undefined;
 
 	Businesses: {
-		sortByTypes: string[]
+		sortByTypes: string[],
+		search: string,
 	};
 	Business: {
 		id: string;
 	}
 }
-
 
 export const linking: LinkingOptions<RootStackParamList> = {
 	prefixes: ["https://ciorogarlaunita.web.app", "ciorogarlaunita://"],
@@ -62,19 +41,17 @@ export const linking: LinkingOptions<RootStackParamList> = {
 import Home from "./screens/Home";
 import Settings from "./screens/Settings";
 import Contribute from "./screens/Contribute";
+import Login from "./screens/Login";
 import Landing from "./screens/Landing";
 import Businesses from "./screens/businesses/Businesses";
 import Business from "./screens/businesses/Business";
-import {StoreProvider} from "easy-peasy";
+import {LinkingOptions} from "@react-navigation/native";
 
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-const asyncStoragePersister = createAsyncStoragePersister({
-	storage: AsyncStorage,
-})
 
-function App() {
+export default function App() {
 	const hasSeenLanding = useStoreState((state) => state.hasSeenLanding)
 
 	return (
@@ -88,6 +65,7 @@ function App() {
 			<Stack.Screen name="Landing" component={Landing} options={{ title: "Bine ai venit" }} />
 			<Stack.Screen name="Settings" component={Settings} options={{ title: "Setari" }} />
 			<Stack.Screen name="Contribute" component={Contribute} options={{ title: "Contribuie" }} />
+			<Stack.Screen name="Login" component={Login} options={{ title: "Autentificare" }} />
 
 			<Stack.Screen name="Businesses" component={Businesses} options={{ title: "Afaceri locale & altele" }} />
 			<Stack.Screen name="Business" component={Business} />
@@ -96,40 +74,3 @@ function App() {
 }
 
 
-function EntryPoint() {
-	const colorScheme = useColorScheme();
-	const theme = colorScheme === "dark" ? darkTheme : lightTheme;
-
-	return (
-		<SafeAreaProvider>
-			<GestureHandlerRootView
-				style={{
-					flex: 1,
-					backgroundColor: theme.colors.background
-				}}
-			>
-				<NavigationContainer 
-					documentTitle={{ 
-						enabled: true,
-						formatter: (options, route) => {
-							return `${options?.title ?? route?.name ?? "Loading..."} · Ciorogârla Unită`;
-						}
-					}} 
-					theme={theme} 
-					linking={linking}
-				>
-					<StoreProvider store={store}>
-						<PersistQueryClientProvider persistOptions={{ persister: asyncStoragePersister }} client={queryClient}>
-							<PaperProvider theme={theme}>
-								<App />
-								<StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
-							</PaperProvider>
-						</PersistQueryClientProvider>
-					</StoreProvider>
-				</NavigationContainer>
-			</GestureHandlerRootView>
-		</SafeAreaProvider>
-	)
-}
-
-registerRootComponent(EntryPoint);
