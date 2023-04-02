@@ -2,11 +2,11 @@ import { Card, Text } from "react-native-paper";
 import Icon from "@expo/vector-icons/MaterialIcons"
 import Container from "../components/Container";
 import { useHeader } from "../hooks/useHeader";
-import {useNavigation} from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import Stack from "../components/Stack";
-import {useTheme} from "../hooks/useTheme";
-import {useEffect} from "react";
-import {useStoreState} from "../lib/store";
+import { useTheme } from "../hooks/useTheme";
+import { useEffect } from "react";
+import { useStoreState } from "../lib/store";
 
 
 const modules = [
@@ -19,22 +19,28 @@ const modules = [
 	},
 	{
 		name: "Calendar de evenimente",
-		description: "Aici gasesti informatii despre evenimentele din comuna Ciorogârla",
+		description: "Calendarul de evenimente din comuna Ciorogârla",
 		icon: "event",
 		disabled: true
 	},
 	{
 		name: "Stiri",
-		description: "Aici gasesti informatii despre stiri din comuna Ciorogârla",
+		description: "Afla ultimele stiri din comuna Ciorogârla",
 		icon: "new-releases",
 		disabled: true
 	},
 	{
 		name: "Oportunitati de voluntariat",
-		description: "Aici gasesti informatii despre oportunitati de voluntariat din comuna Ciorogârla",
+		description: "Dezvolta-ti abilitatile si ajuta comunitatea",
 		icon: "group-work",
 		disabled: true
 	},
+	{
+		name: "Forum",
+		description: "Discuta cu ceilalti cetateni despre orice subiect",
+		icon: "forum",
+		disabled: true
+	}
 ] as const;
 
 

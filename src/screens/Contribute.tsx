@@ -4,10 +4,13 @@ import {useTheme} from "../hooks/useTheme";
 import {Button, Card, Text} from "react-native-paper";
 import Stack from "../components/Stack";
 import {Linking} from "react-native";
-import {Link} from "@react-navigation/native";
+import {useHeader} from "../hooks/useHeader";
 
 export default function Contribute() {
 	const theme = useTheme();
+	useHeader({
+		animated: true
+	})
 
 	return (
 		<Container>

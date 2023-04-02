@@ -1,6 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { createStore, createTypedHooks, action, Action, persist } from "easy-peasy";
-
+import {action, Action, createStore, createTypedHooks, persist} from "easy-peasy";
 
 interface StoreModel {
 	hasSeenLanding: boolean;
@@ -8,18 +7,24 @@ interface StoreModel {
 	setHasSeenLanding: Action<StoreModel, boolean>;
 }
 
-const storage = {
-	async getItem(key: string) {
-		return JSON.parse(await AsyncStorage.getItem(key))
+const customStorage = {
+	getItem: async (key: string) => {
+		const item = await AsyncStorage.getItem(key);
+		return item ? JSON.parse(item) : null;
 	},
-	async setItem(key: string, data: unknown) {
-		AsyncStorage.setItem(key, JSON.stringify(data))
+	setItem: async (key: string, value: any) => {
+		await AsyncStorage.setItem(key, JSON.stringify(value));
 	},
-	async removeItem(key: string) {
-		AsyncStorage.removeItem(key)
-	}
+	removeItem: async (key: string) => {
+		await AsyncStorage.removeItem(key);
+	},
 }
 
+// Weird bug fix for iOS
+// This is a bug with react-native and it doesn't affect
+// other platforms.
+// See https://github.com/facebook/react-native/issues/28602
+window.requestIdleCallback = null;
 export const store = createStore<StoreModel>(
 	persist({
 		hasSeenLanding: false,
@@ -29,8 +34,11 @@ export const store = createStore<StoreModel>(
 		})
 	}, {
 		allow: ["hasSeenLanding"],
-		storage
+		storage: customStorage,
 	})
 );
 
-export const { useStoreActions, useStoreState } = createTypedHooks<StoreModel>();
+const typedHooks = createTypedHooks<StoreModel>();
+
+export const useStoreActions = typedHooks.useStoreActions;
+export const useStoreState = typedHooks.useStoreState;

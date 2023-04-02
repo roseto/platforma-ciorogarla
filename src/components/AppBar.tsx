@@ -57,7 +57,7 @@ export default function AppBar({ back, route, options, navigation, mode, scrollP
 					/>
 					:
 					<Appbar.Content 
-						title={options.title || route.name}
+						title={options.title ?? route.name}
 						style={{
 							maxWidth: 768,
 							width: "100%",
