@@ -1,76 +1,38 @@
-import "./lib/firebaseClient";
-import AppBar from "./components/AppBar";
-import {createNativeStackNavigator} from "@react-navigation/native-stack";
-import {useStoreState} from "./lib/store";
+import {Avatar, Button, CssBaseline, ListItem, ListItemAvatar, ListItemText, ThemeProvider} from "@suid/material";
+import {lightTheme} from "./lib/theme";
+import { sanityClient, urlFor } from "./lib/sanity";
+import {createResource, For} from "solid-js";
 
 
-export type RootStackParamList = {
-	Home: undefined;
-	Settings: undefined;
-	Contribute: undefined;
-	Landing: undefined;
-	Login: undefined;
+const fetcher = async () => {
+	const data = await sanityClient.fetch(`*[_type == "business"]{name, logo, description}`)
 
-	Businesses: {
-		sortByTypes: string[],
-		search: string,
-	};
-	Business: {
-		id: string;
-	}
+	return data
 }
-
-export const linking: LinkingOptions<RootStackParamList> = {
-	prefixes: ["https://ciorogarlaunita.web.app", "ciorogarlaunita://"],
-	config: {
-		initialRouteName: "Home",
-		screens: {
-			Home: "",
-			Settings: "settings",
-			Contribute: "contribute",
-			Landing: "landing",
-
-			Businesses: "businesses",
-			Business: "businesses/:id"
-		}
-	}
-}
-
-
-// Screens
-import Home from "./screens/Home";
-import Settings from "./screens/Settings";
-import Contribute from "./screens/Contribute";
-import Login from "./screens/Login";
-import Landing from "./screens/Landing";
-import Businesses from "./screens/businesses/Businesses";
-import Business from "./screens/businesses/Business";
-import {LinkingOptions} from "@react-navigation/native";
-
-
-const Stack = createNativeStackNavigator<RootStackParamList>();
-
 
 export default function App() {
-	const hasSeenLanding = useStoreState((state) => state.hasSeenLanding)
+	const [data] = createResource(fetcher);
 
 	return (
-		<Stack.Navigator 
-			initialRouteName={hasSeenLanding ? "Home" : "Landing"}
-			screenOptions={{
-				header: (props) => <AppBar {...props} />,
-			}}
-		>
-			<Stack.Screen name="Home" component={Home} options={{ title: "Acasa" }} />
-			<Stack.Screen name="Landing" component={Landing} options={{ title: "Bine ai venit" }} />
-			<Stack.Screen name="Settings" component={Settings} options={{ title: "Setari" }} />
-			<Stack.Screen name="Contribute" component={Contribute} options={{ title: "Contribuie" }} />
-			<Stack.Screen name="Login" component={Login} options={{ title: "Autentificare" }} />
-
-			<Stack.Screen name="Businesses" component={Businesses} options={{ title: "Afaceri locale & altele" }} />
-			<Stack.Screen name="Business" component={Business} />
-		</Stack.Navigator>
+		<ThemeProvider theme={lightTheme}>
+			<CssBaseline />
+			<Button
+				variant="contained"
+			>
+				Button
+			</Button>
+			<For each={data()}>
+				{item => 
+					<ListItem>
+						<ListItemAvatar>
+							<Avatar
+								src={urlFor(item.logo).width(48).height(48).url()}
+							/>
+						</ListItemAvatar>
+						<ListItemText primary={item.name} secondary={item.description} secondaryTypographyProps={{ noWrap: true }}/>
+					</ListItem>
+				}
+			</For>
+		</ThemeProvider>
 	)
 }
-
-

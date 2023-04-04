@@ -1,11 +1,10 @@
 // @ts-ignore
 import { createClient } from "@sanity/client";
 import imageUrlBuilder from "@sanity/image-url";
-import Constants from "expo-constants";
 
-const projectId = Constants.expoConfig?.extra?.sanity.projectId;
-const dataset = Constants.expoConfig?.extra?.sanity.dataset;
-const apiVersion = Constants.expoConfig?.extra?.sanity.apiVersion;
+const projectId = import.meta.env.VITE_SANITY_PROJECT_ID;
+const dataset = import.meta.env.VITE_SANITY_DATASET;
+const apiVersion = import.meta.env.VITE_SANITY_API_VERSION;
 
 export const sanityClient = createClient({
 	projectId,
