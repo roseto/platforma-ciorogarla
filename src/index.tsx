@@ -1,4 +1,5 @@
 /* @refresh reload */
+import { Router } from '@solidjs/router';
 import { render } from 'solid-js/web';
 
 import App from './App';
@@ -11,4 +12,8 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
   );
 }
 
-render(() => <App />, root!);
+render(() => 
+	<Router>
+		<App />
+	</Router>
+, root!);

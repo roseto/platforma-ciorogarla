@@ -1,0 +1,40 @@
+html,
+body {
+	margin: 0;
+	font-family: "Poppins", sans-serif !important;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	overflow-x: hidden;
+	background-color: #dddddd;
+}
+
+
+@media (hover: none) {
+	* {
+		box-sizing: border-box;
+		-webkit-touch-callout: none;
+		-webkit-user-select: none;
+		-khtml-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
+
+	input, input::after, input::before {
+		-webkit-touch-callout: initial;
+		-webkit-user-select: initial;
+		-khtml-user-select: initial;
+		-moz-user-select: initial;
+		-ms-user-select: initial;
+		user-select: initial;
+	}
+
+	*::-webkit-scrollbar {
+		display: none;
+	}
+
+	* {
+		scrollbar-width: none;
+	}
+}

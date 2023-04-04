@@ -1,38 +1,23 @@
-import {Avatar, Button, CssBaseline, ListItem, ListItemAvatar, ListItemText, ThemeProvider} from "@suid/material";
-import {lightTheme} from "./lib/theme";
-import { sanityClient, urlFor } from "./lib/sanity";
-import {createResource, For} from "solid-js";
+import { createTheme, CssBaseline, ThemeProvider, useMediaQuery } from "@suid/material";
+import { darkTheme, lightTheme, commonTheme } from "./lib/theme";
+import {useRoutes} from "@solidjs/router";
+import {routes} from "./pages/routes";
+import {createMemo} from "solid-js";
+import {createPalette, Palette} from "@suid/material/styles/createPalette";
 
-
-const fetcher = async () => {
-	const data = await sanityClient.fetch(`*[_type == "business"]{name, logo, description}`)
-
-	return data
-}
 
 export default function App() {
-	const [data] = createResource(fetcher);
+	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+	const Routes = useRoutes(routes);
+
+	const palette = createMemo(() => createPalette(prefersDarkMode() ? darkTheme.palette as Palette : lightTheme.palette as Palette));
+
+	const theme = createTheme({...commonTheme, palette});
 
 	return (
-		<ThemeProvider theme={lightTheme}>
-			<CssBaseline />
-			<Button
-				variant="contained"
-			>
-				Button
-			</Button>
-			<For each={data()}>
-				{item => 
-					<ListItem>
-						<ListItemAvatar>
-							<Avatar
-								src={urlFor(item.logo).width(48).height(48).url()}
-							/>
-						</ListItemAvatar>
-						<ListItemText primary={item.name} secondary={item.description} secondaryTypographyProps={{ noWrap: true }}/>
-					</ListItem>
-				}
-			</For>
+		<ThemeProvider theme={theme}>
+			<CssBaseline enableColorScheme/>
+			<Routes />
 		</ThemeProvider>
 	)
 }
