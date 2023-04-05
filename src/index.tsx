@@ -5,6 +5,8 @@ import { render } from 'solid-js/web';
 import "./global.css";
 
 import App from './App';
+import {FirebaseProvider} from 'solid-firebase';
+import {firebaseConfig} from './lib/firebaseConfig';
 
 const root = document.getElementById('root');
 
@@ -16,8 +18,10 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
 
 render(() => 
 	<MetaProvider>
-		<Router>
-			<App />
-		</Router>
+		<FirebaseProvider config={firebaseConfig}>
+			<Router>
+				<App />
+			</Router>
+		</FirebaseProvider>
 	</MetaProvider>
 , root!);
