@@ -1,8 +1,10 @@
-import { useRouteData } from "@solidjs/router";
-import {Avatar, Container, List, ListItem, ListItemAvatar, ListItemText, Paper} from "@suid/material";
+import { A, useRouteData } from "@solidjs/router";
+import {Avatar, Box, Chip, Container, List, ListItemAvatar, ListItemButton, ListItemText, Paper, Stack} from "@suid/material";
 import {createResource, For} from "solid-js";
 import Header from "../../components/Header";
+import Searchbox from "../../components/Searchbox";
 import {sanityClient, urlFor} from "../../lib/sanity";
+import { businessTypes } from "../../lib/businessTypes";
 import { Business } from "../../types/SanitySchema";
 
 
@@ -16,27 +18,54 @@ export default function Businesses() {
 				back
 			/>
 			<Container>
-				<Paper>
-					<List>
-						<For each={data()}>
-							{(business) => (
-								<ListItem>
-									<ListItemAvatar>
-										<Avatar 
-											src={urlFor(business.logo).width(64).height(64).url()}
-											variant="rounded"
-										/>
-									</ListItemAvatar>
-									<ListItemText 
-										primary={business.name} 
-										secondary={business.description} 
-										secondaryTypographyProps={{ noWrap: true }}
-									/>
-								</ListItem>
+				<Stack>
+					<Searchbox/>
+					
+					<Box
+						sx={{
+							display: "flex",
+							gap: 1,
+							flexDirection: "row",
+							overflowX: "auto",
+						}}
+					>
+						<For each={Array.from(businessTypes, ([_, value]) => value)}>
+							{(businessType) => (
+								<Chip
+									label={businessType.name}
+									icon={<businessType.icon/>}
+									variant="outlined"
+									color="secondary"
+								/>
 							)}
 						</For>
-					</List>
-				</Paper>
+					</Box>
+
+
+					<Paper>
+						<List>
+							<For each={data()}>
+								{(business) => (
+									<A href={`/businesses/${business.slug?.current}`}>
+										<ListItemButton>
+											<ListItemAvatar>
+												<Avatar 
+													src={urlFor(business.logo).width(64).height(64).url()}
+													variant="rounded"
+												/>
+											</ListItemAvatar>
+											<ListItemText 
+												primary={business.name} 
+												secondary={business.description} 
+												secondaryTypographyProps={{ noWrap: true }}
+											/>
+										</ListItemButton>
+									</A>
+								)}
+							</For>
+						</List>
+					</Paper>
+				</Stack>
 			</Container>
 		</>
 	);
@@ -44,7 +73,8 @@ export default function Businesses() {
 
 
 const fetcher = async () => {
-	const res = await sanityClient.fetch(`*[_type == "business"] { slug, name, description, logo }`);
+	const res = await sanityClient.fetch(`*[_type == "business"] { slug, name, description, logo }`)
+		.catch(() => null);
 
 	return res;
 }

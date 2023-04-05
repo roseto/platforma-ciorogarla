@@ -1,17 +1,19 @@
-import {AppBar, Container, Slide, IconButton, Paper, Toolbar, Typography, Fade, useTheme} from "@suid/material";
+import {AppBar, Container, IconButton, Paper, Toolbar, Typography, Fade, useTheme} from "@suid/material";
 import BackIcon from "@suid/icons-material/ArrowBack";
+import BackIosIcon from "@suid/icons-material/ArrowBackIosNew";
 import {createScrollTrigger} from "../hooks/useScrollTrigger";
 import {isIos} from "../lib/device";
 import {Meta, Title} from "@solidjs/meta";
 import {OverridableComponent} from "@suid/material/OverridableComponent";
 import {SvgIconTypeMap} from "@suid/material/SvgIcon";
-import {For} from "solid-js";
+import {For, Show} from "solid-js";
 import {A} from "@solidjs/router";
 
 interface HeaderProps {
 	title: string;
 	back?: boolean;
 	noNav?: boolean;
+	noHeading?: boolean;
 	themeColor?: string;
 	actions?: {
 		path: string;
@@ -27,56 +29,68 @@ export default function Header(props: HeaderProps) {
 		<>
 			<Title>{props.title} &middot; Ciorogârla Unită</Title>
 			<Meta name="theme-color" content={props.themeColor ?? theme.palette.background.paper} />
-			{!props.noNav && 
-				<>
-					<AppBar
-						position="fixed"
-						color="transparent"
-						elevation={triggered() ? 8 : 0}
+			<Show when={!props.noNav}>
+				<AppBar
+					position="fixed"
+					color="transparent"
+					elevation={0}
+					sx={{
+						paddingTop: "env(safe-area-inset-top)",
+						backgroundColor: theme => 
+							props.noHeading ? 
+								triggered() ? 
+									`${theme.palette.background.paper}${triggered() && isIos() ? "cc" : ""}` 
+									:
+									"transparent" 
+								:
+								`${theme.palette.background.paper}${triggered() && isIos() ? "cc" : ""}`,
+						backdropFilter: triggered() ? "blur(16px)" : undefined,
+						WebkitBackdropFilter: triggered() ? "blur(16px)" : undefined,
+					}}
+				>
+					<Toolbar
 						sx={{
-							paddingTop: "env(safe-area-inset-top)",
-							backgroundColor: theme => `${theme.palette.background.paper}${triggered() && isIos() ? "cc" : ""}`,
-							backdropFilter: "blur(16px)",
-							WebkitBackdropFilter: "blur(16px)",
+							backgroundColor: "transparent",
+							overflow: "hidden",
 						}}
-					>
-						<Toolbar
-							sx={{
-								backgroundColor: "transparent",
-								overflow: "hidden",
-							}}
+						>
+						<Show when={props.back}>
+							<IconButton
+								edge="start"
+								onClick={() => window.history.back()}
+								sx={{ marginRight: isIos() ? 0 : 2 }}
 							>
-							{props.back &&
-								<IconButton
-									edge="start"
-									onClick={() => window.history.back()}
-								>
+								{isIos() ?
+									<BackIosIcon/>
+									:
 									<BackIcon />
+								}
+							</IconButton>
+						</Show>
+						<Fade in={triggered()} appear={false}>
+							<Typography
+								variant="h6"
+								fontWeight="initial"
+								component="div"
+								sx={{ flexGrow: 1 }}
+								>
+								{props.title}
+							</Typography>
+						</Fade>
+						<For each={props.actions}>
+							{(action) => (
+								<IconButton
+									edge="end"
+									component={A}
+									href={action.path}
+								>
+									<action.icon />
 								</IconButton>
-							}
-							<Slide in={triggered()} direction="up" appear={false}>
-								<Typography
-									variant="h6"
-									fontWeight="initial"
-									component="div"
-									sx={{ flexGrow: 1 }}
-									>
-									{props.title}
-								</Typography>
-							</Slide>
-							<For each={props.actions}>
-								{(action) => (
-									<IconButton
-										edge="end"
-										component={A}
-										href={action.path}
-									>
-										<action.icon />
-									</IconButton>
-								)}
-							</For>
-						</Toolbar>
-					</AppBar>
+							)}
+						</For>
+					</Toolbar>
+				</AppBar>
+				<Show when={!props.noHeading}>
 					<Paper
 						sx={{
 							paddingTop: "calc(env(safe-area-inset-top) + 56px)",
@@ -95,8 +109,8 @@ export default function Header(props: HeaderProps) {
 							</Fade>
 						</Container>
 					</Paper>
-				</>
-			}
+				</Show>
+			</Show>
 		</>
 	)
 }

@@ -28,7 +28,7 @@ export const commonTheme: Partial<ThemeInput> = {
 		},
 		MuiStack: {
 			defaultProps: {
-				spacing: 2
+				spacing: 1
 			}
 		}
 	}
