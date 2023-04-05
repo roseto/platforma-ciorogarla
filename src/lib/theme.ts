@@ -1,11 +1,9 @@
-import {Shadows} from "@suid/material/styles/createShadows";
-import createTheme, { ThemeInput } from "@suid/material/styles/createTheme";
+import { ThemeInput } from "@suid/material/styles/createTheme";
 
 export const commonTheme: Partial<ThemeInput> = {
 	shape: {
-		borderRadius: 24
+		borderRadius: 12
 	},
-	shadows: () => Array.from(Array(25)).reduce((acc, _, i) => ({...acc, [i]: "none"}), {}) as Shadows,
 	typography: {
 		h1: {
 			fontSize: "4rem",

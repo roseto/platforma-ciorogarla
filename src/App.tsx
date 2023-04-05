@@ -2,8 +2,9 @@ import { createTheme, CssBaseline, ThemeProvider, useMediaQuery } from "@suid/ma
 import { darkTheme, lightTheme, commonTheme } from "./lib/theme";
 import {useRoutes} from "@solidjs/router";
 import {routes} from "./pages/routes";
-import {createMemo} from "solid-js";
+import {createMemo, Suspense} from "solid-js";
 import {createPalette, Palette} from "@suid/material/styles/createPalette";
+import Header from "./components/Header";
 
 
 export default function App() {
@@ -17,7 +18,9 @@ export default function App() {
 	return (
 		<ThemeProvider theme={theme}>
 			<CssBaseline enableColorScheme/>
-			<Routes />
+			<Suspense fallback={<Header noNav title="Se incarca..." />}>
+				<Routes />
+			</Suspense>
 		</ThemeProvider>
 	)
 }

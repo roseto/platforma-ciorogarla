@@ -1,40 +1,43 @@
 import {CardActionArea, CardContent, Container, Stack, Typography} from "@suid/material";
-import GrassIcon from "@suid/icons-material/Grass";
-import PeopleIcon from "@suid/icons-material/People";
+import SettingsIcon from "@suid/icons-material/Settings";
 import CardWithIcon from "../components/CardWithIcon";
 import Header from "../components/Header";
+import {For} from "solid-js";
+import {modules} from "../lib/modules";
+import {A} from "@solidjs/router";
 
 export default function Home() {
 	return (
 		<>
-			<Header>
-				Acasa
-			</Header>
+			<Header 
+				title="Acasa"
+				actions={[
+					{
+						path: "/settings",
+						icon: SettingsIcon,
+					}
+				]}
+			/>
 			<Container>
 				<Stack>
-					<CardWithIcon cardIcon={GrassIcon}>
-						<CardContent>
-							<Typography variant="h4">
-								Lista de afaceri
-							</Typography>
-							<Typography variant="body1">
-								Aici gasiti o lista cu afaceri
-								din Ciorogarla.
-							</Typography>
-						</CardContent>
-					</CardWithIcon>
-					<CardWithIcon cardIcon={PeopleIcon}>
-						<CardActionArea>
-							<CardContent>
-								<Typography variant="h4">
-									Card cu iconita
-								</Typography>
-								<Typography variant="body1">
-									Card cu iconita
-								</Typography>
-							</CardContent>
-						</CardActionArea>
-					</CardWithIcon>
+					<For each={modules}>
+						{(module) => (
+							<A href={module.path || ""}>
+								<CardWithIcon cardIcon={module.icon}>
+									<CardActionArea>
+										<CardContent>
+											<Typography variant="h4">
+												{module.name}
+											</Typography>
+											<Typography variant="body1" color="textSecondary">
+												{module.description}
+											</Typography>
+										</CardContent>
+									</CardActionArea>
+								</CardWithIcon>
+							</A>
+						)}
+					</For>
 				</Stack>
 			</Container>
 		</>
