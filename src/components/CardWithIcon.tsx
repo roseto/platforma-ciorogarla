@@ -5,7 +5,8 @@ import {SvgIconTypeMap} from "@suid/material/SvgIcon";
 
 export interface CardWithIconProps {
 	cardIcon: OverridableComponent<SvgIconTypeMap<{}, "svg">>;
-	cardIconColor: string;
+	disabled?: boolean;
+	cardIconColor?: string;
 }
 
 
@@ -14,7 +15,7 @@ export default function CardWithIcon(props: CardWithIconProps & CardProps) {
 		<Card 
 			sx={{
 				position: "relative",
-				"&:hover .card-icon": {
+				"&:hover .card-icon": props.disabled ? {} : {
 					transform: "scale(1.2)",
 				},
 				...props.sx,

@@ -22,9 +22,15 @@ export default function Home() {
 				<Stack>
 					<For each={modules}>
 						{(module) => (
-							<A href={module.path || ""}>
-								<CardWithIcon cardIcon={module.icon}>
-									<CardActionArea>
+							<A href={module.disabled ? "" : module.path || ""}>
+								<CardWithIcon 
+									cardIcon={module.icon}
+									disabled={module.disabled}
+									sx={{
+										opacity: module.disabled ? 0.5 : 1,
+									}}
+								>
+									<CardActionArea disabled={module.disabled}>
 										<CardContent>
 											<Typography variant="h4">
 												{module.name}

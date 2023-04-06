@@ -21,15 +21,18 @@ export const modules = [
 		name: "News",
 		description: "Noutăți din Ciorogârla",
 		icon: NewsIcon,
+		disabled: true
 	},
 	{
 		name: "Forum",
 		description: "Locul unde poți discuta cu alți oameni din Ciorogârla",
 		icon: ForumIcon,
+		disabled: true
 	},
 	{
 		name: "Oportunități de voluntariat",
 		description: "Locul unde poți găsi oportunități de voluntariat",
 		icon: VolunteerIcon,
+		disabled: true
 	},
 ]
