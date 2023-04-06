@@ -1,7 +1,5 @@
 import {lazy} from "solid-js";
 import { RouteDefinition } from "@solidjs/router";
-
-
 import { BusinessesGetData } from "./Businesses/Businesses";
 import { BusinessGetData } from "./Businesses/Business";
 
@@ -29,9 +27,5 @@ export const routes: RouteDefinition[] = [
 				data: BusinessGetData,
 			}
 		]
-	},
-	{
-		path: "/events",
-		component: lazy(() => import("./Events/Events")),
-	},
+	}
 ]

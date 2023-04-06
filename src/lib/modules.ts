@@ -15,7 +15,7 @@ export const modules = [
 		name: "Calendar de evenimente",
 		description: "Evenimentele din Ciorogârla",
 		icon: CalendarIcon,
-		path: "/events",
+		disabled: true
 	},
 	{
 		name: "News",

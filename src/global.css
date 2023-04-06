@@ -38,18 +38,18 @@ body {
 	}
 }
 
- body::after {
-	 content: '';
-	 position: fixed;
-	 top: 0;
-	 left: 0;
-	 width: 100%;
-	 height: env(safe-area-inset-top);
-	 background: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 100%);
-	 z-index: 9999;
- }
+body::after {
+	content: '';
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: env(safe-area-inset-top);
+	background: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 100%);
+	z-index: 9999;
+}
 
- a {
-	 text-decoration: none;
-	 color: inherit;
- }
+a {
+	text-decoration: none;
+	color: inherit;
+}

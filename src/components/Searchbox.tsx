@@ -1,7 +1,13 @@
 import { InputBase, Paper } from "@suid/material";
 import SearchIcon from "@suid/icons-material/Search";
 
-export default function Searchbox() {
+interface SearchboxProps {
+	value?: string;
+	defaultValue?: string;
+	onChange?: (value: string) => void;
+}
+
+export default function Searchbox(props: SearchboxProps) {
 	return (
 		<Paper
 			sx={{
@@ -20,6 +26,9 @@ export default function Searchbox() {
 				sx={{
 					width: "100%"
 				}}
+				value={props.value}
+				defaultValue={props.defaultValue}
+				onChange={(e) => props.onChange?.(e.currentTarget.value)}
 			/>
 		</Paper>
 	)

@@ -5,6 +5,7 @@ import {routes} from "./pages/routes";
 import {createMemo, Suspense} from "solid-js";
 import {createPalette, Palette} from "@suid/material/styles/createPalette";
 import Header from "./components/Header";
+import { scheduleIdle } from "@solid-primitives/scheduled";
 import {useFirebaseApp} from "solid-firebase";
 import {getPerformance} from "firebase/performance";
 import {getAnalytics} from "firebase/analytics";
@@ -13,8 +14,10 @@ import {getAnalytics} from "firebase/analytics";
 export default function App() {
 	const app = useFirebaseApp();
 	if (import.meta.env.MODE === "production") {
-		getPerformance(app);
-		getAnalytics(app);
+		scheduleIdle(() => {
+			getPerformance(app);
+			getAnalytics(app);
+		})
 	}
 	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 	const Routes = useRoutes(routes);

@@ -1,15 +1,35 @@
-import { A, useRouteData } from "@solidjs/router";
-import {Avatar, Box, Chip, Container, List, ListItemAvatar, ListItemButton, ListItemText, Paper, Stack} from "@suid/material";
-import {createResource, For} from "solid-js";
+import { A, RouteDataFuncArgs, useRouteData, useSearchParams } from "@solidjs/router";
+import {Avatar, Box, Chip, Container, List, ListItemAvatar, ListItemButton, ListItemText, Paper, Stack, Typography} from "@suid/material";
+import {createResource, createSignal, For, Show} from "solid-js";
 import Header from "../../components/Header";
 import Searchbox from "../../components/Searchbox";
 import {sanityClient, urlFor} from "../../lib/sanity";
 import { businessTypes } from "../../lib/businessTypes";
 import { Business } from "../../types/SanitySchema";
+import { debounce } from "@solid-primitives/scheduled";
 
 
 export default function Businesses() {
+	const [searchParams, setSearchParams] = useSearchParams();
+	const [filterByTypes, setFilterByTypes] = createSignal<string[]>([]);
+	const [search, setSearch] = createSignal<string>("");
 	const data = useRouteData<typeof BusinessesGetData>();
+
+	const toggleFilter = (type: string) => {
+		const types = filterByTypes();
+
+		if (types.includes(type)) {
+			setFilterByTypes(types.filter((t) => t !== type));
+			setSearchParams({ filter: types.filter((t) => t !== type).join(",") }, { replace: true });
+		} else {
+			setFilterByTypes([...types, type]);
+			setSearchParams({ filter: [...types, type].join(",") }, { replace: true });
+		}
+	}
+
+	const debounceSearch = debounce((input: string) => {
+		setSearchParams({ search: input }, { replace: true });
+	}, 500)
 
 	return (
 		<>
@@ -19,7 +39,14 @@ export default function Businesses() {
 			/>
 			<Container>
 				<Stack>
-					<Searchbox/>
+					<Searchbox
+						defaultValue={searchParams.search}
+						value={search()}
+						onChange={(value) => {
+							setSearch(value);
+							debounceSearch(value);
+						}}
+					/>
 					
 					<Box
 						sx={{
@@ -29,13 +56,34 @@ export default function Businesses() {
 							overflowX: "auto",
 						}}
 					>
-						<For each={Array.from(businessTypes, ([_, value]) => value)}>
+						<For 
+							each={
+								Array.from(businessTypes, ([id, value]) => ({ id, ...value}))
+									// order by filterByTypes
+									.sort((a, b) => {
+										const types = filterByTypes();
+										
+										if (!types) return 0;
+										
+										const aIndex = types.indexOf(a.id);
+										const bIndex = types.indexOf(b.id);
+
+										if (aIndex === -1 && bIndex === -1) return 0;
+										if (aIndex === -1) return 1;
+										if (bIndex === -1) return -1;
+										
+										return aIndex - bIndex;
+									})
+							}
+						>
 							{(businessType) => (
 								<Chip
 									label={businessType.name}
 									icon={<businessType.icon/>}
-									variant="outlined"
+									variant={filterByTypes()?.includes(businessType.id) ? "filled" : "outlined"}
 									color="secondary"
+									clickable
+									onClick={() => toggleFilter(businessType.id)}
 								/>
 							)}
 						</For>
@@ -43,6 +91,21 @@ export default function Businesses() {
 
 
 					<Paper>
+						<Show when={data()?.length === 0}>
+							<Typography textAlign="center" mt={2}>
+								No results found
+							</Typography>
+						</Show>
+						<Show when={data() === undefined}>
+							<Typography textAlign="center" mt={2}>
+								Loading...
+							</Typography>
+						</Show>
+						<Show when={data() === null}>
+							<Typography textAlign="center" mt={2}>
+								The search returned an error
+							</Typography>
+						</Show>
 						<List>
 							<For each={data()}>
 								{(business) => (
@@ -72,15 +135,25 @@ export default function Businesses() {
 }
 
 
-const fetcher = async () => {
-	const res = await sanityClient.fetch(`*[_type == "business"] { slug, name, description, logo, isSponsor } | order(isSponsor desc)`)
+const fetcher = async ({search, types} : { search: string, types: string[] }) => {
+	const groqQuery = `
+		*[_type == "business" 
+			${types.length ? `&& type in ${JSON.stringify(types)}` : ""}
+			${search ? `&& name match "*${search}*"` : ""}
+		] { slug, name, description, logo, isSponsor } | order(isSponsor desc)
+	`
+
+	const res = await sanityClient.fetch<Business[]>(groqQuery)
 		.catch(() => null);
 
 	return res;
 }
 
-export function BusinessesGetData() {
-	const [data] = createResource<Business[]>(fetcher);
+export function BusinessesGetData({ location }: RouteDataFuncArgs) {
+	const [data] = createResource(() => ({
+		search: location.query?.search || "",
+		types: location.query?.filter ? location.query.filter.split(",") : []
+	}), fetcher); 
 
 	return data;
 }

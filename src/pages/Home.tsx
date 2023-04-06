@@ -1,8 +1,8 @@
-import {CardActionArea, CardContent, Container, Stack, Typography} from "@suid/material";
+import {CardActionArea, CardContent, Chip, Container, Stack, Typography} from "@suid/material";
 import SettingsIcon from "@suid/icons-material/Settings";
 import CardWithIcon from "../components/CardWithIcon";
 import Header from "../components/Header";
-import {For} from "solid-js";
+import {For, Show} from "solid-js";
 import {modules} from "../lib/modules";
 import {A} from "@solidjs/router";
 
@@ -35,6 +35,13 @@ export default function Home() {
 											<Typography variant="h4">
 												{module.name}
 											</Typography>
+											<Show when={module.disabled}>
+												<Chip 
+													size="small"
+													variant="outlined"
+													label="In curand"
+												/>
+											</Show>
 											<Typography variant="body1" color="textSecondary">
 												{module.description}
 											</Typography>
