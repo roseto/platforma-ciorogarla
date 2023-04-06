@@ -7,11 +7,15 @@ import {createPalette, Palette} from "@suid/material/styles/createPalette";
 import Header from "./components/Header";
 import {useFirebaseApp} from "solid-firebase";
 import {getPerformance} from "firebase/performance";
+import {getAnalytics} from "firebase/analytics";
 
 
 export default function App() {
 	const app = useFirebaseApp();
-	getPerformance(app);
+	if (import.meta.env.MODE === "production") {
+		getPerformance(app);
+		getAnalytics(app);
+	}
 	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 	const Routes = useRoutes(routes);
 	const palette = createMemo(() => createPalette(prefersDarkMode() ? darkTheme.palette as Palette : lightTheme.palette as Palette));
