@@ -1,23 +1,27 @@
 import { RouteDataFuncArgs, useRouteData } from "@solidjs/router";
-import {Avatar, Box, Button, Card, CardContent, Chip, Container, IconButton, List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Skeleton, Stack, SvgIcon, Typography} from "@suid/material";
+import {Avatar, Box, Button, Card, CardContent, Chip, Container, IconButton, List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Skeleton, Stack, SvgIcon, Typography, useTheme} from "@suid/material";
 import {createMemo, Show} from "solid-js";
 import {createResource} from "solid-js";
 import Header from "../../components/Header";
 import {businessTypes} from "../../lib/businessTypes";
 import {sanityClient, urlFor} from "../../lib/sanity";
 import {Business} from "../../types/SanitySchema";
+import {Dynamic} from "solid-js/web";
+import {createEffect} from "solid-js";
 
 
 import MapIcon from "@suid/icons-material/Map";
 import WebsiteIcon from "@suid/icons-material/Link";
 import EmailIcon from "@suid/icons-material/Email";
 import PhoneIcon from "@suid/icons-material/Phone";
+import StarIcon from "@suid/icons-material/Star";
 import FacebookSvg from "../../resources/icons/facebook.svg?component-solid";
 import InstagramSvg from "../../resources/icons/instagram.svg?component-solid";
-import {Dynamic} from "solid-js/web";
+import CardWithIcon from "../../components/CardWithIcon";
 
 export default function BusinessPage() {
 	const data = useRouteData<typeof BusinessGetData>();
+	const theme = useTheme();
 	const windowWidth = window.innerWidth;
 	const ChipIcon = createMemo(() => businessTypes.get(data()?.type || "")?.icon || (() => null));
 
@@ -125,71 +129,95 @@ export default function BusinessPage() {
 							Viziteaza site-ul
 						</Button>
 					</Show>
-				</Stack>
-				<Box
-					sx={{
-						display: "flex",
-						flexDirection: "row",
-						justifyContent: "center",
-						alignItems: "center",
-						margin: "8px 0"
-					}}
-				>
-					<Show when={data()?.contact?.facebook}>
-						<IconButton>
-							<SvgIcon>
-								<FacebookSvg />
-							</SvgIcon>
-						</IconButton>
-					</Show>
-					<Show when={data()?.contact?.instagram}>
-						<IconButton>
-							<SvgIcon>
-								<InstagramSvg />
-							</SvgIcon>
-						</IconButton>
-					</Show>
-				</Box>
-				<Card>
-					<CardContent>
-						<Typography
-							variant="body1"
+					<Box
+						sx={{
+							display: "flex",
+							flexDirection: "row",
+							justifyContent: "center",
+							alignItems: "center",
+							margin: "8px 0"
+						}}
+					>
+						<Show when={data()?.contact?.facebook}>
+							<IconButton>
+								<SvgIcon>
+									<FacebookSvg />
+								</SvgIcon>
+							</IconButton>
+						</Show>
+						<Show when={data()?.contact?.instagram}>
+							<IconButton>
+								<SvgIcon>
+									<InstagramSvg />
+								</SvgIcon>
+							</IconButton>
+						</Show>
+					</Box>
+					<Card>
+						<CardContent>
+							<Typography
+								variant="body1"
+							>
+								{data()?.description}
+							</Typography>
+						</CardContent>
+					</Card>
+					<Show when={data()?.isSponsor}>
+						<CardWithIcon 
+							cardIcon={StarIcon}
+							cardIconColor={theme.palette.primary.dark}
+							sx={{
+								background: `linear-gradient(45deg, ${theme.palette.secondary.main}, ${theme.palette.primary.main})`,
+							}}
 						>
-							{data()?.description}
-						</Typography>
-					</CardContent>
-				</Card>
-				<List>
-					<ListSubheader disableSticky>
-						Contact
-					</ListSubheader>
-					<Show when={data()?.contact?.email}>
-						<a href={`mailto:${data()?.contact?.email}`} target="_blank">
-							<ListItemButton>
-								<ListItemIcon>
-									<EmailIcon />
-								</ListItemIcon>
-								<ListItemText 
-									primary="Email"
-									secondary={data()?.contact?.email}
-								/>
-							</ListItemButton>
-						</a>
+							<CardContent>
+								<Typography
+									variant="h5"
+									color={theme.palette.primary.contrastText}
+								>
+									Aceasta afacere ajuta Ciorogârla Unită!
+								</Typography>
+								<Typography
+									color={theme.palette.primary.contrastText}
+								>
+									{data()?.name} ne ajuta in misiunea noastra de 
+									a sustine comunitatea noatra!
+								</Typography>
+							</CardContent>
+						</CardWithIcon>
 					</Show>
-					<Show when={data()?.contact?.phone}>
-						<a href={`tel:${data()?.contact?.phone}`}>
-							<ListItemButton>
-								<ListItemIcon>
-									<PhoneIcon />
-								</ListItemIcon>
-								<ListItemText 
-									primary="Phone"
-									secondary={data()?.contact?.phone}
-								/>
-							</ListItemButton>
-						</a>
-					</Show>
-				</List>
+					<List>
+						<ListSubheader disableSticky>
+							Contact
+						</ListSubheader>
+						<Show when={data()?.contact?.email}>
+							<a href={`mailto:${data()?.contact?.email}`} target="_blank">
+								<ListItemButton>
+									<ListItemIcon>
+										<EmailIcon />
+									</ListItemIcon>
+									<ListItemText 
+										primary="Email"
+										secondary={data()?.contact?.email}
+									/>
+								</ListItemButton>
+							</a>
+						</Show>
+						<Show when={data()?.contact?.phone}>
+							<a href={`tel:${data()?.contact?.phone}`}>
+								<ListItemButton>
+									<ListItemIcon>
+										<PhoneIcon />
+									</ListItemIcon>
+									<ListItemText 
+										primary="Phone"
+										secondary={data()?.contact?.phone}
+									/>
+								</ListItemButton>
+							</a>
+						</Show>
+					</List>
+				</Stack>
 			</Container>
 		</>
 	)
@@ -197,12 +225,19 @@ export default function BusinessPage() {
 
 const fetcher = async (id: string) => {
 	const data = await sanityClient.fetch<Business>(`*[_type == "business" && slug.current == $slug][0]`, { slug: id })
+		.catch(() => null);
 
 	return data;
 }
 
-export const BusinessGetData = ({ params }: RouteDataFuncArgs) => {
+export const BusinessGetData = ({ params, navigate }: RouteDataFuncArgs) => {
 	const [data] = createResource(() => params.id, fetcher);
+	
+	createEffect(() => {
+		if (data() === null) {
+			navigate("/businesses", { replace: true })
+		}
+	})
 
 	return data;
 }

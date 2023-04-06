@@ -73,7 +73,7 @@ export default function Businesses() {
 
 
 const fetcher = async () => {
-	const res = await sanityClient.fetch(`*[_type == "business"] { slug, name, description, logo }`)
+	const res = await sanityClient.fetch(`*[_type == "business"] { slug, name, description, logo, isSponsor } | order(isSponsor desc)`)
 		.catch(() => null);
 
 	return res;

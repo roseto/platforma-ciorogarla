@@ -17,12 +17,21 @@ export const routes: RouteDefinition[] = [
 
 	{
 		path: "/businesses",
-		component: lazy(() => import("./Businesses/Businesses")),
-		data: BusinessesGetData,
+		children: [
+			{
+				path: "/",
+				component: lazy(() => import("./Businesses/Businesses")),
+				data: BusinessesGetData,
+			},
+			{
+				path: "/:id",
+				component: lazy(() => import("./Businesses/Business")),
+				data: BusinessGetData,
+			}
+		]
 	},
 	{
-		path: "/businesses/:id",
-		component: lazy(() => import("./Businesses/Business")),
-		data: BusinessGetData,
-	}
+		path: "/events",
+		component: lazy(() => import("./Events/Events")),
+	},
 ]

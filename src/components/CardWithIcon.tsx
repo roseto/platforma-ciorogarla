@@ -5,6 +5,7 @@ import {SvgIconTypeMap} from "@suid/material/SvgIcon";
 
 export interface CardWithIconProps {
 	cardIcon: OverridableComponent<SvgIconTypeMap<{}, "svg">>;
+	cardIconColor: string;
 }
 
 
@@ -31,8 +32,9 @@ export default function CardWithIcon(props: CardWithIconProps & CardProps) {
 					opacity: 0.5,
 					transition: "transform 0.5s",
 					pointerEvents: "none",
+					color: theme => props.cardIconColor ?? theme.palette.secondary.main,
+					fill: "currentColor",
 				}}
-				color="secondary"
 			/>
 		</Card>
 	)
