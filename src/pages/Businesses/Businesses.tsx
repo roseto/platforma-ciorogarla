@@ -1,5 +1,5 @@
 import { A, RouteDataFuncArgs, useRouteData, useSearchParams } from "@solidjs/router";
-import {Avatar, Box, Chip, Container, List, ListItemAvatar, ListItemButton, ListItemText, Paper, Stack, Typography} from "@suid/material";
+import {Avatar, Box, Button, Chip, Container, Dialog, DialogActions, DialogContent, DialogTitle, List, ListItemAvatar, ListItemButton, ListItemIcon, ListItemText, Paper, Stack, Typography} from "@suid/material";
 import {createResource, createSignal, For, Show} from "solid-js";
 import Header from "../../components/Header";
 import Searchbox from "../../components/Searchbox";
@@ -9,9 +9,12 @@ import { Business } from "../../types/SanitySchema";
 import { debounce } from "@solid-primitives/scheduled";
 
 
+import InfoIcon from "@suid/icons-material/Info";
+
 export default function Businesses() {
 	const [searchParams, setSearchParams] = useSearchParams();
 	const [filterByTypes, setFilterByTypes] = createSignal<string[]>([]);
+	const [addDialog, setAddDialog] = createSignal(false);
 	const [search, setSearch] = createSignal<string>("");
 	const data = useRouteData<typeof BusinessesGetData>();
 
@@ -128,7 +131,40 @@ export default function Businesses() {
 							</For>
 						</List>
 					</Paper>
+					<ListItemButton
+						dense
+						onClick={() => setAddDialog(true)}
+					>
+						<ListItemIcon>
+							<InfoIcon />
+						</ListItemIcon>
+						<ListItemText
+							secondary="Adaugare afacere"
+						/>
+					</ListItemButton>
 				</Stack>
+				<Dialog
+					open={addDialog()}
+					onClose={() => setAddDialog(false)}
+				>
+					<DialogTitle>
+						Adaugare afacere
+					</DialogTitle>
+					<DialogContent>
+						<Typography>
+							Pentru adaugarea unei afaceri, va rugam sa ne contactati
+							pe email la afacere@ciorogarlaunita.eu.org
+						</Typography>
+					</DialogContent>
+					<DialogActions>
+						<Button
+							variant="text"
+							onClick={() => setAddDialog(false)}
+						>
+							OK
+						</Button>
+					</DialogActions>
+				</Dialog>
 			</Container>
 		</>
 	);

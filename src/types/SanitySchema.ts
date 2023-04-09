@@ -204,4 +204,124 @@ export interface Business extends SanityDocument {
   };
 }
 
-export type Documents = Business;
+/**
+ * Organisation
+ *
+ *
+ */
+export interface Organisation extends SanityDocument {
+  _type: "organisation";
+
+  /**
+   * Name — `string`
+   *
+   * The name of the organisation
+   */
+  name?: string;
+
+  /**
+   * Link — `url`
+   *
+   * The link to the organisation
+   */
+  link?: string;
+
+  /**
+   * Logo — `image`
+   *
+   * The logo of the organisation
+   */
+  logo?: {
+    _type: "image";
+    asset: SanityReference<SanityImageAsset>;
+    crop?: SanityImageCrop;
+    hotspot?: SanityImageHotspot;
+  };
+}
+
+/**
+ * Volunteering Project
+ *
+ *
+ */
+export interface VolunteeringProject extends SanityDocument {
+  _type: "volunteeringProject";
+
+  /**
+   * Name — `string`
+   *
+   * The name of the project
+   */
+  name?: string;
+
+  /**
+   * Description — `text`
+   *
+   * The description of the project
+   */
+  description?: string;
+
+  /**
+   * Organisation — `reference`
+   *
+   * The organisation that the project belongs to
+   */
+  organisation?: SanityReference<Organisation>;
+
+  /**
+   * Logo — `image`
+   *
+   * The logo of the project
+   */
+  logo?: {
+    _type: "image";
+    asset: SanityReference<SanityImageAsset>;
+    crop?: SanityImageCrop;
+    hotspot?: SanityImageHotspot;
+  };
+
+  /**
+   * Location — `geopoint`
+   *
+   * The location of the project
+   */
+  location?: SanityGeoPoint;
+
+  /**
+   * Infopack — `file`
+   *
+   * The infopack of the project
+   */
+  infopack?: { _type: "file"; asset: SanityReference<any> };
+
+  /**
+   * Country — `string`
+   *
+   * The country where the project takes place
+   */
+  country?: string;
+
+  /**
+   * Period — `object`
+   *
+   * The period of the project
+   */
+  period?: {
+    _type: "period";
+    /**
+     * From Date — `date`
+     *
+     * The date that the project starts
+     */
+    fromDate?: string;
+
+    /**
+     * To Date — `date`
+     *
+     * The date that the project ends
+     */
+    toDate?: string;
+  };
+}
+
+export type Documents = Business | Organisation | VolunteeringProject;
