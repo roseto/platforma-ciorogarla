@@ -12,6 +12,10 @@ export const routes: RouteDefinition[] = [
 		path: "/settings",
 		component: lazy(() => import("./Settings")),
 	},
+	{
+		path: "/install",
+		component: lazy(() => import("./Install")),
+	},
 
 	{
 		path: "/businesses",
