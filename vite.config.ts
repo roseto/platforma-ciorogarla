@@ -18,13 +18,7 @@ export default defineConfig({
 			devOptions: {
 				enabled: false
 			},
-			includeAssets: [
-				"/assets/android-chrome-192x192.png",
-				"/assets/android-chrome-512x512.png",
-				"/assets/apple-touch-icon.png",
-				"/assets/favicon-16x16.png",
-				"/assets/favicon-32x32.png",
-			],
+			includeManifestIcons: true,
 			manifest: {
 				name: "Ciorogârla Unită",
 				short_name: "Ciorogârla Unită",
@@ -33,23 +27,23 @@ export default defineConfig({
 				background_color: "#053b21",
 				icons: [
 					{
-						src: "/assets/android-chrome-192x192.png",
+						src: "/android-chrome-192x192.png",
 						sizes: "192x192",
 						type: "image/png",
 					},
 					{
-						src: "/assets/android-chrome-512x512.png",
+						src: "/android-chrome-512x512.png",
 						sizes: "512x512",
 						type: "image/png",
 					},
 					{
-						src: "/assets/android-chrome-192x192.png",
+						src: "/android-chrome-192x192.png",
 						sizes: "192x192",
 						type: "image/png",
 						purpose: "any maskable",
 					},
 					{
-						src: "/assets/android-chrome-512x512.png",
+						src: "/android-chrome-512x512.png",
 						sizes: "512x512",
 						type: "image/png",
 						purpose: "any maskable",
@@ -61,7 +55,7 @@ export default defineConfig({
 				scope: "/",
 				categories: ["education", "news", "social"],
 				lang: "ro",
-			}
+			},
 		}),
 	],
 	server: {
