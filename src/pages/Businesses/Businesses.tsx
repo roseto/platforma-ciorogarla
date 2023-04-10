@@ -9,7 +9,7 @@ import { Business } from "../../types/SanitySchema";
 import { debounce } from "@solid-primitives/scheduled";
 
 
-import InfoIcon from "@suid/icons-material/Info";
+import AddBusinessIcon from "@suid/icons-material/AddBusiness";
 
 export default function Businesses() {
 	const [searchParams, setSearchParams] = useSearchParams();
@@ -39,6 +39,12 @@ export default function Businesses() {
 			<Header 
 				title="Afaceri locale"
 				back
+				actions={[
+					{
+						icon: AddBusinessIcon,
+						onClick: () => setAddDialog(true),
+					}
+				]}
 			/>
 			<Container>
 				<Stack>
@@ -131,17 +137,6 @@ export default function Businesses() {
 							</For>
 						</List>
 					</Paper>
-					<ListItemButton
-						dense
-						onClick={() => setAddDialog(true)}
-					>
-						<ListItemIcon>
-							<InfoIcon />
-						</ListItemIcon>
-						<ListItemText
-							secondary="Adaugare afacere"
-						/>
-					</ListItemButton>
 				</Stack>
 				<Dialog
 					open={addDialog()}

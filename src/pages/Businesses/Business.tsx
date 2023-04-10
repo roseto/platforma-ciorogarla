@@ -1,5 +1,6 @@
 import { RouteDataFuncArgs, useRouteData } from "@solidjs/router";
 import {Avatar, Box, Button, Card, CardContent, Chip, Container, IconButton, List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Skeleton, Stack, SvgIcon, Typography, useTheme} from "@suid/material";
+import CardWithIcon from "../../components/CardWithIcon";
 import {createMemo, Show} from "solid-js";
 import {createResource} from "solid-js";
 import Header from "../../components/Header";
@@ -9,15 +10,14 @@ import {Business} from "../../types/SanitySchema";
 import {Dynamic} from "solid-js/web";
 import {createEffect} from "solid-js";
 
-
 import MapIcon from "@suid/icons-material/Map";
 import WebsiteIcon from "@suid/icons-material/Link";
 import EmailIcon from "@suid/icons-material/Email";
 import PhoneIcon from "@suid/icons-material/Phone";
 import StarIcon from "@suid/icons-material/Star";
+import ListIcon from "@suid/icons-material/Assignment";
 import FacebookSvg from "../../resources/icons/facebook.svg?component-solid";
 import InstagramSvg from "../../resources/icons/instagram.svg?component-solid";
-import CardWithIcon from "../../components/CardWithIcon";
 
 export default function BusinessPage() {
 	const data = useRouteData<typeof BusinessGetData>();
@@ -32,6 +32,7 @@ export default function BusinessPage() {
 				title={data()?.name ?? "Afaceri locale"}
 				back
 				noHeading
+				// @ts-ignore: Metadata is there but not specified
 				themeColor={data()?.cover?.asset?.metadata?.palette?.dominant.background}
 			/>
 			<div
@@ -115,6 +116,9 @@ export default function BusinessPage() {
 					<Show when={data()?.location}>
 						<Button
 							variant="contained"
+							component="a"
+							href={`https://www.google.com/maps/search/?api=1&query=${data()?.location?.coordinates?.lat},${data()?.location?.coordinates?.lng}`}
+							target="_blank"
 							color="primary"
 							startIcon={<MapIcon />}
 						>
@@ -125,6 +129,9 @@ export default function BusinessPage() {
 						<Button
 							variant="outlined"
 							color="secondary"
+							component="a"
+							href={data()?.contact?.website}
+							target="_blank"
 							startIcon={<WebsiteIcon />}
 						>
 							Viziteaza site-ul
@@ -140,14 +147,22 @@ export default function BusinessPage() {
 						}}
 					>
 						<Show when={data()?.contact?.facebook}>
-							<IconButton>
+							<IconButton
+								component="a"
+								href={data()?.contact?.facebook}
+								target="_blank"
+							>
 								<SvgIcon>
 									<FacebookSvg />
 								</SvgIcon>
 							</IconButton>
 						</Show>
 						<Show when={data()?.contact?.instagram}>
-							<IconButton>
+							<IconButton
+								component="a"
+								href={data()?.contact?.instagram}
+								target="_blank"
+							>
 								<SvgIcon>
 									<InstagramSvg />
 								</SvgIcon>
@@ -163,6 +178,29 @@ export default function BusinessPage() {
 							</Typography>
 						</CardContent>
 					</Card>
+					<Box
+						displayRaw="flex"
+						flexDirection="row"
+						gap={1}
+					>
+						<Show when={data()?.pricesLink}>
+							<Chip
+								label="Vezi lista de preturi"
+								component="a"
+								target="_blank"
+								color="secondary"
+								clickable
+								icon={<ListIcon />}
+								href={data()?.pricesLink}
+							/>
+						</Show>
+						<Show when={data()?.prices}>
+							<Chip 
+								label={`Preturi: ${data()?.prices}`}
+								variant="outlined"
+							/>
+						</Show>
+					</Box>
 					<Show when={data()?.isSponsor}>
 						<CardWithIcon 
 							cardIcon={StarIcon}
@@ -192,30 +230,33 @@ export default function BusinessPage() {
 							Contact
 						</ListSubheader>
 						<Show when={data()?.contact?.email}>
-							<a href={`mailto:${data()?.contact?.email}`} target="_blank">
-								<ListItemButton>
-									<ListItemIcon>
-										<EmailIcon />
-									</ListItemIcon>
-									<ListItemText 
-										primary="Email"
-										secondary={data()?.contact?.email}
-									/>
-								</ListItemButton>
-							</a>
+							<ListItemButton 
+								component="a"
+								href={`mailto:${data()?.contact?.email}`} 
+								target="_blank"
+							>
+								<ListItemIcon>
+									<EmailIcon />
+								</ListItemIcon>
+								<ListItemText 
+									primary="Email"
+									secondary={data()?.contact?.email}
+								/>
+							</ListItemButton>
 						</Show>
 						<Show when={data()?.contact?.phone}>
-							<a href={`tel:${data()?.contact?.phone}`}>
-								<ListItemButton>
-									<ListItemIcon>
-										<PhoneIcon />
-									</ListItemIcon>
-									<ListItemText 
-										primary="Phone"
-										secondary={data()?.contact?.phone}
-									/>
-								</ListItemButton>
-							</a>
+							<ListItemButton
+								component="a"
+								href={`tel:${data()?.contact?.phone}`}
+							>
+								<ListItemIcon>
+									<PhoneIcon />
+								</ListItemIcon>
+								<ListItemText 
+									primary="Phone"
+									secondary={data()?.contact?.phone}
+								/>
+							</ListItemButton>
 						</Show>
 					</List>
 				</Stack>

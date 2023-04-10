@@ -16,7 +16,8 @@ interface HeaderProps {
 	noHeading?: boolean;
 	themeColor?: string;
 	actions?: {
-		path: string;
+		path?: string;
+		onClick?: () => void;
 		icon: OverridableComponent<SvgIconTypeMap<{}, "svg">>;
 	}[],
 }
@@ -81,8 +82,9 @@ export default function Header(props: HeaderProps) {
 							{(action) => (
 								<IconButton
 									edge="end"
-									component={A}
+									component={action.path ? A : "button"}
 									href={action.path}
+									onClick={action.onClick}
 								>
 									<action.icon />
 								</IconButton>

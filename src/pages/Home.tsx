@@ -1,4 +1,4 @@
-import {CardActionArea, CardContent, Chip, Container, ListItemButton, ListItemIcon, ListItemText, Paper, Stack, Typography, useTheme} from "@suid/material";
+import {Avatar, Box, CardActionArea, CardContent, Chip, Container, ListItemButton, ListItemIcon, ListItemText, Paper, Stack, Typography, useTheme} from "@suid/material";
 import SettingsIcon from "@suid/icons-material/Settings";
 import InstallIcon from "@suid/icons-material/InstallMobile";
 import CardWithIcon from "../components/CardWithIcon";
@@ -30,13 +30,26 @@ export default function Home() {
 				}}
 			>
 				<Stack>
-					<Typography
-						mt={2}
-						variant="h6"
-						gutterBottom
+					<Box
+						displayRaw="flex"
+						gap={1}
+						flexDirection="row"
+						alignItems="center"
+						my={2}
 					>
-						Ciorogârla Unită
-					</Typography>
+						<Avatar
+							src="/favicon-32x32.png"
+							sx={{
+								width: "32px",
+								height: "32px",
+							}}
+						/>
+						<Typography
+							variant="h6"
+						>
+							Ciorogârla Unită
+						</Typography>
+					</Box>
 					<Show when={!isInstalled()}>
 						<A href="/install">
 							<Paper variant="outlined" sx={{ backgroundColor: "transparent" }}>
