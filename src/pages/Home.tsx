@@ -21,7 +21,11 @@ export default function Home() {
 					}
 				]}
 			/>
-			<Container>
+			<Container
+				sx={{
+					marginTop: "env(safe-area-inset-top)",
+				}}
+			>
 				<Stack>
 					<Typography
 						mt={2}
