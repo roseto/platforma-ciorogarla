@@ -1,10 +1,12 @@
-import {CardActionArea, CardContent, Chip, Container, Stack, Typography} from "@suid/material";
+import {CardActionArea, CardContent, Chip, Container, ListItemButton, ListItemIcon, ListItemText, Paper, Stack, Typography} from "@suid/material";
 import SettingsIcon from "@suid/icons-material/Settings";
+import InstallIcon from "@suid/icons-material/InstallMobile";
 import CardWithIcon from "../components/CardWithIcon";
 import Header from "../components/Header";
 import {For, Show} from "solid-js";
 import {modules} from "../lib/modules";
 import {A} from "@solidjs/router";
+import {isInstalled} from "../lib/device";
 
 export default function Home() {
 	return (
@@ -20,6 +22,21 @@ export default function Home() {
 			/>
 			<Container>
 				<Stack>
+					<Show when={!isInstalled()}>
+						<A href="/install">
+							<Paper variant="outlined" sx={{ backgroundColor: "transparent" }}>
+								<ListItemButton>
+									<ListItemIcon>
+										<InstallIcon />
+									</ListItemIcon>
+									<ListItemText 
+										primary="Instaleaza aplicatia"
+										secondary="Pare ca nu ai instalat aplicatia. Apasa aici pentru acces mai usor."
+									/>
+								</ListItemButton>
+							</Paper>
+						</A>
+					</Show>
 					<For each={modules}>
 						{(module) => (
 							<A href={module.disabled ? "" : module.path || ""}>

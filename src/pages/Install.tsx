@@ -1,11 +1,14 @@
-import {Container, Link, Stack, Typography} from "@suid/material";
+import {Button, Container, Link, Stack, Typography} from "@suid/material";
 import Header from "../components/Header";
-import {parser} from "../lib/device";
+import {isInstalled, parser} from "../lib/device";
 
 import InfoIcon from "@suid/icons-material/Info";
 import IosShareIcon from "@suid/icons-material/IosShare";
 import MoreVertIcon from "@suid/icons-material/MoreVert"
-import {Match, Switch} from "solid-js";
+import InstallIcon from "@suid/icons-material/InstallMobile";
+import {Match, Show, Switch} from "solid-js";
+import {useNavigate} from "@solidjs/router";
+import {useA2HS} from "../hooks/useA2HS";
 
 export default function Install() {
 	const deviceVendor = parser.getDevice().vendor;
@@ -13,6 +16,12 @@ export default function Install() {
 	const deviceOs = parser.getOS().name;
 	const browserName = parser.getBrowser().name;
 	const mobile = parser.getDevice().type === "mobile";
+	const navigate = useNavigate();
+	const [prompt, install] = useA2HS();
+
+	if (isInstalled()) {
+		navigate("/", { replace: true });
+	}
 
 	return (
 		<>
@@ -29,6 +38,14 @@ export default function Install() {
 						{deviceVendor ? " " + deviceVendor : ""} {deviceModel ? deviceModel : "dispozitiv" + (mobile ? " mobil" : "")}
 						{browserName ? " cu " + browserName : ""}.
 					</Typography>
+					<Show when={prompt()}>
+						<Button
+							onClick={install}
+							startIcon={<InstallIcon />}
+						>
+							Instalare
+						</Button>
+					</Show>
 					<Typography variant="h5" gutterBottom>
 						Instructiuni
 					</Typography>

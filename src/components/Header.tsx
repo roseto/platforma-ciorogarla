@@ -28,7 +28,7 @@ export default function Header(props: HeaderProps) {
 	return (
 		<>
 			<Title>{props.title} &middot; Ciorogârla Unită</Title>
-			<Meta name="theme-color" content={props.themeColor ?? theme.palette.background.paper} />
+			<Meta name="theme-color" content={props.themeColor ? triggered() ? theme.palette.background.paper : props.themeColor : theme.palette.background.paper} />
 			<Show when={!props.noNav}>
 				<AppBar
 					position="fixed"

@@ -9,6 +9,7 @@ import { scheduleIdle } from "@solid-primitives/scheduled";
 import {useFirebaseApp} from "solid-firebase";
 import {getPerformance} from "firebase/performance";
 import {getAnalytics} from "firebase/analytics";
+import {useA2HS} from "./hooks/useA2HS";
 
 
 export default function App() {
@@ -22,6 +23,8 @@ export default function App() {
 	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 	const Routes = useRoutes(routes);
 	const palette = createMemo(() => createPalette(prefersDarkMode() ? darkTheme.palette as Palette : lightTheme.palette as Palette));
+	// We use this hook to make sure that the prompt event is being hooked into the app
+	useA2HS();
 
 	const theme = createTheme({...commonTheme, palette});
 

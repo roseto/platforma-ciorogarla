@@ -32,6 +32,7 @@ export default function BusinessPage() {
 				title={data()?.name ?? "Afaceri locale"}
 				back
 				noHeading
+				themeColor={data()?.cover?.asset?.metadata?.palette?.dominant.background}
 			/>
 			<div
 				style={{
@@ -224,8 +225,10 @@ export default function BusinessPage() {
 }
 
 const fetcher = async (id: string) => {
-	const data = await sanityClient.fetch<Business>(`*[_type == "business" && slug.current == $slug][0]`, { slug: id })
+	const data = await sanityClient.fetch<Business>(`*[_type == "business" && slug.current == $slug][0] { ..., cover {..., asset -> {..., metadata}}}`, { slug: id })
 		.catch(() => null);
+
+	console.log(data);
 
 	return data;
 }
