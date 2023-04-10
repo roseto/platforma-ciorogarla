@@ -1,4 +1,4 @@
-import {CardActionArea, CardContent, Chip, Container, ListItemButton, ListItemIcon, ListItemText, Paper, Stack, Typography} from "@suid/material";
+import {CardActionArea, CardContent, Chip, Container, ListItemButton, ListItemIcon, ListItemText, Paper, Stack, Typography, useTheme} from "@suid/material";
 import SettingsIcon from "@suid/icons-material/Settings";
 import InstallIcon from "@suid/icons-material/InstallMobile";
 import CardWithIcon from "../components/CardWithIcon";
@@ -9,11 +9,14 @@ import {A} from "@solidjs/router";
 import {isInstalled} from "../lib/device";
 
 export default function Home() {
+	const theme = useTheme();
+
 	return (
 		<>
 			<Header 
 				title="Acasa"
 				noHeading
+				themeColor={theme.palette.background.default}
 				actions={[
 					{
 						path: "/settings",
