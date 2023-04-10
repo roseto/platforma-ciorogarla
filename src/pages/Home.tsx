@@ -13,6 +13,7 @@ export default function Home() {
 		<>
 			<Header 
 				title="Acasa"
+				noHeading
 				actions={[
 					{
 						path: "/settings",
@@ -22,6 +23,13 @@ export default function Home() {
 			/>
 			<Container>
 				<Stack>
+					<Typography
+						mt={2}
+						variant="h6"
+						gutterBottom
+					>
+						Ciorogârla Unită
+					</Typography>
 					<Show when={!isInstalled()}>
 						<A href="/install">
 							<Paper variant="outlined" sx={{ backgroundColor: "transparent" }}>
