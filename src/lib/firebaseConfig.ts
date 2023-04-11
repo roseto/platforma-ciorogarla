@@ -1,10 +1,10 @@
 export const firebaseConfig = {
-	apiKey: "AIzaSyBQ2DqvmWbpJCb9rN_srrLQsMy6jdCWJ_k",
-	authDomain: "ciorogarlaunita.firebaseapp.com",
-	databaseURL: "https://ciorogarlaunita-default-rtdb.europe-west1.firebasedatabase.app",
-	projectId: "ciorogarlaunita",
-	storageBucket: "ciorogarlaunita.appspot.com",
-	messagingSenderId: "71203725400",
-	appId: "1:71203725400:web:583a8d9c43e29ef4d3aa2d",
-	measurementId: "G-4FWZL89RBV"
+	apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+	authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+	databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
+	projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+	storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+	messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+	appId: import.meta.env.VITE_FIREBASE_APP_ID,
+	measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };

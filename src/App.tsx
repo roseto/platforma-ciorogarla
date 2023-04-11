@@ -6,9 +6,10 @@ import {createMemo, Suspense} from "solid-js";
 import {createPalette, Palette} from "@suid/material/styles/createPalette";
 import Header from "./components/Header";
 import { scheduleIdle } from "@solid-primitives/scheduled";
-import {useFirebaseApp} from "solid-firebase";
+import {useAuth, useFirebaseApp} from "solid-firebase";
 import {getPerformance} from "firebase/performance";
 import {getAnalytics} from "firebase/analytics";
+import {getAuth} from "firebase/auth";
 import {useA2HS} from "./hooks/useA2HS";
 
 
@@ -20,6 +21,7 @@ export default function App() {
 			getAnalytics(app);
 		})
 	}
+	useAuth(getAuth(app));
 	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 	const Routes = useRoutes(routes);
 	const palette = createMemo(() => createPalette(prefersDarkMode() ? darkTheme.palette as Palette : lightTheme.palette as Palette));

@@ -1,4 +1,5 @@
 import { defineConfig } from "vite";
+import path from "path";
 import solidPlugin from "vite-plugin-solid";
 import suidPlugin from "@suid/vite-plugin";
 import solidSvg from "vite-plugin-solid-svg";
@@ -58,6 +59,16 @@ export default defineConfig({
 			},
 		}),
 	],
+	resolve: {
+		alias: {
+			'@firebase/auth': path.resolve(
+				'node_modules/@firebase/auth/dist/esm2017/index.js',
+			),
+			'@firebase/app': path.resolve(
+				'node_modules/@firebase/app/dist/esm/index.esm2017.js',
+			),
+		}
+	},
 	server: {
 		port: 3000,
 	},
