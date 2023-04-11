@@ -5,8 +5,13 @@ import { render } from 'solid-js/web';
 import "./global.css";
 
 import App from './App';
+import { registerSW } from "virtual:pwa-register";
 import {FirebaseProvider} from 'solid-firebase';
 import {firebaseConfig} from './lib/firebaseConfig';
+
+registerSW({
+	immediate: true,
+})
 
 const root = document.getElementById('root');
 
