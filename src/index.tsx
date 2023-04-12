@@ -2,6 +2,7 @@
 import { MetaProvider } from '@solidjs/meta';
 import { Router } from '@solidjs/router';
 import { render } from 'solid-js/web';
+import "@fontsource/montserrat";
 import "./global.css";
 
 import App from './App';

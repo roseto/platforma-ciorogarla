@@ -7,7 +7,8 @@ export const commonTheme: Partial<ThemeInput> = {
 	typography: {
 		h1: {
 			fontSize: "4rem",
-		}
+		},
+		fontFamily: "'Montserrat', sans-serif",
 	},
 	components: {
 		MuiButton: {
