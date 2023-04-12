@@ -32,9 +32,10 @@ export default function App() {
 	createEffect(() => {
 		if (!isRouting() && analytics) {
 			console.log("Log event");
-			logEvent(analytics, "screen_view", {
-				firebase_screen: location.pathname,
-				firebase_screen_class: location.pathname,
+			logEvent(analytics, "page_view", {
+				page_title: document.title,
+				page_location: location.pathname,
+				page_path: location.pathname,
 			})
 		}
 	})
