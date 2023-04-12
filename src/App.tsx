@@ -6,7 +6,7 @@ import {createEffect, createMemo, Suspense} from "solid-js";
 import {createPalette, Palette} from "@suid/material/styles/createPalette";
 import Header from "./components/Header";
 import {useAuth, useFirebaseApp} from "solid-firebase";
-import {logEvent} from "firebase/analytics";
+import {Analytics, logEvent} from "firebase/analytics";
 import {getPerformance} from "firebase/performance";
 import {getAuth} from "firebase/auth";
 import {useA2HS} from "./hooks/useA2HS";
@@ -31,9 +31,9 @@ export default function App() {
 	const theme = createTheme({...commonTheme, palette});
 
 	createEffect(() => {
-		if (analytics && !isRouting()) {
+		if (analytics() && !isRouting()) {
 			console.log("Log event");
-			logEvent(analytics(), "page_view", {
+			logEvent(analytics() as Analytics, "page_view", {
 				page_title: document.title,
 				page_location: location.pathname,
 				page_path: location.pathname,
