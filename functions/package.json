@@ -15,6 +15,7 @@
   },
   "main": "lib/index.js",
   "dependencies": {
+    "@sanity/client": "^5.4.2",
     "firebase-admin": "^11.5.0",
     "firebase-functions": "^4.2.0"
   },
