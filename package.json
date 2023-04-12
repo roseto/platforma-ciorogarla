@@ -32,6 +32,8 @@
 		"solid-firebase": "^0.1.7",
 		"solid-js": "^1.6.10",
 		"solid-transition-group": "^0.2.2",
-		"ua-parser-js": "^1.0.35"
+		"solid-zustand": "^1.5.0",
+		"ua-parser-js": "^1.0.35",
+		"zustand": "^4.3.7"
 	}
 }

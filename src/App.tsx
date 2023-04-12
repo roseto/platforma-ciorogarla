@@ -6,21 +6,22 @@ import {createEffect, createMemo, Suspense} from "solid-js";
 import {createPalette, Palette} from "@suid/material/styles/createPalette";
 import Header from "./components/Header";
 import {useAuth, useFirebaseApp} from "solid-firebase";
-import {getAnalytics, logEvent} from "firebase/analytics";
+import {logEvent} from "firebase/analytics";
 import {getPerformance} from "firebase/performance";
 import {getAuth} from "firebase/auth";
 import {useA2HS} from "./hooks/useA2HS";
+import {useAnalytics} from "./lib/analytics";
 
 
 export default function App() {
 	const app = useFirebaseApp();
-	const analytics = import.meta.env.MODE === "production" ? getAnalytics(app) : null;
 	if (import.meta.env.MODE === "production") {
 		getPerformance(app);
 	}
 	useAuth(getAuth(app));
 	const location = useLocation();
 	const isRouting = useIsRouting();
+	const analytics = useAnalytics();
 	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 	const Routes = useRoutes(routes);
 	const palette = createMemo(() => createPalette(prefersDarkMode() ? darkTheme.palette as Palette : lightTheme.palette as Palette));
@@ -30,7 +31,7 @@ export default function App() {
 	const theme = createTheme({...commonTheme, palette});
 
 	createEffect(() => {
-		if (!isRouting() && analytics) {
+		if (analytics && !isRouting()) {
 			console.log("Log event");
 			logEvent(analytics, "page_view", {
 				page_title: document.title,
