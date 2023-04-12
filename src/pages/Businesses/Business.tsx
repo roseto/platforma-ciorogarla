@@ -269,8 +269,6 @@ const fetcher = async (id: string) => {
 	const data = await sanityClient.fetch<Business>(`*[_type == "business" && slug.current == $slug][0] { ..., cover {..., asset -> {..., metadata}}}`, { slug: id })
 		.catch(() => null);
 
-	console.log(data);
-
 	return data;
 }
 
