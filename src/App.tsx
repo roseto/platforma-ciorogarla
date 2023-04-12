@@ -5,7 +5,6 @@ import {routes} from "./pages/routes";
 import {createMemo, Suspense} from "solid-js";
 import {createPalette, Palette} from "@suid/material/styles/createPalette";
 import Header from "./components/Header";
-import { scheduleIdle } from "@solid-primitives/scheduled";
 import {useAuth, useFirebaseApp} from "solid-firebase";
 import {getPerformance} from "firebase/performance";
 import {getAnalytics} from "firebase/analytics";
@@ -16,10 +15,8 @@ import {useA2HS} from "./hooks/useA2HS";
 export default function App() {
 	const app = useFirebaseApp();
 	if (import.meta.env.MODE === "production") {
-		scheduleIdle(() => {
-			getPerformance(app);
-			getAnalytics(app);
-		})
+		getPerformance(app);
+		getAnalytics(app);
 	}
 	useAuth(getAuth(app));
 	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
