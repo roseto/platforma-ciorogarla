@@ -10,7 +10,7 @@ import {logEvent} from "firebase/analytics";
 import {getPerformance} from "firebase/performance";
 import {getAuth} from "firebase/auth";
 import {useA2HS} from "./hooks/useA2HS";
-import {useAnalytics} from "./lib/analytics";
+import {useAnalytics} from "./hooks/useAnalytics";
 
 
 export default function App() {
@@ -33,7 +33,7 @@ export default function App() {
 	createEffect(() => {
 		if (analytics && !isRouting()) {
 			console.log("Log event");
-			logEvent(analytics, "page_view", {
+			logEvent(analytics(), "page_view", {
 				page_title: document.title,
 				page_location: location.pathname,
 				page_path: location.pathname,
