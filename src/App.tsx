@@ -1,6 +1,6 @@
 import { createTheme, CssBaseline, ThemeProvider, useMediaQuery } from "@suid/material";
 import { darkTheme, lightTheme, commonTheme } from "./lib/theme";
-import {useIsRouting, useLocation, useRoutes} from "@solidjs/router";
+import {useRoutes} from "@solidjs/router";
 import {routes} from "./pages/routes";
 import {createMemo, Suspense} from "solid-js";
 import {createPalette, Palette} from "@suid/material/styles/createPalette";
@@ -13,8 +13,6 @@ import {useA2HS} from "./hooks/useA2HS";
 export default function App() {
 	const app = useFirebaseApp();
 	useAuth(getAuth(app));
-	const location = useLocation();
-	const isRouting = useIsRouting();
 	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 	const Routes = useRoutes(routes);
 	const palette = createMemo(() => createPalette(prefersDarkMode() ? darkTheme.palette as Palette : lightTheme.palette as Palette));
