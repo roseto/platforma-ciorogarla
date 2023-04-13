@@ -1,20 +1,19 @@
-import {Button, Container, ListItem, ListItemIcon, ListItemText, Stack, SvgIcon, Typography} from "@suid/material";
+import {Button, Container, TextField, Stack, SvgIcon, Typography, Divider} from "@suid/material";
 import {useAuth, useFirebaseApp} from "solid-firebase";
-import { getAuth, GoogleAuthProvider, signInWithPopup, updateProfile } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithPopup, updateProfile, TwitterAuthProvider, GithubAuthProvider, sendSignInLinkToEmail } from "firebase/auth";
 import Header from "../components/Header";
 import {useNavigate} from "@solidjs/router";
-import {createEffect} from "solid-js";
+import {createEffect, createSignal} from "solid-js";
 
 import GoogleIcon from "../resources/icons/google.svg?component-solid";
-import FacebookIcon from "../resources/icons/facebook.svg?component-solid";
-import MicrosoftIcon from "../resources/icons/microsoft.svg?component-solid";
+import TwitterIcon from "../resources/icons/twitter.svg?component-solid";
+import GitHubIcon from "../resources/icons/github.svg?component-solid";
 import AppleIcon from "../resources/icons/apple.svg?component-solid";
-import ForumIcon from "@suid/icons-material/Forum";
 import ShieldIcon from "@suid/icons-material/Shield";
-import KeyOffIcon from "@suid/icons-material/KeyOff";
 
 export default function Login() {
 	const firebase = useFirebaseApp();
+	const [email, setEmail] = createSignal("");
 	const auth = getAuth(firebase);
 	const user = useAuth(auth);
 	const navigate = useNavigate();
@@ -25,9 +24,7 @@ export default function Login() {
 		}
 	});
 
-	const loginWithGoogle = async () => {
-		const provider = new GoogleAuthProvider();
-
+	const login = async (provider: GoogleAuthProvider) => {
 		signInWithPopup(auth, provider).then((res) => {
 			const providerId = res.providerId;
 
@@ -44,6 +41,17 @@ export default function Login() {
 		})
 	}
 
+	const loginWithEmail = async (e: Event) => {
+		e.preventDefault();
+
+		sendSignInLinkToEmail(auth, email(), {
+			url: window.location.origin + "?email=" + email(),
+			handleCodeInApp: true,
+		}).catch((error) => {
+			console.log(error)
+		});
+	}
+
 	return (
 		<>
 			<Header
@@ -54,7 +62,7 @@ export default function Login() {
 				<Stack>
 					<Button
 						startIcon={<SvgIcon><GoogleIcon/></SvgIcon>}
-						onClick={loginWithGoogle}
+						onClick={() => login(new GoogleAuthProvider())}
 						disableElevation
 					>
 						Conectare cu Google
@@ -67,40 +75,51 @@ export default function Login() {
 						Conectare cu Apple
 					</Button>
 					<Button
-						startIcon={<SvgIcon><FacebookIcon/></SvgIcon>}
-						disabled
+						startIcon={<SvgIcon><TwitterIcon/></SvgIcon>}
+						onClick={() => login(new TwitterAuthProvider())}
 						disableElevation
 					>
-						Conectare cu Facebook
+						Conectare cu Twitter
 					</Button>
 					<Button
-						startIcon={<SvgIcon><MicrosoftIcon/></SvgIcon>}
-						disabled
+						startIcon={<SvgIcon><GitHubIcon/></SvgIcon>}
+						onClick={() => login(new GithubAuthProvider())}
 						disableElevation
 					>
-						Conectare cu Microsoft
+						Conectare cu GitHub
 					</Button>
+					<Divider variant="middle"/>
+					<Typography 
+						textAlign="center" 
+						color="textSecondary" 
+						textTransform="uppercase" 
+						variant="caption"
+					>
+						Sau pe moda veche
+					</Typography>
+					<form onSubmit={loginWithEmail}>
+						<Stack>
+							<TextField
+								type="email"
+								label="Email"
+								variant="outlined"
+								name="email"
+								disabled
+								value={email()}
+								onChange={(_, value) => setEmail(value)}
+							/>
+							<Button
+								variant="outlined"
+								type="submit"
+								disabled
+							>
+								Conectare cu Email
+							</Button>
+						</Stack>
+					</form>
 					<Typography color="textSecondary" textAlign="center">
 						<ShieldIcon fontSize="inherit" /> Protejat de App Check
 					</Typography>
-					<ListItem>
-						<ListItemIcon>
-							<ForumIcon />
-						</ListItemIcon>
-						<ListItemText
-							primary="Postati pe forum"
-							secondary="Folositi contul pentru a posta pe forum."
-						/>
-					</ListItem>
-					<ListItem>
-						<ListItemIcon>
-							<KeyOffIcon />
-						</ListItemIcon>
-						<ListItemText
-							primary="De ce nu pot sa folosesc parola?"
-							secondary="Pentru a va proteja datele, nu puteti sa va conectati cu parola. Va puteti conecta doar cu un cont third-party (Google, Facebook, etc)."
-						/>
-					</ListItem>
 				</Stack>
 			</Container>
 		</>

@@ -22,6 +22,9 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
   );
 }
 
+// @ts-ignore
+self.FIREBASE_APPCHECK_DEBUG_TOKEN = import.meta.env.MODE === "development";
+
 render(() => 
 	<MetaProvider>
 		<FirebaseProvider config={firebaseConfig}>
