@@ -6,26 +6,18 @@ import {createEffect, createMemo, Suspense} from "solid-js";
 import {createPalette, Palette} from "@suid/material/styles/createPalette";
 import Header from "./components/Header";
 import {useAuth, useFirebaseApp} from "solid-firebase";
-import {Analytics, logEvent} from "firebase/analytics";
-import {getPerformance} from "firebase/performance";
+import {logEvent} from "firebase/analytics";
 import {getAuth} from "firebase/auth";
-import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 import {useA2HS} from "./hooks/useA2HS";
 import {useAnalytics} from "./hooks/useAnalytics";
 
 
 export default function App() {
 	const app = useFirebaseApp();
-	if (import.meta.env.MODE === "production") {
-		getPerformance(app);
-	}
 	useAuth(getAuth(app));
 	const location = useLocation();
 	const isRouting = useIsRouting();
 	const analytics = useAnalytics();
-	initializeAppCheck(app, {
-		provider: new ReCaptchaV3Provider(import.meta.env.VITE_RECAPTCHA_SITE_KEY)
-	});
 	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 	const Routes = useRoutes(routes);
 	const palette = createMemo(() => createPalette(prefersDarkMode() ? darkTheme.palette as Palette : lightTheme.palette as Palette));
