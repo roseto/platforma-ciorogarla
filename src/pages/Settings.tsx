@@ -11,6 +11,7 @@ import {Show} from "solid-js";
 import AccountIcon from "@suid/icons-material/AccountCircle";
 import AnalyticsIcon from "@suid/icons-material/Analytics";
 import TermsIcon from "@suid/icons-material/Description";
+import PrivacyIcon from "@suid/icons-material/PrivacyTip";
 
 
 export default function Settings() {
@@ -102,6 +103,18 @@ export default function Settings() {
 					</ListItemIcon>
 					<ListItemText
 						primary="Termeni si conditii"
+					/>
+				</ListItemButton>
+				<ListItemButton
+					component="a"
+					href="https://ciorogarlaunita.eu.org/privacy-policy"
+					target="_blank"
+				>
+					<ListItemIcon>
+						<PrivacyIcon/>
+					</ListItemIcon>
+					<ListItemText
+						primary="Politica de confidentialitate"
 					/>
 				</ListItemButton>
 				<ListItem>
