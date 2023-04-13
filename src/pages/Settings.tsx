@@ -75,7 +75,7 @@ export default function Settings() {
 					</ListItemIcon>
 					<ListItemText
 						primary="Analitica"
-						secondary={anayltics.state ? "Impartasiti informatie anonima" : "Nu impartasiti informatie anonima"}
+						secondary={anayltics.state ? "Impartasiti informatie pentru analitica" : "Nu impartasiti informatii pentru analitica"}
 						sx={{
 							mr: 8
 						}}
