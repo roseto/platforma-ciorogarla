@@ -2,6 +2,7 @@ import {lazy} from "solid-js";
 import { RouteDefinition } from "@solidjs/router";
 import { BusinessesGetData } from "./Businesses/Businesses";
 import { BusinessGetData } from "./Businesses/Business";
+import { VolunteeringProjectsGetData } from "./Volunteering/Projects";
 
 export const routes: RouteDefinition[] = [
 	{
@@ -33,6 +34,20 @@ export const routes: RouteDefinition[] = [
 				path: "/:id",
 				component: lazy(() => import("./Businesses/Business")),
 				data: BusinessGetData,
+			}
+		]
+	},
+	{
+		path: "/volunteering",
+		children: [
+			{
+				path: "/",
+				component: lazy(() => import("./Volunteering/Projects")),
+				data: VolunteeringProjectsGetData
+			},
+			{
+				path: "/:id",
+				component: lazy(() => import("./Volunteering/Project")),
 			}
 		]
 	}

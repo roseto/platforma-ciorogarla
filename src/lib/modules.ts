@@ -15,7 +15,7 @@ export const modules = [
 		name: "Oportunități de voluntariat",
 		description: "Locul unde poți găsi oportunități de voluntariat",
 		icon: VolunteerIcon,
-		disabled: true
+		path: "/volunteering",
 	},
 	{
 		name: "Calendar de evenimente",

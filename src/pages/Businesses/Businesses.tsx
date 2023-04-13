@@ -101,18 +101,18 @@ export default function Businesses() {
 
 					<Paper>
 						<Show when={data()?.length === 0}>
-							<Typography textAlign="center" mt={2}>
-								No results found
+							<Typography textAlign="center" pt={2}>
+								Fara rezultate
 							</Typography>
 						</Show>
 						<Show when={data() === undefined}>
-							<Typography textAlign="center" mt={2}>
-								Loading...
+							<Typography textAlign="center" pt={2}>
+								Se incarca...
 							</Typography>
 						</Show>
 						<Show when={data() === null}>
-							<Typography textAlign="center" mt={2}>
-								The search returned an error
+							<Typography textAlign="center" pt={2}>
+								A aparut o eroare
 							</Typography>
 						</Show>
 						<List>
