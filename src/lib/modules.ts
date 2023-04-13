@@ -12,6 +12,12 @@ export const modules = [
 		path: "/businesses",
 	},
 	{
+		name: "Oportunități de voluntariat",
+		description: "Locul unde poți găsi oportunități de voluntariat",
+		icon: VolunteerIcon,
+		disabled: true
+	},
+	{
 		name: "Calendar de evenimente",
 		description: "Evenimentele din Ciorogârla",
 		icon: CalendarIcon,
@@ -27,12 +33,6 @@ export const modules = [
 		name: "Forum",
 		description: "Locul unde poți discuta cu alți oameni din Ciorogârla",
 		icon: ForumIcon,
-		disabled: true
-	},
-	{
-		name: "Oportunități de voluntariat",
-		description: "Locul unde poți găsi oportunități de voluntariat",
-		icon: VolunteerIcon,
 		disabled: true
 	},
 ]

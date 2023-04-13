@@ -1,11 +1,11 @@
-import {Switch, List, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText, ListItemButton, ListItemAvatar, Avatar, Divider, Container, Paper} from "@suid/material";
+import {Switch, List, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText, ListItemButton, ListItemAvatar, Avatar, Divider, Container, Paper, Button} from "@suid/material";
 import Header from "../components/Header";
 import InfoIcon from "@suid/icons-material/Info";
 import { version } from "../../package.json";
 import {useAnalyticsState} from "../lib/store";
 import {A} from "@solidjs/router";
 import {useAuth, useFirebaseApp} from "solid-firebase";
-import {getAuth} from "firebase/auth";
+import {getAuth, signOut} from "firebase/auth";
 import {Show} from "solid-js";
 
 import AccountIcon from "@suid/icons-material/AccountCircle";
@@ -54,6 +54,16 @@ export default function Settings() {
 							/>
 						</Show>
 					</ListItemButton>
+					<Show when={user.data}>
+						<Button
+							variant="outlined"
+							color="error"
+							onClick={() => signOut(auth)}
+							fullWidth
+						>
+							Deconectare
+						</Button>
+					</Show>
 				</Paper>
 			</Container>
 			<List>
