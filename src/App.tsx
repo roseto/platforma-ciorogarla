@@ -35,9 +35,10 @@ export default function App() {
 	const theme = createTheme({...commonTheme, palette});
 
 	createEffect(() => {
-		if (analytics() && !isRouting()) {
-			console.log("Log event");
-			logEvent(analytics() as Analytics, "page_view", {
+		const a = analytics(); // Type checking man
+
+		if (a && !isRouting()) {
+			logEvent(a, "page_view", {
 				page_title: document.title,
 				page_location: location.pathname,
 				page_path: location.pathname,
