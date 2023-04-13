@@ -44,7 +44,21 @@
 		<noscript>You need to enable JavaScript to run this app.</noscript>
 		<div id="root"></div>
 
-		<script src="/src/analytics.ts" type="module" async></script>
-		<script src="/src/index.tsx" type="module" async></script>
+		<script>
+			partytown = {
+				forward: ["dataLayer.push"]
+			}
+		</script>
+		<script src="/~partytown/partytown.js" type="module"></script>
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-4FWZL89RBV" type="text/partytown"></script>
+		<script type="text/partytown">
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+
+			gtag('config', 'G-4FWZL89RBV');
+		</script>
+		<script src="/src/analytics.ts" type="module"></script>
+		<script src="/src/index.tsx" type="module"></script>
 	</body>
 </html>

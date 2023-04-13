@@ -5,7 +5,7 @@
 	"scripts": {
 		"start": "vite",
 		"dev": "vite",
-		"build": "vite build",
+		"build": "partytown copylib public/~partytown && vite build",
 		"serve": "vite preview"
 	},
 	"license": "AGPL-3.0",
@@ -22,6 +22,7 @@
 		"vite-plugin-solid-svg": "^0.6.1"
 	},
 	"dependencies": {
+		"@builder.io/partytown": "^0.8.0",
 		"@fontsource/montserrat": "^4.5.14",
 		"@sanity/client": "^5.4.2",
 		"@sanity/image-url": "^1.0.2",
