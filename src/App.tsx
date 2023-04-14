@@ -8,7 +8,13 @@ import Header from "./components/Header";
 import {useAuth, useFirebaseApp} from "solid-firebase";
 import {getAuth} from "firebase/auth";
 import {useA2HS} from "./hooks/useA2HS";
+import {scheduleIdle} from "@solid-primitives/scheduled";
 
+
+scheduleIdle(() => {
+	alert("Idle");
+	import("./analytics");
+}, 1000)
 
 export default function App() {
 	const app = useFirebaseApp();
