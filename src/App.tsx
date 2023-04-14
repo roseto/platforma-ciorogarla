@@ -11,10 +11,12 @@ import {useA2HS} from "./hooks/useA2HS";
 import {scheduleIdle} from "@solid-primitives/scheduled";
 
 
-scheduleIdle(() => {
+const analyticsTrigger = scheduleIdle(() => {
 	alert("Idle");
 	import("./analytics");
-}, 1000)
+}, 1000);
+
+analyticsTrigger();
 
 export default function App() {
 	const app = useFirebaseApp();
