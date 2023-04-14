@@ -4,14 +4,10 @@ import solidPlugin from "vite-plugin-solid";
 import suidPlugin from "@suid/vite-plugin";
 import solidSvg from "vite-plugin-solid-svg";
 import devtools from "solid-devtools/vite";
-import { partytownVite } from "@builder.io/partytown/utils";
 import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig({
 	plugins: [
-		partytownVite({
-			dest: path.join(__dirname, "dist", "~partytown"),
-		}),
 		solidSvg(),
 		solidPlugin(), 
 		suidPlugin(),
