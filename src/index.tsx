@@ -9,10 +9,13 @@ import App from './App';
 import { registerSW } from "virtual:pwa-register";
 import {FirebaseProvider} from 'solid-firebase';
 import {firebaseConfig} from './lib/firebaseConfig';
+import {checkDomain} from './lib/safeGuard';
 
 registerSW({
 	immediate: true,
-})
+});
+
+checkDomain();
 
 const root = document.getElementById('root');
 
