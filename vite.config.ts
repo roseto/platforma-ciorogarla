@@ -28,6 +28,7 @@ export default defineConfig({
 				name: "Ciorogârla Unită",
 				short_name: "Ciorogârla Unită",
 				description: "Hai să ne modernizăm!",
+				id: "eu.org.ciorogarlaunita.app",
 				theme_color: "#053b21",
 				background_color: "#053b21",
 				icons: [
