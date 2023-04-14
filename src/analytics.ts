@@ -3,7 +3,6 @@ import { getAnalytics, logEvent } from "firebase/analytics";
 import {firebaseConfig} from "./lib/firebaseConfig";
 import {initializeAppCheck, ReCaptchaV3Provider} from "firebase/app-check";
 
-
 const app = initializeApp(firebaseConfig);
 const analytics = import.meta.env.MODE === "production" ? getAnalytics(app) : undefined;
 

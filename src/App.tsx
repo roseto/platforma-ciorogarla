@@ -12,13 +12,13 @@ import {scheduleIdle} from "@solid-primitives/scheduled";
 
 
 const analyticsTrigger = scheduleIdle(() => {
-	alert("Idle");
 	import("./analytics");
 }, 1000);
 
-setTimeout(() => {
+window.onload = () => {
+	console.log("Loaded");
 	analyticsTrigger();
-}, 1000);
+}
 	
 
 
