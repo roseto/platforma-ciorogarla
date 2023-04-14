@@ -16,7 +16,11 @@ const analyticsTrigger = scheduleIdle(() => {
 	import("./analytics");
 }, 1000);
 
-analyticsTrigger();
+setTimeout(() => {
+	analyticsTrigger();
+}, 1000);
+	
+
 
 export default function App() {
 	const app = useFirebaseApp();
