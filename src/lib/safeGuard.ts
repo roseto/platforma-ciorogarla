@@ -10,6 +10,6 @@ export const checkDomain = () => {
 
 	if (domain !== DOMAIN) {
 		console.log("Redirecting to", DOMAIN);
-		window.location.href = DOMAIN;
+		window.location.href = "https://" + DOMAIN;
 	}
 }
