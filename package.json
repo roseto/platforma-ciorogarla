@@ -5,7 +5,7 @@
 	"scripts": {
 		"start": "vite",
 		"dev": "vite",
-		"build": "partytown copylib public/~partytown && vite build",
+		"build": "vite build",
 		"serve": "vite preview"
 	},
 	"license": "AGPL-3.0",
