@@ -63,6 +63,14 @@ export default defineConfig({
 				scope: "/",
 				categories: ["education", "news", "social"],
 				lang: "ro",
+				prefer_related_applications: true,
+				related_applications: [
+					{
+						platform: "play",
+						url: "https://play.google.com/store/apps/details?id=eu.org.ciorogarlaunita.app",
+						id: "eu.org.ciorogarlaunita.app",
+					},
+				],
 				screenshots: [
 					{
 						src: "/screenshots/1.png",
