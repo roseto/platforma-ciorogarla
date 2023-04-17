@@ -1,6 +1,6 @@
-import {Button, Container, TextField, Stack, SvgIcon, Typography, Divider} from "@suid/material";
+import {Button, Container, TextField, Stack, SvgIcon, Typography, Divider, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions} from "@suid/material";
 import {useAuth, useFirebaseApp} from "solid-firebase";
-import { getAuth, GoogleAuthProvider, signInWithPopup, updateProfile, TwitterAuthProvider, GithubAuthProvider, sendSignInLinkToEmail } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithPopup, updateProfile, TwitterAuthProvider, GithubAuthProvider, sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink } from "firebase/auth";
 import Header from "../components/Header";
 import {useNavigate} from "@solidjs/router";
 import {createEffect, createSignal} from "solid-js";
@@ -13,6 +13,7 @@ import ShieldIcon from "@suid/icons-material/Shield";
 
 export default function Login() {
 	const firebase = useFirebaseApp();
+	const [confirmationDialogOpen, setConfirmationDialogOpen] = createSignal(false);
 	const [email, setEmail] = createSignal("");
 	const auth = getAuth(firebase);
 	const user = useAuth(auth);
@@ -20,9 +21,22 @@ export default function Login() {
 
 	createEffect(() => {
 		if (!user.loading && user.data) {
-		navigate("/", { replace: true });
+			navigate("/", { replace: true });
 		}
 	});
+
+	if (isSignInWithEmailLink(auth, window.location.href)) {
+		let emailConfirm = new URLSearchParams(window.location.search).get("email") || "";
+
+		if (!emailConfirm) {
+			emailConfirm = window.prompt("Please provide your email for confirmation") || "";
+		}
+
+		signInWithEmailLink(auth, emailConfirm, window.location.href)
+			.catch((error) => {
+				console.log(error)
+			});
+	}
 
 	const login = async (provider: GoogleAuthProvider) => {
 		signInWithPopup(auth, provider).then((res) => {
@@ -45,11 +59,15 @@ export default function Login() {
 		e.preventDefault();
 
 		sendSignInLinkToEmail(auth, email(), {
-			url: window.location.origin + "?email=" + email(),
+			url: window.location.origin + "/login?email=" + email(),
 			handleCodeInApp: true,
-		}).catch((error) => {
-			console.log(error)
-		});
+		})
+			.then(() => {
+				setConfirmationDialogOpen(true);
+			})
+			.catch((error) => {
+				console.log(error)
+			});
 	}
 
 	return (
@@ -104,14 +122,12 @@ export default function Login() {
 								label="Email"
 								variant="outlined"
 								name="email"
-								disabled
 								value={email()}
 								onChange={(_, value) => setEmail(value)}
 							/>
 							<Button
 								variant="outlined"
 								type="submit"
-								disabled
 							>
 								Conectare cu Email
 							</Button>
@@ -122,6 +138,32 @@ export default function Login() {
 					</Typography>
 				</Stack>
 			</Container>
+			<Dialog
+				open={confirmationDialogOpen()}
+				onClose={() => setConfirmationDialogOpen(false)}
+			>
+				<DialogTitle>
+					Email de confirmare trimis
+				</DialogTitle>
+				<DialogContent>
+					<DialogContentText>
+						Am trimis un email de confirmare catre 
+						<strong>{email()}</strong>
+					</DialogContentText>
+					<DialogContentText>
+						Asigurati-va ca email-ul vine de la 
+						<strong>noreply@ciorogarlaunita.eu.org</strong>
+					</DialogContentText>
+				</DialogContent>
+				<DialogActions>
+					<Button
+						variant="text"
+						onClick={() => setConfirmationDialogOpen(false)}
+					>
+						Ok
+					</Button>
+				</DialogActions>
+			</Dialog>
 		</>
 	)
 }

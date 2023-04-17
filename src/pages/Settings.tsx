@@ -50,7 +50,7 @@ export default function Settings() {
 								/>
 							</ListItemAvatar>
 							<ListItemText
-								primary={user.data?.displayName}
+								primary={user.data?.displayName || "Fara nume de utilizator"}
 								secondary={user.data?.email}
 							/>
 						</Show>
@@ -67,66 +67,68 @@ export default function Settings() {
 					</Show>
 				</Paper>
 			</Container>
-			<List>
-				<ListItemButton
-					onClick={() => anayltics.set(!anayltics.state)}
-				>
-					<ListItemIcon>
-						<AnalyticsIcon/>
-					</ListItemIcon>
-					<ListItemText
-						primary="Analitica"
-						secondary={anayltics.state ? "Impartasiti informatie pentru analitica" : "Nu impartasiti informatii pentru analitica"}
-						sx={{
-							mr: 8
-						}}
-					/>
-					<ListItemSecondaryAction>
-						<Switch
-							checked={anayltics.state}
-							onChange={e => anayltics.set(e.target.checked)}
+			<Container disableGutters>
+				<List>
+					<ListItemButton
+						onClick={() => anayltics.set(!anayltics.state)}
+					>
+						<ListItemIcon>
+							<AnalyticsIcon/>
+						</ListItemIcon>
+						<ListItemText
+							primary="Analitica"
+							secondary={anayltics.state ? "Impartasiti informatie pentru analitica" : "Nu impartasiti informatii pentru analitica"}
+							sx={{
+								mr: 8
+							}}
 						/>
-					</ListItemSecondaryAction>
-				</ListItemButton>
-				
-				<Divider
-					variant="middle"
-				/>
+						<ListItemSecondaryAction>
+							<Switch
+								checked={anayltics.state}
+								onChange={e => anayltics.set(e.target.checked)}
+							/>
+						</ListItemSecondaryAction>
+					</ListItemButton>
+					
+					<Divider
+						variant="middle"
+					/>
 
-				<ListItemButton
-					component="a"
-					href="https://ciorogarlaunita.eu.org/terms-and-conditions"
-					target="_blank"
-				>
-					<ListItemIcon>
-						<TermsIcon/>
-					</ListItemIcon>
-					<ListItemText
-						primary="Termeni si conditii"
-					/>
-				</ListItemButton>
-				<ListItemButton
-					component="a"
-					href="https://ciorogarlaunita.eu.org/privacy-policy"
-					target="_blank"
-				>
-					<ListItemIcon>
-						<PrivacyIcon/>
-					</ListItemIcon>
-					<ListItemText
-						primary="Politica de confidentialitate"
-					/>
-				</ListItemButton>
-				<ListItem>
-					<ListItemIcon>
-						<InfoIcon/>
-					</ListItemIcon>
-					<ListItemText 
-						primary="Versiune"
-						secondary={version}
-					/>
-				</ListItem>
-			</List>
+					<ListItemButton
+						component="a"
+						href="https://ciorogarlaunita.eu.org/terms-and-conditions"
+						target="_blank"
+					>
+						<ListItemIcon>
+							<TermsIcon/>
+						</ListItemIcon>
+						<ListItemText
+							primary="Termeni si conditii"
+						/>
+					</ListItemButton>
+					<ListItemButton
+						component="a"
+						href="https://ciorogarlaunita.eu.org/privacy-policy"
+						target="_blank"
+					>
+						<ListItemIcon>
+							<PrivacyIcon/>
+						</ListItemIcon>
+						<ListItemText
+							primary="Politica de confidentialitate"
+						/>
+					</ListItemButton>
+					<ListItem>
+						<ListItemIcon>
+							<InfoIcon/>
+						</ListItemIcon>
+						<ListItemText 
+							primary="Versiune"
+							secondary={version}
+						/>
+					</ListItem>
+				</List>
+			</Container>
 		</>
 	)
 }
