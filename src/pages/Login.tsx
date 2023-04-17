@@ -13,7 +13,9 @@ import ShieldIcon from "@suid/icons-material/Shield";
 
 export default function Login() {
 	const firebase = useFirebaseApp();
+	const [loading, setLoading] = createSignal(false);
 	const [confirmationDialogOpen, setConfirmationDialogOpen] = createSignal(false);
+	const [errorDialogOpen, setErrorDialogOpen] = createSignal(false);
 	const [email, setEmail] = createSignal("");
 	const auth = getAuth(firebase);
 	const user = useAuth(auth);
@@ -33,12 +35,15 @@ export default function Login() {
 		}
 
 		signInWithEmailLink(auth, emailConfirm, window.location.href)
-			.catch((error) => {
-				console.log(error)
+			.catch(() => {
+				setErrorDialogOpen(true)
+			}).finally(() => {
+				setLoading(false)
 			});
 	}
 
 	const login = async (provider: GoogleAuthProvider) => {
+		setLoading(true);
 		signInWithPopup(auth, provider).then((res) => {
 			const providerId = res.providerId;
 
@@ -52,11 +57,16 @@ export default function Login() {
 					});
 				}
 			});
+		}).catch(() => {
+			setErrorDialogOpen(true);
+		}).finally(() => {
+			setLoading(false);
 		})
 	}
 
 	const loginWithEmail = async (e: Event) => {
 		e.preventDefault();
+		setLoading(true);
 
 		sendSignInLinkToEmail(auth, email(), {
 			url: window.location.origin + "/login?email=" + email(),
@@ -65,8 +75,11 @@ export default function Login() {
 			.then(() => {
 				setConfirmationDialogOpen(true);
 			})
-			.catch((error) => {
-				console.log(error)
+			.catch(() => {
+				setErrorDialogOpen(true)
+			})
+			.finally(() => {
+				setLoading(false);
 			});
 	}
 
@@ -82,6 +95,7 @@ export default function Login() {
 						startIcon={<SvgIcon><GoogleIcon/></SvgIcon>}
 						onClick={() => login(new GoogleAuthProvider())}
 						disableElevation
+						disabled={loading()}
 					>
 						Conectare cu Google
 					</Button>
@@ -96,6 +110,7 @@ export default function Login() {
 						startIcon={<SvgIcon><TwitterIcon/></SvgIcon>}
 						onClick={() => login(new TwitterAuthProvider())}
 						disableElevation
+						disabled={loading()}
 					>
 						Conectare cu Twitter
 					</Button>
@@ -103,6 +118,7 @@ export default function Login() {
 						startIcon={<SvgIcon><GitHubIcon/></SvgIcon>}
 						onClick={() => login(new GithubAuthProvider())}
 						disableElevation
+						disabled={loading()}
 					>
 						Conectare cu GitHub
 					</Button>
@@ -110,10 +126,9 @@ export default function Login() {
 					<Typography 
 						textAlign="center" 
 						color="textSecondary" 
-						textTransform="uppercase" 
 						variant="caption"
 					>
-						Sau pe moda veche
+						sau pe moda veche
 					</Typography>
 					<form onSubmit={loginWithEmail}>
 						<Stack>
@@ -122,12 +137,14 @@ export default function Login() {
 								label="Email"
 								variant="outlined"
 								name="email"
+								disabled={loading()}
 								value={email()}
 								onChange={(_, value) => setEmail(value)}
 							/>
 							<Button
 								variant="outlined"
 								type="submit"
+								disabled={loading()}
 							>
 								Conectare cu Email
 							</Button>
@@ -159,6 +176,31 @@ export default function Login() {
 					<Button
 						variant="text"
 						onClick={() => setConfirmationDialogOpen(false)}
+					>
+						Ok
+					</Button>
+				</DialogActions>
+			</Dialog>
+			<Dialog
+				open={errorDialogOpen()}
+				onClose={() => setErrorDialogOpen(false)}
+			>
+				<DialogTitle>
+					Eroare la conectare
+				</DialogTitle>
+				<DialogContent>
+					<DialogContentText>
+						Va rugam sa incercati mai tarziu.
+					</DialogContentText>
+					<DialogContentText>
+						Daca problema persista, contactati-ne la 
+						<strong><a href="mailto:cont@ciorogarlaunita.eu.org">cont@ciorogarlaunita.eu.org</a></strong>
+					</DialogContentText>
+				</DialogContent>
+				<DialogActions>
+					<Button
+						variant="text"
+						onClick={() => setErrorDialogOpen(false)}
 					>
 						Ok
 					</Button>
