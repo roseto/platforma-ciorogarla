@@ -84,6 +84,7 @@ export default function Settings() {
 						/>
 						<ListItemSecondaryAction>
 							<Switch
+								edge="end"
 								checked={anayltics.state}
 								onChange={e => anayltics.set(e.target.checked)}
 							/>

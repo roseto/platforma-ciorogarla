@@ -10,6 +10,8 @@ import {getAuth} from "firebase/auth";
 import {useA2HS} from "./hooks/useA2HS";
 import {scheduleIdle} from "@solid-primitives/scheduled";
 import {initializeAppCheck, ReCaptchaV3Provider} from "firebase/app-check";
+import WelcomeDialog from "./components/WelcomeDialog";
+import {useAnalyticsState} from "./lib/store";
 
 
 const backgroundTrigger = scheduleIdle(() => {
@@ -19,8 +21,6 @@ const backgroundTrigger = scheduleIdle(() => {
 window.onload = () => {
 	backgroundTrigger();
 }
-	
-
 
 export default function App() {
 	const app = useFirebaseApp();
@@ -41,6 +41,7 @@ export default function App() {
 			<CssBaseline enableColorScheme/>
 			<Suspense fallback={<Header noNav title="Se incarca..." />}>
 				<Routes />
+				<WelcomeDialog />
 			</Suspense>
 		</ThemeProvider>
 	)

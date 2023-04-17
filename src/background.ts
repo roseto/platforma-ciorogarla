@@ -11,7 +11,7 @@ const ANALYTICS_ENABLED = import.meta.env.MODE === "production" && analyticsStat
 
 const analytics = ANALYTICS_ENABLED ? getAnalytics(app) : undefined;
 
-if (ANALYTICS_ENABLED && analytics) {
+const initializeDataCollection = () => {
 	initializePerformance(app);
 	initializeAnalytics(app, {
 		config: {
@@ -20,18 +20,27 @@ if (ANALYTICS_ENABLED && analytics) {
 			send_page_view: true,
 		},
 	});
+
+	if (analytics) {
+		window.addEventListener("popstate", () => {
+			logEvent(analytics, "page_view", {
+				page_title: document.title,
+				page_location: location.pathname,
+				page_path: location.pathname,
+			})
+		})
+	}
+}
+
+if (ANALYTICS_ENABLED && analytics) {
+	initializeDataCollection();
 }
 
 // @ts-ignore
 self.FIREBASE_APPCHECK_DEBUG_TOKEN = import.meta.env.MODE === "development";
 
-
-if (analytics) {
-	window.addEventListener("popstate", () => {
-		logEvent(analytics, "page_view", {
-			page_title: document.title,
-			page_location: location.pathname,
-			page_path: location.pathname,
-		})
-	})
-}
+useAnalyticsState.subscribe((value, prev) => {
+	if (value.state && !prev.state) {
+		initializeDataCollection();
+	}
+});

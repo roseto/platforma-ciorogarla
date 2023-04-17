@@ -15,3 +15,18 @@ export const useAnalyticsState = create(persist<AnalyticsState>((set) => ({
 		storage: createJSONStorage(() => window.localStorage),
 	}
 ));
+
+interface FirstTimeState {
+	state: boolean
+	set: (state: boolean) => void
+}
+
+export const useFirstTime = create(persist<FirstTimeState>((set) => ({
+		state: true,
+		set: (state: boolean) => set({ state }),
+	}),
+	{
+		name: "first-time",
+		storage: createJSONStorage(() => window.localStorage),
+	}
+));
