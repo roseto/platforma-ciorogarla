@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
-import { getAnalytics, logEvent } from "firebase/analytics";
-import { getPerformance } from "firebase/performance";
+import { getAnalytics, initializeAnalytics, logEvent } from "firebase/analytics";
+import { initializePerformance } from "firebase/performance";
 import {firebaseConfig} from "./lib/firebaseConfig";
 import {useAnalyticsState} from "./lib/store";
 
@@ -10,7 +10,17 @@ const analyticsState = useAnalyticsState();
 const ANALYTICS_ENABLED = import.meta.env.MODE === "production" && analyticsState.state;
 
 const analytics = ANALYTICS_ENABLED ? getAnalytics(app) : undefined;
-ANALYTICS_ENABLED ? getPerformance(app) : undefined;
+
+if (ANALYTICS_ENABLED && analytics) {
+	initializePerformance(app);
+	initializeAnalytics(app, {
+		config: {
+			allow_ad_personalization_signals: false,
+			allow_google_signals: false,
+			send_page_view: true,
+		},
+	});
+}
 
 // @ts-ignore
 self.FIREBASE_APPCHECK_DEBUG_TOKEN = import.meta.env.MODE === "development";

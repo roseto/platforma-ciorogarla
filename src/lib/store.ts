@@ -7,7 +7,7 @@ interface AnalyticsState {
 }
 
 export const useAnalyticsState = create(persist<AnalyticsState>((set) => ({
-		state: true,
+		state: false,
 		set: (state: boolean) => set({ state }),
 	}),
 	{
