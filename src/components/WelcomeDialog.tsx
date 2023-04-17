@@ -33,7 +33,7 @@ export default function WelcomeDialog() {
 			fullScreen
 			TransitionComponent={Transition}
 		>
-			<Container sx={{ mt: 2 }}>
+			<Container sx={{ pt: 2, mt: "env(safe-area-inset-top)" }}>
 				<Typography
 					variant="h1"
 					textAlign="center"
