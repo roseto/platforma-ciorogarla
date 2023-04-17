@@ -1,21 +1,20 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics, logEvent } from "firebase/analytics";
+import { getPerformance } from "firebase/performance";
 import {firebaseConfig} from "./lib/firebaseConfig";
-import {initializeAppCheck, ReCaptchaV3Provider} from "firebase/app-check";
+import {useAnalyticsState} from "./lib/store";
 
 const app = initializeApp(firebaseConfig);
-const analytics = import.meta.env.MODE === "production" ? getAnalytics(app) : undefined;
+const analyticsState = useAnalyticsState();
+
+const ANALYTICS_ENABLED = import.meta.env.MODE === "production" && analyticsState.state;
+
+const analytics = ANALYTICS_ENABLED ? getAnalytics(app) : undefined;
+ANALYTICS_ENABLED ? getPerformance(app) : undefined;
 
 // @ts-ignore
 self.FIREBASE_APPCHECK_DEBUG_TOKEN = import.meta.env.MODE === "development";
 
-if (import.meta.env.MODE === "production") {
-	getAnalytics(app);
-}
-
-initializeAppCheck(app, {
-	provider: new ReCaptchaV3Provider(import.meta.env.VITE_RECAPTCHA_SITE_KEY)
-});
 
 if (analytics) {
 	window.addEventListener("popstate", () => {

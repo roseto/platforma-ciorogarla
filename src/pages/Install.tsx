@@ -1,14 +1,17 @@
-import {Button, Container, Link, Stack, Typography} from "@suid/material";
+import {Button, Container, Link, Stack, SvgIcon, Typography} from "@suid/material";
 import Header from "../components/Header";
 import {isInstalled, parser} from "../lib/device";
+import {Match, Show, Switch} from "solid-js";
+import {useNavigate} from "@solidjs/router";
+import {useA2HS} from "../hooks/useA2HS";
 
 import InfoIcon from "@suid/icons-material/Info";
 import IosShareIcon from "@suid/icons-material/IosShare";
 import MoreVertIcon from "@suid/icons-material/MoreVert"
 import InstallIcon from "@suid/icons-material/InstallMobile";
-import {Match, Show, Switch} from "solid-js";
-import {useNavigate} from "@solidjs/router";
-import {useA2HS} from "../hooks/useA2HS";
+import PaquetIcon from "../resources/icons/paquet.svg?component-solid";
+import PlayIcon from "../resources/icons/play.svg?component-solid";
+import AppStoreIcon from "../resources/icons/app-store.svg?component-solid";
 
 export default function Install() {
 	const deviceVendor = parser.getDevice().vendor;
@@ -52,17 +55,44 @@ export default function Install() {
 					<Switch>
 						<Match when={deviceVendor === "Apple" && browserName === "Mobile Safari"}>
 							<IosInstructionsSafari/>
+							{/*<Button
+								startIcon={<SvgIcon><AppStoreIcon/></SvgIcon>}
+							>
+								Descarca pe App Store
+							</Button>*/}
 						</Match>
 						<Match when={deviceVendor === "Apple" && browserName !== "Mobile Safari"}>
 							<IosInstructionsNotSafari/>
+							{/* <Button
+								startIcon={<SvgIcon><AppStoreIcon/></SvgIcon>}
+							>
+								Descarca pe App Store
+							</Button> */}
 						</Match>
 						<Match when={deviceOs === "Android"}>
 							<AndroidInstructions/>
+							<Button
+								component="a"
+								href="https://play.google.com/store/apps/details?id=org.eu.ciorogarlaunita.app"
+								target="_blank"
+								startIcon={<SvgIcon><PlayIcon/></SvgIcon>}
+							>
+								Descarca pe Google Play
+							</Button>
 						</Match>
 						<Match when={!parser.getDevice().type}>
 							<DesktopInstructions/>
 						</Match>
 					</Switch>
+					<Button
+						startIcon={<SvgIcon><PaquetIcon/></SvgIcon>}
+						variant="outlined"
+						component="a"
+						href="https://paquet.shop/app/013c536e-4a2d-4bce-90fd-c33c954bdc04"
+						target="_blank"
+					>
+						Descarca pe Paquet
+					</Button>
 				</Stack>
 			</Container>
 		</>

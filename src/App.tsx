@@ -9,21 +9,24 @@ import {useAuth, useFirebaseApp} from "solid-firebase";
 import {getAuth} from "firebase/auth";
 import {useA2HS} from "./hooks/useA2HS";
 import {scheduleIdle} from "@solid-primitives/scheduled";
+import {initializeAppCheck, ReCaptchaV3Provider} from "firebase/app-check";
 
 
-const analyticsTrigger = scheduleIdle(() => {
-	import("./analytics");
+const backgroundTrigger = scheduleIdle(() => {
+	import("./background");
 }, 1000);
 
 window.onload = () => {
-	console.log("Loaded");
-	analyticsTrigger();
+	backgroundTrigger();
 }
 	
 
 
 export default function App() {
 	const app = useFirebaseApp();
+	initializeAppCheck(app, {
+		provider: new ReCaptchaV3Provider(import.meta.env.VITE_RECAPTCHA_SITE_KEY)
+	});
 	useAuth(getAuth(app));
 	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 	const Routes = useRoutes(routes);
