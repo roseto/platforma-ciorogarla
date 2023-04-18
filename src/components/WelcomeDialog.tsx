@@ -59,6 +59,7 @@ export default function WelcomeDialog() {
 					/>
 					<ListItemSecondaryAction>
 						<Switch
+							onClick={(e) => e.stopPropagation()}
 							edge="end"
 							checked={confirmAllowed()}
 							onChange={(_, checked) => setConfirmAllowed(checked)}
@@ -73,6 +74,7 @@ export default function WelcomeDialog() {
 					/>
 					<ListItemSecondaryAction>
 						<Switch
+							onClick={(e) => e.stopPropagation()}
 							edge="end"
 							checked={allowsAnalytics()}
 							onChange={(_, checked) => setAllowsAnalytics(checked)}

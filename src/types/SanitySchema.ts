@@ -269,11 +269,11 @@ export interface VolunteeringProject extends SanityDocument {
   organisation?: SanityReference<Organisation>;
 
   /**
-   * Logo — `image`
+   * Image — `image`
    *
-   * The logo of the project
+   * An image for the project
    */
-  logo?: {
+  image?: {
     _type: "image";
     asset: SanityReference<SanityImageAsset>;
     crop?: SanityImageCrop;
@@ -324,4 +324,34 @@ export interface VolunteeringProject extends SanityDocument {
   };
 }
 
-export type Documents = Business | Organisation | VolunteeringProject;
+/**
+ * User
+ *
+ *
+ */
+export interface User extends SanityDocument {
+  _type: "user";
+
+  /**
+   * Display Name — `string`
+   *
+   *
+   */
+  displayName?: string;
+
+  /**
+   * Photo URL — `url`
+   *
+   *
+   */
+  photoURL?: string;
+
+  /**
+   * UID — `string`
+   *
+   *
+   */
+  uid?: string;
+}
+
+export type Documents = Business | Organisation | VolunteeringProject | User;

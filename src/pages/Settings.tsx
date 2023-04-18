@@ -40,7 +40,7 @@ export default function Settings() {
 								</ListItemIcon>
 								<ListItemText
 									primary="Cont"
-									secondary="Nu sunteti logat"
+									secondary="Nu sunteti conectat"
 								/>
 							</>
 						)}>
@@ -84,9 +84,10 @@ export default function Settings() {
 						/>
 						<ListItemSecondaryAction>
 							<Switch
+								onClick={(e) => e.stopPropagation()}
 								edge="end"
 								checked={anayltics.state}
-								onChange={e => anayltics.set(e.target.checked)}
+								onChange={(_, checked) => anayltics.set(checked)}
 							/>
 						</ListItemSecondaryAction>
 					</ListItemButton>
