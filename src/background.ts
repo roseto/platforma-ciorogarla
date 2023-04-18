@@ -35,7 +35,7 @@ const initializeDataCollection = async () => {
 	analyticsInitialized = true;
 }
 
-if (ANALYTICS_ENABLED && analytics) {
+if (ANALYTICS_ENABLED && analytics && !analyticsInitialized) {
 	initializeDataCollection();
 }
 
