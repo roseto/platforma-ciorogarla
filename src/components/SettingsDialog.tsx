@@ -33,6 +33,7 @@ export default function SettingsDialog(props: SettingsDialogProps) {
 					backgroundImage: "none"
 				}
 			}}
+			fullWidth
 		>
 			<DialogContent sx={{ p: 1 }}>
 				<Paper>

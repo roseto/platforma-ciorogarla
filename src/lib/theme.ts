@@ -17,6 +17,11 @@ export const commonTheme: Partial<ThemeInput> = {
 				color: "primary",
 			}
 		},
+		MuiDialog: {
+			defaultProps: {
+				maxWidth: "md"
+			}
+		},
 		MuiPaper: {
 			defaultProps: {
 				elevation: 0
