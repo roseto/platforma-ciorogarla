@@ -240,6 +240,22 @@ export interface Organisation extends SanityDocument {
 }
 
 /**
+ * Country
+ *
+ *
+ */
+export interface Country extends SanityDocument {
+  _type: "country";
+
+  /**
+   * Name — `string`
+   *
+   * The name of the country
+   */
+  name?: string;
+}
+
+/**
  * Volunteering Project
  *
  *
@@ -260,6 +276,13 @@ export interface VolunteeringProject extends SanityDocument {
    * The description of the project
    */
   description?: string;
+
+  /**
+   * Topic — `string`
+   *
+   * The topic of the project
+   */
+  topic?: string;
 
   /**
    * Organisation — `reference`
@@ -295,11 +318,11 @@ export interface VolunteeringProject extends SanityDocument {
   infopack?: { _type: "file"; asset: SanityReference<any> };
 
   /**
-   * Country — `string`
+   * Country — `reference`
    *
    * The country where the project takes place
    */
-  country?: string;
+  country?: SanityReference<Country>;
 
   /**
    * Period — `object`
@@ -354,4 +377,9 @@ export interface User extends SanityDocument {
   uid?: string;
 }
 
-export type Documents = Business | Organisation | VolunteeringProject | User;
+export type Documents =
+  | Business
+  | Organisation
+  | Country
+  | VolunteeringProject
+  | User;

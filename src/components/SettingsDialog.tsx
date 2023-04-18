@@ -1,11 +1,11 @@
-import {Switch, List, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText, ListItemButton, ListItemAvatar, Avatar, Divider, Container, Paper, Button} from "@suid/material";
-import Header from "../components/Header";
-import { version } from "../../package.json";
+import {Switch, Avatar, Button, Dialog, DialogContent, Divider, List, ListItem, ListItemAvatar, ListItemButton, ListItemIcon, ListItemSecondaryAction, ListItemText, Paper} from "@suid/material";
+import {getAuth, signOut} from "firebase/auth";
+import {useAuth, useFirebaseApp} from "solid-firebase";
+import {Show} from "solid-js";
 import {useAnalyticsState} from "../lib/store";
 import {A} from "@solidjs/router";
-import {useAuth, useFirebaseApp} from "solid-firebase";
-import {getAuth, signOut} from "firebase/auth";
-import {Show} from "solid-js";
+import { version } from "../../package.json";
+
 
 import AccountIcon from "@suid/icons-material/AccountCircle";
 import InfoIcon from "@suid/icons-material/Info";
@@ -13,22 +13,30 @@ import AnalyticsIcon from "@suid/icons-material/Analytics";
 import TermsIcon from "@suid/icons-material/Description";
 import PrivacyIcon from "@suid/icons-material/PrivacyTip";
 
+interface SettingsDialogProps {
+	open: boolean;
+	onClose: () => void;
+}
 
-export default function Settings() {
+export default function SettingsDialog(props: SettingsDialogProps) {
 	const firebaseApp = useFirebaseApp();
 	const anayltics = useAnalyticsState();
 	const auth = getAuth(firebaseApp);
 	const user = useAuth(auth);
 
 	return (
-		<>
-			<Header
-				title="Setari"
-				back
-			/>
-			<Container>
-				<Paper
-				>
+		<Dialog
+			open={props.open}
+			onClose={props.onClose}
+			PaperProps={{
+				sx: {
+					backgroundColor: "background.default",
+					backgroundImage: "none"
+				}
+			}}
+		>
+			<DialogContent sx={{ px: .5, py: 1 }}>
+				<Paper>
 					<ListItemButton
 						component={A}
 						href={user.data ? "" : "/login"}
@@ -66,9 +74,7 @@ export default function Settings() {
 						</Button>
 					</Show>
 				</Paper>
-			</Container>
-			<Container disableGutters>
-				<List>
+				<List disablePadding>
 					<ListItemButton
 						onClick={() => anayltics.set(!anayltics.state)}
 					>
@@ -100,6 +106,7 @@ export default function Settings() {
 						component="a"
 						href="https://ciorogarlaunita.eu.org/terms-and-conditions"
 						target="_blank"
+						dense
 					>
 						<ListItemIcon>
 							<TermsIcon/>
@@ -109,6 +116,7 @@ export default function Settings() {
 						/>
 					</ListItemButton>
 					<ListItemButton
+						dense
 						component="a"
 						href="https://ciorogarlaunita.eu.org/privacy-policy"
 						target="_blank"
@@ -120,7 +128,7 @@ export default function Settings() {
 							primary="Politica de confidentialitate"
 						/>
 					</ListItemButton>
-					<ListItem>
+					<ListItem dense>
 						<ListItemIcon>
 							<InfoIcon/>
 						</ListItemIcon>
@@ -130,7 +138,7 @@ export default function Settings() {
 						/>
 					</ListItem>
 				</List>
-			</Container>
-		</>
+			</DialogContent>
+		</Dialog>
 	)
 }

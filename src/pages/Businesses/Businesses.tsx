@@ -1,5 +1,5 @@
 import { A, RouteDataFuncArgs, useRouteData, useSearchParams } from "@solidjs/router";
-import {Avatar, Box, Button, Chip, Container, Dialog, DialogActions, DialogContent, DialogTitle, List, ListItemAvatar, ListItemButton, ListItemIcon, ListItemText, Paper, Stack, Typography} from "@suid/material";
+import {Avatar, Box, Button, Chip, Container, Dialog, DialogActions, DialogContent, DialogTitle, Link, List, ListItemAvatar, ListItemButton, ListItemText, Paper, Stack, Typography} from "@suid/material";
 import {createResource, createSignal, For, Show} from "solid-js";
 import Header from "../../components/Header";
 import Searchbox from "../../components/Searchbox";
@@ -148,7 +148,7 @@ export default function Businesses() {
 					<DialogContent>
 						<Typography>
 							Pentru adaugarea unei afaceri, va rugam sa ne contactati
-							pe email la afacere@ciorogarlaunita.eu.org
+							pe email la <Link href="mailto:afacere@ciorogarlaunita.eu.org" target="_blank"><strong>afacere@ciorogarlaunita.eu.org</strong></Link>
 						</Typography>
 					</DialogContent>
 					<DialogActions>

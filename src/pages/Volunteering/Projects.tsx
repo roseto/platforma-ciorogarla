@@ -3,7 +3,7 @@ import {Avatar, Box, Button, Card, CardActionArea, CardContent, CardMedia, Chip,
 import {createResource, For, Show} from "solid-js";
 import Header from "../../components/Header";
 import {sanityClient, urlFor} from "../../lib/sanity";
-import {Organisation, VolunteeringProject} from "../../types/SanitySchema";
+import {Country, Organisation, VolunteeringProject} from "../../types/SanitySchema";
 
 export default function Projects() {
 	const data = useRouteData<typeof VolunteeringProjectsGetData>();
@@ -62,7 +62,7 @@ export default function Projects() {
 										</Show>
 										<Show when={project.country}>
 											<Chip
-												label={project.country}
+												label={(project.country as unknown as Country).name}
 												size="small"
 											/>
 										</Show>
@@ -88,8 +88,11 @@ const calculateDays = (start: string, end: string) => {
 }
 
 const fetcher = async () => {
-	const res = sanityClient.fetch<VolunteeringProject[]>(`*[_type == "volunteeringProject"] {..., organisation->{...}}`)
-		.catch(() => null);
+	const res = sanityClient.fetch<VolunteeringProject[]>(`*[_type == "volunteeringProject"] {
+		...,
+		organisation->{...},
+		country->{...}
+	}`).catch(() => null);
 
 
 	return res;

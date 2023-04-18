@@ -3,23 +3,29 @@ import SettingsIcon from "@suid/icons-material/Settings";
 import InstallIcon from "@suid/icons-material/InstallMobile";
 import CardWithIcon from "../components/CardWithIcon";
 import Header from "../components/Header";
-import {For, Show} from "solid-js";
+import {createSignal, For, Show} from "solid-js";
 import {modules} from "../lib/modules";
 import {A} from "@solidjs/router";
 import {isInstalled} from "../lib/device";
+import SettingsDialog from "../components/SettingsDialog";
 
 export default function Home() {
 	const theme = useTheme();
+	const [settingsDialogOpen, setSettingsDialogOpen] = createSignal(false);
 
 	return (
 		<>
+			<SettingsDialog
+				open={settingsDialogOpen()}
+				onClose={() => setSettingsDialogOpen(false)}
+			/>
 			<Header 
 				title="Acasa"
 				noHeading
 				themeColor={theme.palette.background.default}
 				actions={[
 					{
-						path: "/settings",
+						onClick: () => setSettingsDialogOpen(true),
 						icon: SettingsIcon,
 					}
 				]}
