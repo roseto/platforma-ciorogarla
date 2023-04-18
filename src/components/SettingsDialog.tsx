@@ -1,15 +1,13 @@
-import {Switch, Avatar, Button, Dialog, DialogContent, Divider, List, ListItem, ListItemAvatar, ListItemButton, ListItemIcon, ListItemSecondaryAction, ListItemText, Paper} from "@suid/material";
+import {Avatar, Button, Dialog, DialogContent, List, ListItemAvatar, ListItemButton, ListItemIcon, ListItemText, Paper, Menu, MenuItem} from "@suid/material";
 import {getAuth, signOut} from "firebase/auth";
 import {useAuth, useFirebaseApp} from "solid-firebase";
-import {Show} from "solid-js";
-import {useAnalyticsState} from "../lib/store";
+import {createSignal, Show} from "solid-js";
 import {A} from "@solidjs/router";
-import { version } from "../../package.json";
 
 
 import AccountIcon from "@suid/icons-material/AccountCircle";
-import InfoIcon from "@suid/icons-material/Info";
-import AnalyticsIcon from "@suid/icons-material/Analytics";
+import LogoutIcon from "@suid/icons-material/Logout";
+import SettingsIcon from "@suid/icons-material/Settings";
 import TermsIcon from "@suid/icons-material/Description";
 import PrivacyIcon from "@suid/icons-material/PrivacyTip";
 
@@ -20,7 +18,8 @@ interface SettingsDialogProps {
 
 export default function SettingsDialog(props: SettingsDialogProps) {
 	const firebaseApp = useFirebaseApp();
-	const anayltics = useAnalyticsState();
+	const [accountMenuAnchor, setAccountMenuAnchor] = createSignal<HTMLElement | null>(null)
+	const open = () => Boolean(accountMenuAnchor());
 	const auth = getAuth(firebaseApp);
 	const user = useAuth(auth);
 
@@ -35,11 +34,14 @@ export default function SettingsDialog(props: SettingsDialogProps) {
 				}
 			}}
 		>
-			<DialogContent sx={{ px: .5, py: 1 }}>
+			<DialogContent sx={{ p: 1 }}>
 				<Paper>
 					<ListItemButton
-						component={A}
+						component={user.data ? "button" : A}
 						href={user.data ? "" : "/login"}
+						onClick={user.data ? ((e: Event) => {
+							setAccountMenuAnchor(e.currentTarget as HTMLElement);
+						}) : undefined}
 					>
 						<Show when={user.data} fallback={(
 							<>
@@ -63,45 +65,42 @@ export default function SettingsDialog(props: SettingsDialogProps) {
 							/>
 						</Show>
 					</ListItemButton>
-					<Show when={user.data}>
-						<Button
-							variant="outlined"
-							color="error"
-							onClick={() => signOut(auth)}
-							fullWidth
+					<Menu
+						open={open()}
+						anchorEl={accountMenuAnchor()}
+						onClose={() => setAccountMenuAnchor(null)}
+						onClick={() => setAccountMenuAnchor(null)}
+						PaperProps={{
+							sx: {
+								width: accountMenuAnchor()?.offsetWidth
+							}
+						}}
+					>
+						<MenuItem
+							onClick={() => {
+								signOut(auth);
+								props.onClose();
+							}}
 						>
+							<ListItemIcon>
+								<LogoutIcon />
+							</ListItemIcon>
 							Deconectare
-						</Button>
-					</Show>
-				</Paper>
-				<List disablePadding>
+						</MenuItem>
+					</Menu>
 					<ListItemButton
-						onClick={() => anayltics.set(!anayltics.state)}
+						component={A}
+						href="/settings"
 					>
 						<ListItemIcon>
-							<AnalyticsIcon/>
+							<SettingsIcon/>
 						</ListItemIcon>
 						<ListItemText
-							primary="Analitica"
-							secondary={anayltics.state ? "Impartasiti informatie pentru analitica" : "Nu impartasiti informatii pentru analitica"}
-							sx={{
-								mr: 8
-							}}
+							primary="Setari"
 						/>
-						<ListItemSecondaryAction>
-							<Switch
-								onClick={(e) => e.stopPropagation()}
-								edge="end"
-								checked={anayltics.state}
-								onChange={(_, checked) => anayltics.set(checked)}
-							/>
-						</ListItemSecondaryAction>
 					</ListItemButton>
-					
-					<Divider
-						variant="middle"
-					/>
-
+				</Paper>
+				<List>
 					<ListItemButton
 						component="a"
 						href="https://ciorogarlaunita.eu.org/terms-and-conditions"
@@ -128,15 +127,6 @@ export default function SettingsDialog(props: SettingsDialogProps) {
 							primary="Politica de confidentialitate"
 						/>
 					</ListItemButton>
-					<ListItem dense>
-						<ListItemIcon>
-							<InfoIcon/>
-						</ListItemIcon>
-						<ListItemText 
-							primary="Versiune"
-							secondary={version}
-						/>
-					</ListItem>
 				</List>
 			</DialogContent>
 		</Dialog>

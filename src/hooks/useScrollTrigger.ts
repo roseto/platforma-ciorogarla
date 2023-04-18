@@ -1,13 +1,17 @@
-import {createSignal} from "solid-js";
+import {Accessor, createEffect, createSignal} from "solid-js";
 
-export const createScrollTrigger = (threshold: number) => {
-	const [triggered, setTriggered] = createSignal(window.scrollY > threshold);
+export const createScrollTrigger = (threshold: number | Accessor<number>) => {
+	const thresholdValue = typeof threshold === "number" ? () => threshold : threshold;
+	const [triggered, setTriggered] = createSignal(window.scrollY > thresholdValue());
 
 	const handleScroll = () => {
-		setTriggered(window.scrollY > threshold);
+		setTriggered(window.scrollY > thresholdValue());
 	}
 
-	window.addEventListener("scroll", handleScroll);
+	createEffect(() => {
+		window.addEventListener("scroll", handleScroll);
+		return () => window.removeEventListener("scroll", handleScroll);
+	});
 
 	return triggered;
 }

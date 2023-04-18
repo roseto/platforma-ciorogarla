@@ -7,7 +7,6 @@ import {useAuth, useFirebaseApp} from "solid-firebase";
 import {getAuth, signOut} from "firebase/auth";
 import {Show} from "solid-js";
 
-import AccountIcon from "@suid/icons-material/AccountCircle";
 import InfoIcon from "@suid/icons-material/Info";
 import AnalyticsIcon from "@suid/icons-material/Analytics";
 import TermsIcon from "@suid/icons-material/Description";
@@ -15,10 +14,7 @@ import PrivacyIcon from "@suid/icons-material/PrivacyTip";
 
 
 export default function Settings() {
-	const firebaseApp = useFirebaseApp();
 	const anayltics = useAnalyticsState();
-	const auth = getAuth(firebaseApp);
-	const user = useAuth(auth);
 
 	return (
 		<>
@@ -26,47 +22,6 @@ export default function Settings() {
 				title="Setari"
 				back
 			/>
-			<Container>
-				<Paper
-				>
-					<ListItemButton
-						component={A}
-						href={user.data ? "" : "/login"}
-					>
-						<Show when={user.data} fallback={(
-							<>
-								<ListItemIcon>
-									<AccountIcon/>
-								</ListItemIcon>
-								<ListItemText
-									primary="Cont"
-									secondary="Nu sunteti conectat"
-								/>
-							</>
-						)}>
-							<ListItemAvatar>
-								<Avatar
-									src={user.data?.photoURL || ""}
-								/>
-							</ListItemAvatar>
-							<ListItemText
-								primary={user.data?.displayName || "Fara nume de utilizator"}
-								secondary={user.data?.email}
-							/>
-						</Show>
-					</ListItemButton>
-					<Show when={user.data}>
-						<Button
-							variant="outlined"
-							color="error"
-							onClick={() => signOut(auth)}
-							fullWidth
-						>
-							Deconectare
-						</Button>
-					</Show>
-				</Paper>
-			</Container>
 			<Container disableGutters>
 				<List>
 					<ListItemButton

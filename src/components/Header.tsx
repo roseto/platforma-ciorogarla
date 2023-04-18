@@ -6,7 +6,7 @@ import {isIos} from "../lib/device";
 import {Meta, Title} from "@solidjs/meta";
 import {OverridableComponent} from "@suid/material/OverridableComponent";
 import {SvgIconTypeMap} from "@suid/material/SvgIcon";
-import {For, Show} from "solid-js";
+import {createSignal, For, Show} from "solid-js";
 import {A} from "@solidjs/router";
 
 interface HeaderProps {
@@ -38,13 +38,10 @@ export default function Header(props: HeaderProps) {
 					sx={{
 						paddingTop: "env(safe-area-inset-top)",
 						backgroundColor: theme => 
-							props.noHeading ? 
 								triggered() ? 
 									`${theme.palette.background.paper}${triggered() && isIos() ? "cc" : ""}` 
 									:
-									"transparent" 
-								:
-								`${theme.palette.background.paper}${triggered() && isIos() ? "cc" : ""}`,
+									"transparent",
 						backdropFilter: triggered() ? "blur(16px)" : undefined,
 						WebkitBackdropFilter: triggered() ? "blur(16px)" : undefined,
 					}}
@@ -54,7 +51,7 @@ export default function Header(props: HeaderProps) {
 							backgroundColor: "transparent",
 							overflow: "hidden",
 						}}
-						>
+					>
 						<Show when={props.back}>
 							<IconButton
 								edge="start"
@@ -95,9 +92,9 @@ export default function Header(props: HeaderProps) {
 				<Show when={!props.noHeading}>
 					<Paper
 						sx={{
+							backgroundColor: "transparent",
 							paddingTop: "calc(env(safe-area-inset-top) + 56px)",
 							borderRadius: 0,
-							marginBottom: 2,
 							overflow: "hidden",
 						}}
 					>
@@ -105,7 +102,7 @@ export default function Header(props: HeaderProps) {
 							<Fade in={!triggered()} appear={false}>
 								<Typography
 									variant="h1"
-									>
+								>
 									{props.title}
 								</Typography>
 							</Fade>

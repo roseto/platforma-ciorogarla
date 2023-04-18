@@ -1,4 +1,4 @@
-import {Button, Container, TextField, Stack, SvgIcon, Typography, Divider, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions} from "@suid/material";
+import {Button, Container, TextField, Stack, SvgIcon, Typography, Divider, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Link} from "@suid/material";
 import {useAuth, useFirebaseApp} from "solid-firebase";
 import { getAuth, GoogleAuthProvider, signInWithPopup, updateProfile, TwitterAuthProvider, GithubAuthProvider, sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink } from "firebase/auth";
 import Header from "../components/Header";
@@ -194,7 +194,7 @@ export default function Login() {
 					</DialogContentText>
 					<DialogContentText>
 						Daca problema persista, contactati-ne la 
-						<strong><a href="mailto:cont@ciorogarlaunita.eu.org">cont@ciorogarlaunita.eu.org</a></strong>
+						<Link href="mailto:cont@ciorogarlaunita.eu.org" target="_blank"><strong>cont@ciorogarlaunita.eu.org</strong></Link>
 					</DialogContentText>
 				</DialogContent>
 				<DialogActions>
