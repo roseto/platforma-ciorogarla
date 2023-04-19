@@ -132,7 +132,7 @@ export function HomeGetData() {
 
 function BusinessSection(props: { businesses: Business[] }) {
 	return (
-		<>
+		<Show when={props.businesses}>
 			<List>
 				<ListSubheader
 					disableSticky
@@ -169,6 +169,6 @@ function BusinessSection(props: { businesses: Business[] }) {
 					</ListItemButton>
 				</A>
 			</List>
-		</>
+		</Show>
 	)
 }
