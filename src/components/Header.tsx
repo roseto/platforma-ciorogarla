@@ -6,7 +6,7 @@ import {isIos} from "../lib/device";
 import {Meta, Title} from "@solidjs/meta";
 import {OverridableComponent} from "@suid/material/OverridableComponent";
 import {SvgIconTypeMap} from "@suid/material/SvgIcon";
-import {createSignal, For, Show} from "solid-js";
+import {For, Show} from "solid-js";
 import {A} from "@solidjs/router";
 
 interface HeaderProps {
@@ -29,7 +29,7 @@ export default function Header(props: HeaderProps) {
 	return (
 		<>
 			<Title>{props.title} &middot; Ciorogârla Unită</Title>
-			<Meta name="theme-color" content={props.themeColor ? triggered() ? theme.palette.background.paper : props.themeColor : theme.palette.background.paper} />
+			<Meta name="theme-color" content={props.themeColor ? triggered() ? theme.palette.background.default : props.themeColor : theme.palette.background.paper} />
 			<Show when={!props.noNav}>
 				<AppBar
 					position="fixed"

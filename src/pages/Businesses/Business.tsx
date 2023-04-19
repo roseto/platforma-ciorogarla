@@ -54,7 +54,7 @@ export default function BusinessPage() {
 					)}
 				>
 					<img 
-						src={urlFor(data()?.cover).width(windowWidth).height(128).url() ?? ""}
+						src={urlFor(data()?.cover).width(windowWidth * 2).height(256).url() ?? ""}
 						alt={data()?.name ?? ""}
 						width={windowWidth}
 						height="128px"
@@ -86,7 +86,7 @@ export default function BusinessPage() {
 						)}
 					>
 						<Avatar 
-							src={urlFor(data()?.logo).width(128).height(128).url() ?? ""}
+							src={urlFor(data()?.logo).width(256).height(256).url() ?? ""}
 							alt={data()?.name ?? ""}
 							variant="square"
 							sx={{

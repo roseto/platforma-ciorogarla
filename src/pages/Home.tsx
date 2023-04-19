@@ -1,17 +1,22 @@
-import {Avatar, Box, CardActionArea, CardContent, Chip, Container, ListItemButton, ListItemIcon, ListItemText, Paper, Stack, Typography, useTheme} from "@suid/material";
+import {Avatar, Box, CardActionArea, CardContent, Chip, Container, List, ListItemAvatar, ListItemButton, ListItemIcon, ListItemSecondaryAction, ListItemText, ListSubheader, Paper, Stack, Typography, useTheme} from "@suid/material";
 import SettingsIcon from "@suid/icons-material/Settings";
 import InstallIcon from "@suid/icons-material/InstallMobile";
 import CardWithIcon from "../components/CardWithIcon";
 import Header from "../components/Header";
-import {createSignal, For, Show} from "solid-js";
+import {createResource, createSignal, For, Show} from "solid-js";
 import {modules} from "../lib/modules";
-import {A} from "@solidjs/router";
+import {A, useRouteData} from "@solidjs/router";
 import {isInstalled} from "../lib/device";
 import SettingsDialog from "../components/SettingsDialog";
+import {Business} from "../types/SanitySchema";
+
+import ArrowForwardIcon from "@suid/icons-material/ArrowForward";
+import {sanityClient, urlFor} from "../lib/sanity";
 
 export default function Home() {
 	const theme = useTheme();
 	const [settingsDialogOpen, setSettingsDialogOpen] = createSignal(false);
+	const data = useRouteData<typeof HomeGetData>();
 
 	return (
 		<>
@@ -71,6 +76,7 @@ export default function Home() {
 							</Paper>
 						</A>
 					</Show>
+					<BusinessSection businesses={data.businesses()}/>
 					<For each={modules}>
 						{(module) => (
 							<A href={module.disabled ? "" : module.path || ""}>
@@ -104,6 +110,65 @@ export default function Home() {
 					</For>
 				</Stack>
 			</Container>
+		</>
+	)
+}
+
+const fetcherBusinesses = async () => {
+	const data = sanityClient.fetch(`*[_type == "business"] | order(_createdAt desc)[0...3]`)
+		.catch(() => null);
+
+	return data;
+}
+
+export function HomeGetData() {
+	const [businesses] = createResource(fetcherBusinesses);
+
+	return {
+		businesses
+	}
+}
+
+
+function BusinessSection(props: { businesses: Business[] }) {
+	return (
+		<>
+			<List>
+				<ListSubheader
+					disableSticky
+				>
+					Afaceri noi adaugate
+				</ListSubheader>
+				<For each={props.businesses}>
+					{(business) => (
+						<A href={`/businesses/${business.slug?.current}`}>
+							<ListItemButton>
+								<ListItemAvatar>
+									<Avatar
+										src={urlFor(business.logo).width(64).height(64).url()}
+										variant="rounded"
+									/>
+								</ListItemAvatar>
+								<ListItemText
+									primary={business.name}
+									secondary={business.description}
+									secondaryTypographyProps={{ noWrap: true }}
+								/>
+							</ListItemButton>
+						</A>
+					)}
+				</For>
+				<A href="/businesses">
+					<ListItemButton>
+						<ListItemText
+							primary="Mai multe"
+						/>
+						<ListItemSecondaryAction>
+						<ArrowForwardIcon />
+						</ListItemSecondaryAction>
+					</ListItemButton>
+				</A>
+			</List>
 		</>
 	)
 }
