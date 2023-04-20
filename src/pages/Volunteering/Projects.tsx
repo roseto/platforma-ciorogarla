@@ -1,5 +1,5 @@
-import {useRouteData} from "@solidjs/router";
-import {Avatar, Box, Button, Card, CardActionArea, CardContent, CardMedia, Chip, Container, List, Paper, Typography} from "@suid/material";
+import {A, useRouteData} from "@solidjs/router";
+import {Avatar, Box, Button, Card, CardActionArea, CardContent, CardMedia, Chip, Container, Paper, Typography} from "@suid/material";
 import {createResource, For, Show} from "solid-js";
 import Header from "../../components/Header";
 import {sanityClient, urlFor} from "../../lib/sanity";
@@ -24,52 +24,59 @@ export default function Projects() {
 				</Show>
 				<For each={data()}>
 					{(project) => (
-						<Card>
-							<CardActionArea onClick={() => console.log("hello")}>
-								<CardMedia
-									image={urlFor(project.image).height(128).width(768).url()}
-									sx={{ width: "100%", height: 128 }}
-								/>
-								<CardContent>
-									<Typography variant="h5" gutterBottom>
-										{project.name}
-									</Typography>
-									<Button
-										onClick={(e) => {
-											e.stopPropagation();
-										}}
-										component="a"
-										href={(project.organisation as unknown as Organisation).link}
-										target="_blank"
-										startIcon={
-											<Avatar
-												src={urlFor((project.organisation as unknown as Organisation).logo).width(64).height(64).url()}
-												sx={{ width: 24, height: 24 }}
-											/>
-										}
-										variant="outlined"
-										size="small"
-										sx={{ mb: 2, borderRadius: "4rem" }}
-									>
-										{(project.organisation as unknown as Organisation).name}
-									</Button>
-									<Box gap={.5} displayRaw="flex" flexDirection="row">
-										<Show when={project.period?.fromDate && project.period?.toDate}>
-											<Chip
-												label={`${calculateDays(project.period?.fromDate!, project.period?.toDate!)} zile`}
-												size="small"
-											/>
-										</Show>
-										<Show when={project.country}>
-											<Chip
-												label={(project.country as unknown as Country).name}
-												size="small"
-											/>
-										</Show>
-									</Box>
-								</CardContent>
-							</CardActionArea>
-						</Card>
+						<A
+							href={`/volunteering/${project.slug?.current}`}
+						>
+							<Card>
+								<CardActionArea>
+									<CardMedia
+										image={urlFor(project.image).height(256).width(1024).url()}
+										sx={{ width: "100%", height: 128 }}
+									/>
+									<CardContent>
+										<Typography variant="h5" gutterBottom>
+											{project.name}
+										</Typography>
+										<Typography color="textSecondary" gutterBottom>
+											{project.topic}
+										</Typography>
+										<Button
+											onClick={(e) => {
+												e.stopPropagation();
+											}}
+											component="a"
+											href={(project.organisation as unknown as Organisation).link}
+											target="_blank"
+											startIcon={
+												<Avatar
+													src={urlFor((project.organisation as unknown as Organisation).logo).width(64).height(64).url()}
+													sx={{ width: 24, height: 24 }}
+												/>
+											}
+											variant="outlined"
+											size="small"
+											sx={{ mb: 2, borderRadius: "4rem" }}
+										>
+											{(project.organisation as unknown as Organisation).name}
+										</Button>
+										<Box gap={.5} displayRaw="flex" flexDirection="row">
+											<Show when={project.period?.fromDate && project.period?.toDate}>
+												<Chip
+													label={`${calculateDays(project.period?.fromDate!, project.period?.toDate!)} zile`}
+													size="small"
+												/>
+											</Show>
+											<Show when={project.country}>
+												<Chip
+													label={(project.country as unknown as Country).name}
+													size="small"
+												/>
+											</Show>
+										</Box>
+									</CardContent>
+								</CardActionArea>
+							</Card>
+						</A>
 					)}
 				</For>
 			</Container>

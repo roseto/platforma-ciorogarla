@@ -29,83 +29,67 @@ export default function BusinessPage() {
 	return (
 		<>
 			<Header
-				title={data()?.name ?? "Afaceri locale"}
+				title={data()?.name ?? "Afacere"}
 				back
 				noHeading
 				// @ts-ignore: Metadata is there but not specified
 				themeColor={data()?.cover?.asset?.metadata?.palette?.dominant.background}
 			/>
-			<div
-				style={{
-					position: "relative",
-					"padding-bottom": "68px",
-				}}
+			<Show 
+				when={data()?.cover} 
+				fallback={(
+					<Skeleton
+						variant="rectangular"
+						sx={{
+							width: "100%",
+							height: "128px",
+						}}
+					/>
+				)}
 			>
+				<img 
+					src={urlFor(data()?.cover).width(windowWidth * 2).height(256).url() ?? ""}
+					alt={data()?.name ?? ""}
+					width={windowWidth}
+					height="128px"
+					style={{
+						"border-bottom-left-radius": theme.shape.borderRadius + "px",
+						"border-bottom-right-radius": theme.shape.borderRadius + "px",
+					}}
+				/>
+			</Show>
+		<Container>
 				<Show 
-					when={data()?.cover} 
+					when={data()?.logo}
 					fallback={(
 						<Skeleton
 							variant="rectangular"
-							sx={{
-								width: "100%",
-								height: "128px",
-							}}
-						/>
-					)}
-				>
-					<img 
-						src={urlFor(data()?.cover).width(windowWidth * 2).height(256).url() ?? ""}
-						alt={data()?.name ?? ""}
-						width={windowWidth}
-						height="128px"
-					/>
-				</Show>
-				<Box
-					sx={{
-						position: "absolute",
-						left: "50%",
-						transform: "translateX(-50%)",
-						top: 64,
-						width: "128px",
-						height: "128px",
-						backgroundColor: "background.default",
-						borderRadius: theme => theme.shape.borderRadius / 8,
-						overflow: "hidden",
-					}}
-				>
-					<Show 
-						when={data()?.logo}
-						fallback={(
-							<Skeleton
-								variant="rectangular"
-								sx={{
-									width: "128px",
-									height: "128px",
-								}}
-							/>
-						)}
-					>
-						<Avatar 
-							src={urlFor(data()?.logo).width(256).height(256).url() ?? ""}
-							alt={data()?.name ?? ""}
-							variant="square"
 							sx={{
 								width: "128px",
 								height: "128px",
 							}}
 						/>
-					</Show>
-				</Box>
-			</div>
-			<Container>
+					)}
+				>
+					<Avatar 
+						src={urlFor(data()?.logo).width(256).height(256).url() ?? ""}
+						alt={data()?.name ?? ""}
+						variant="rounded"
+						sx={{
+							width: "128px",
+							height: "128px",
+							marginTop: "-64px",
+						}}
+					/>
+				</Show>
 				<Stack>
-					<Typography variant="h4" component="h1" textAlign="center">
+					<Typography variant="h4" component="h1">
 						{data()?.name}
 					</Typography>
 					<Show when={data()?.type}>
 						<Chip
 							sx={{
-								alignSelf: "center",
+								alignSelf: "start",
 							}}
 							label={businessTypes.get(data()?.type as string)?.name}
 							icon={<Dynamic component={ChipIcon()} />}
@@ -272,7 +256,7 @@ const fetcher = async (id: string) => {
 	return data;
 }
 
-export const BusinessGetData = ({ params, navigate }: RouteDataFuncArgs) => {
+export function BusinessGetData({ params, navigate }: RouteDataFuncArgs) {
 	const [data] = createResource(() => params.id, fetcher);
 	
 	createEffect(() => {

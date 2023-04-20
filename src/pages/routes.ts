@@ -3,6 +3,7 @@ import { RouteDefinition } from "@solidjs/router";
 import { BusinessesGetData } from "./Businesses/Businesses";
 import { BusinessGetData } from "./Businesses/Business";
 import { VolunteeringProjectsGetData } from "./Volunteering/Projects";
+import { VolunteeringProjectGetData } from "./Volunteering/Project";
 import {HomeGetData} from "./Home";
 
 export const routes: RouteDefinition[] = [
@@ -50,6 +51,7 @@ export const routes: RouteDefinition[] = [
 			{
 				path: "/:id",
 				component: lazy(() => import("./Volunteering/Project")),
+				data: VolunteeringProjectGetData
 			}
 		]
 	}
