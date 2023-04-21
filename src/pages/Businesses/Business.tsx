@@ -1,5 +1,5 @@
 import { RouteDataFuncArgs, useRouteData } from "@solidjs/router";
-import {Avatar, Box, Button, Card, CardContent, Chip, Container, IconButton, List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Skeleton, Stack, SvgIcon, Typography, useTheme} from "@suid/material";
+import {Avatar, Box, Button, Card, CardActionArea, CardContent, Chip, Container, IconButton, List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Skeleton, Stack, SvgIcon, Typography, useTheme} from "@suid/material";
 import CardWithIcon from "../../components/CardWithIcon";
 import {createMemo, Show} from "solid-js";
 import {createResource} from "solid-js";
@@ -7,6 +7,7 @@ import Header from "../../components/Header";
 import {businessTypes} from "../../lib/businessTypes";
 import {sanityClient, urlFor} from "../../lib/sanity";
 import {Business} from "../../types/SanitySchema";
+import {generateStaticMapUrl} from "../../lib/mapbox";
 import {Dynamic} from "solid-js/web";
 import {createEffect} from "solid-js";
 
@@ -16,6 +17,7 @@ import EmailIcon from "@suid/icons-material/Email";
 import PhoneIcon from "@suid/icons-material/Phone";
 import StarIcon from "@suid/icons-material/Star";
 import ListIcon from "@suid/icons-material/Assignment";
+import MarkerIcon from "@suid/icons-material/PinDrop";
 import FacebookSvg from "../../resources/icons/facebook.svg?component-solid";
 import InstagramSvg from "../../resources/icons/instagram.svg?component-solid";
 
@@ -34,6 +36,8 @@ export default function BusinessPage() {
 				noHeading
 				// @ts-ignore: Metadata is there but not specified
 				themeColor={data()?.cover?.asset?.metadata?.palette?.dominant.background}
+				// @ts-ignore: Metadata is there but not specified
+				color={data()?.cover?.asset?.metadata?.palette?.dominant.title}
 			/>
 			<Show 
 				when={data()?.cover} 
@@ -58,7 +62,7 @@ export default function BusinessPage() {
 					}}
 				/>
 			</Show>
-		<Container>
+			<Container>
 				<Show 
 					when={data()?.logo}
 					fallback={(
@@ -185,6 +189,30 @@ export default function BusinessPage() {
 							/>
 						</Show>
 					</Box>
+					<Show when={data()?.location}>
+						<a
+							href={`https://www.google.com/maps/search/?api=1&query=${data()?.location?.coordinates?.lat},${data()?.location?.coordinates?.lng}`}
+							target="_blank"
+						>
+							<Card>
+								<CardActionArea>
+									<CardContent>
+										<Typography gutterBottom>
+										<MarkerIcon fontSize="inherit"/>{" "}
+											{data()?.location?.address}
+										</Typography>
+										<img
+											width="100%"
+											height={200}
+											src={generateStaticMapUrl(data()?.location?.coordinates?.lat!, data()?.location?.coordinates?.lng!, 768, 200, theme.palette.mode)}
+											style={{ "object-fit": "cover", "border-radius": theme.shape.borderRadius / 2 + "px" }}
+											onError={(e) => e.currentTarget.remove()}
+										/>
+									</CardContent>
+								</CardActionArea>
+							</Card>
+						</a>
+					</Show>
 					<Show when={data()?.isSponsor}>
 						<CardWithIcon 
 							cardIcon={StarIcon}

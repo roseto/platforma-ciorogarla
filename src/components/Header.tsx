@@ -15,6 +15,7 @@ interface HeaderProps {
 	noNav?: boolean;
 	noHeading?: boolean;
 	themeColor?: string;
+	color?: string;
 	actions?: {
 		path?: string;
 		onClick?: () => void;
@@ -34,16 +35,17 @@ export default function Header(props: HeaderProps) {
 				<AppBar
 					position="fixed"
 					color="transparent"
-					elevation={0}
+					elevation={triggered() ? 4 : 0}
 					sx={{
 						paddingTop: "env(safe-area-inset-top)",
 						backgroundColor: theme => 
 								triggered() ? 
-									`${theme.palette.background.paper}${triggered() && isIos() ? "cc" : ""}` 
+									`${theme.palette.background.default}${triggered() && isIos() ? "cc" : ""}` 
 									:
 									"transparent",
 						backdropFilter: triggered() ? "blur(16px)" : undefined,
 						WebkitBackdropFilter: triggered() ? "blur(16px)" : undefined,
+						transition: "background-color 0.2s ease-in-out",
 					}}
 				>
 					<Toolbar
@@ -59,9 +61,9 @@ export default function Header(props: HeaderProps) {
 								sx={{ marginRight: isIos() ? 0 : 2 }}
 							>
 								{isIos() ?
-									<BackIosIcon/>
+									<BackIosIcon sx={{ color: triggered() ? "inherit" : props.color ?? "inherit" }}/>
 									:
-									<BackIcon />
+									<BackIcon sx={{ color: triggered() ? "inherit" : props.color ?? "inherit" }}/>
 								}
 							</IconButton>
 						</Show>
@@ -83,7 +85,7 @@ export default function Header(props: HeaderProps) {
 									href={action.path}
 									onClick={action.onClick}
 								>
-									<action.icon />
+									<action.icon sx={{ color: triggered() ? "inherit" : props.color ?? "inherit" }}/>
 								</IconButton>
 							)}
 						</For>

@@ -1,5 +1,5 @@
 import {RouteDataFuncArgs, useRouteData} from "@solidjs/router";
-import {Avatar, Box, Button, Card, CardContent, Chip, Container, ListItemAvatar, ListItemButton, ListItemIcon, ListItemText, Stack, Typography, useTheme} from "@suid/material";
+import {Avatar, Box, Button, Card, CardActionArea, CardContent, Chip, Container, ListItemAvatar, ListItemButton, ListItemIcon, ListItemText, Stack, Typography, useTheme} from "@suid/material";
 import {createEffect, createResource, createSignal, Show} from "solid-js";
 import Header from "../../components/Header";
 import {sanityClient, urlFor} from "../../lib/sanity";
@@ -23,6 +23,8 @@ export default function Project() {
 				noHeading
 				//@ts-ignore: Metadata is there but not specified
 				themeColor={data()?.image?.asset?.metadata?.palette?.dominant.background}
+				//@ts-ignore: Metadata is there but not specified
+				color={data()?.image?.asset?.metadata?.palette?.dominant.title}
 			/>
 			<Show when={data()?.image}>
 				<img
@@ -75,22 +77,30 @@ export default function Project() {
 							</Show>
 						</CardContent>
 					</Card>
-					<Card>
-						<CardContent>
-							<Typography gutterBottom>
-								<MarkerIcon fontSize="inherit"/>{" "}
-								{data()?.address}
-							</Typography>
-							<Show when={data()?.location}>
-								<img
-									width="100%"
-									height={200}
-									src={generateStaticMapUrl(data()?.location?.lat!, data()?.location?.lng!, 768, 200, theme.palette.mode)}
-									style={{ "object-fit": "cover", "border-radius": theme.shape.borderRadius / 2 + "px" }}
-								/>
-							</Show>
-						</CardContent>
-					</Card>
+					<a
+						href={`https://www.google.com/maps/search/?api=1&query=${data()?.location?.coordinates?.lat},${data()?.location?.coordinates?.lng}`}
+						target="_blank"
+					>
+						<Card>
+							<CardActionArea>
+								<CardContent>
+									<Typography gutterBottom>
+									<MarkerIcon fontSize="inherit"/>{" "}
+										{data()?.location?.address}
+									</Typography>
+									<Show when={data()?.location}>
+										<img
+											width="100%"
+											height={200}
+											src={generateStaticMapUrl(data()?.location?.coordinates?.lat!, data()?.location?.coordinates?.lng!, 768, 200, theme.palette.mode)}
+											style={{ "object-fit": "cover", "border-radius": theme.shape.borderRadius / 2 + "px" }}
+											onError={(e) => e.currentTarget.remove()}
+										/>
+									</Show>
+								</CardContent>
+							</CardActionArea>
+						</Card>
+					</a>
 					<ListItemButton
 						component="a"
 						//@ts-ignore: URL added manually
