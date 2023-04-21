@@ -311,6 +311,13 @@ export interface VolunteeringProject extends SanityDocument {
   };
 
   /**
+   * Address — `string`
+   *
+   * The address of the project
+   */
+  address?: string;
+
+  /**
    * Location — `geopoint`
    *
    * The location of the project
