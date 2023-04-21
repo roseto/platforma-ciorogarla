@@ -70,6 +70,8 @@ export interface Business extends SanityDocument {
     | "barbershop"
     | "itp"
     | "showroom"
+    | "distributor"
+    | "autoParts"
     | "market"
     | "pizza";
 

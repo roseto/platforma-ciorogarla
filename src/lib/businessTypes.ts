@@ -9,6 +9,8 @@ import ITPIcon from "@suid/icons-material/CarRepair";
 import MarketIcon from "@suid/icons-material/LocalGroceryStore";
 import PizzaIcon from "@suid/icons-material/LocalPizza";
 import ShowroomIcon from "@suid/icons-material/Storefront";
+import AutoPartsIcon from "@suid/icons-material/Build";
+import DistributorIcon from "@suid/icons-material/LocalShipping";
 
 
 export const businessTypes = new Map<string, { name: string, icon: OverridableComponent<SvgIconTypeMap<{}, "svg">> }>([
@@ -20,4 +22,6 @@ export const businessTypes = new Map<string, { name: string, icon: OverridableCo
 	["market", {name: "Magazin", icon: MarketIcon}],
 	["pizza", {name: "Pizzerie", icon: PizzaIcon}],
 	["showroom", {name: "Showroom", icon: ShowroomIcon}],
+	["autoParts", {name: "Parti Auto", icon: AutoPartsIcon}],
+	["distributor", {name: "Distribuitor", icon: DistributorIcon}],
 ]);
