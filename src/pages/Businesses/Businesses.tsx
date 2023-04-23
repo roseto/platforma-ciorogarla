@@ -46,7 +46,9 @@ export default function Businesses() {
 					}
 				]}
 			/>
-			<Container>
+			<Container
+				sx={{ pb: 2 }}
+			>
 				<Stack>
 					<Searchbox
 						defaultValue={searchParams.search}

@@ -38,6 +38,7 @@ export default function Home() {
 			<Container
 				sx={{
 					marginTop: "env(safe-area-inset-top)",
+					pb: 2
 				}}
 			>
 				<Stack>

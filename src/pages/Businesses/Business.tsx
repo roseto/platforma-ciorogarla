@@ -62,7 +62,9 @@ export default function BusinessPage() {
 					}}
 				/>
 			</Show>
-			<Container>
+			<Container
+				sx={{ pb: 2 }}
+			>
 				<Show 
 					when={data()?.logo}
 					fallback={(
