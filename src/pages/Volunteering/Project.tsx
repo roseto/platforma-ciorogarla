@@ -9,6 +9,7 @@ import {generateStaticMapUrl} from "../../lib/mapbox";
 import MarkerIcon from "@suid/icons-material/PinDrop";
 import InfoIcon from "@suid/icons-material/Info";
 import InfoPackIcon from "@suid/icons-material/Feed";
+import MapsCard from "../../components/MapsCard";
 
 export default function Project() {
 	const data = useRouteData<typeof VolunteeringProjectGetData>();
@@ -77,30 +78,11 @@ export default function Project() {
 							</Show>
 						</CardContent>
 					</Card>
-					<a
-						href={`https://www.google.com/maps/search/?api=1&query=${data()?.location?.coordinates?.lat},${data()?.location?.coordinates?.lng}`}
-						target="_blank"
-					>
-						<Card>
-							<CardActionArea>
-								<CardContent>
-									<Typography gutterBottom>
-									<MarkerIcon fontSize="inherit"/>{" "}
-										{data()?.location?.address}
-									</Typography>
-									<Show when={data()?.location}>
-										<img
-											width="100%"
-											height={200}
-											src={generateStaticMapUrl(data()?.location?.coordinates?.lat!, data()?.location?.coordinates?.lng!, 768, 200, theme.palette.mode)}
-											style={{ "object-fit": "cover", "border-radius": theme.shape.borderRadius / 2 + "px" }}
-											onError={(e) => e.currentTarget.remove()}
-										/>
-									</Show>
-								</CardContent>
-							</CardActionArea>
-						</Card>
-					</a>
+					<MapsCard
+						address={data()?.location?.address || ""}
+						lat={data()?.location?.coordinates?.lat}
+						lng={data()?.location?.coordinates?.lng}
+					/>
 					<ListItemButton
 						component="a"
 						//@ts-ignore: URL added manually
