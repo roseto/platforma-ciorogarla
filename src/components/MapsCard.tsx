@@ -1,10 +1,11 @@
-import {Divider, ListItemButton, ListItemIcon, ListItemText, Paper, Skeleton, Typography, useTheme} from "@suid/material";
+import {AppBar, Dialog, Divider, IconButton, ListItemButton, ListItemIcon, ListItemText, Paper, Skeleton, Slide, Toolbar, Typography, useTheme} from "@suid/material";
 import {getMapsEmbedURL, getMapsURL} from "../lib/maps";
-import {createMemo, createSignal, Show} from "solid-js";
+import {createMemo, createSignal, JSXElement, Show} from "solid-js";
 
 import MarkerIcon from "@suid/icons-material/PinDrop";
-import MapIcon from "@suid/icons-material/Map";
 import StreetViewIcon from "@suid/icons-material/Streetview";
+import CloseIcon from "@suid/icons-material/Close";
+import {TransitionProps} from "solid-transition-group";
 
 
 interface MapsCardProps {
@@ -18,7 +19,7 @@ export default function MapsCard(props: MapsCardProps) {
 	const theme = useTheme();
 	const url = getMapsURL(props.address ?? props.override);
 	const isStreetViewEnabled = createMemo(() => props.lat && props.lng);
-	const [streetViewMode, setStreetViewMode] = createSignal(false);
+	const [streetViewDialog, setStreetViewDialog] = createSignal(false);
 
 	return (
 		<Paper
@@ -43,13 +44,13 @@ export default function MapsCard(props: MapsCardProps) {
 			<Show when={isStreetViewEnabled}>
 				<Divider variant="middle" />
 				<ListItemButton
-					onClick={() => setStreetViewMode(!streetViewMode())}
+					onClick={() => setStreetViewDialog(true)}
 				>
 					<ListItemIcon sx={{ minWidth: 32 }}>
-						{streetViewMode() ? <MapIcon /> : <StreetViewIcon />}
+						<StreetViewIcon />
 					</ListItemIcon>
 					<ListItemText
-						primary={streetViewMode() ? "View on map" : "View in Street View"}
+						primary="View in Street View"
 					/>
 				</ListItemButton>
 			</Show>
@@ -62,7 +63,7 @@ export default function MapsCard(props: MapsCardProps) {
 				<Skeleton
 					variant="rectangular"
 					width="100%"
-					height={streetViewMode() ? "512px" : "256px"}
+					height="256px"
 					style={{
 						"border-radius": theme.shape.borderRadius + "px",
 					}}
@@ -71,19 +72,62 @@ export default function MapsCard(props: MapsCardProps) {
 				changes and iframe registers the changes in the history */}
 				<object
 					type="text/html"
-					data={getMapsEmbedURL(streetViewMode() ? "streetview" : "place", props.address ?? props.override, `${props.lat},${props.lng}`)}
+					data={getMapsEmbedURL("place", props.address ?? props.override)}
 					width="100%"
-					height={streetViewMode() ? "512px" : "256px"}
+					height="256px"
 					style={{
 						position: "absolute",
 						top: 0,
 						left: 0,
 						border: 0,
 						"border-radius": theme.shape.borderRadius + "px",
-						filter: streetViewMode() ? "none" : theme.palette.mode === "dark" ? "invert(90%) hue-rotate(180deg)" : "none",
+						filter: theme.palette.mode === "dark" ? "invert(90%) hue-rotate(180deg)" : "none",
 					}}
 				/>
 			</div>
+			<Dialog
+				open={streetViewDialog()}
+				onClose={() => setStreetViewDialog(false)}
+				fullScreen
+				TransitionComponent={DialogTransition}
+			>
+				<AppBar sx={{ position: "relative", pt: "env(safe-area-inset-top)" }}>
+					<Toolbar>
+						<IconButton
+							edge="start"
+							color="inherit"
+							onClick={() => setStreetViewDialog(false)}
+							aria-label="close"
+						>
+							<CloseIcon />
+						</IconButton>
+						<Typography
+							sx={{
+								ml: 2,
+								flex: 1,
+							}}
+							variant="h6"
+							component="div"
+						>
+							Street View
+						</Typography>
+					</Toolbar>
+				</AppBar>
+				<object
+					type="text/html"
+					data={getMapsEmbedURL("streetview", props.address, `${props.lat},${props.lng}`)}
+					width="100%"
+					height="100%"
+					style={{
+						border: 0,
+					}}
+				/>
+			</Dialog>
 		</Paper>
 	)
 }
+
+
+const DialogTransition = function Transition(props: TransitionProps & { children: JSXElement }) {
+	return <Slide direction="up" {...props} />;
+};
