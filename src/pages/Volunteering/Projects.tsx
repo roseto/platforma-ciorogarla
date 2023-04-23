@@ -1,15 +1,18 @@
 import {debounce} from "@solid-primitives/scheduled";
 import {A, RouteDataFuncArgs, useRouteData, useSearchParams} from "@solidjs/router";
-import {Avatar, Box, Button, Card, CardActionArea, CardContent, CardMedia, Chip, Container, Paper, Stack, Typography} from "@suid/material";
+import {Avatar, Box, Button, Card, CardActionArea, CardContent, CardMedia, Chip, Container, Dialog, DialogActions, DialogContent, DialogTitle, Link, Paper, Stack, Typography} from "@suid/material";
 import {createResource, createSignal, For, Show} from "solid-js";
 import Header from "../../components/Header";
 import Searchbox from "../../components/Searchbox";
 import {sanityClient, urlFor} from "../../lib/sanity";
 import {Country, Organisation, VolunteeringProject} from "../../types/SanitySchema";
 
+import AddProjectIcon from "@suid/icons-material/NoteAdd";
+
 export default function Projects() {
 	const [searchParams, setSearchParams] = useSearchParams();
 	const [search, setSearch] = createSignal("");
+	const [addDialog, setAddDialog] = createSignal(false);
 	const data = useRouteData<typeof VolunteeringProjectsGetData>();
 
 	const debounceSearch = debounce((input: string) => {
@@ -22,6 +25,12 @@ export default function Projects() {
 			<Header 
 				title="Voluntariat"
 				back
+				actions={[
+					{
+						icon: AddProjectIcon,
+						onClick: () => setAddDialog(true),
+					}
+				]}
 			/>
 			<Container>
 				<Stack>
@@ -108,6 +117,28 @@ export default function Projects() {
 					</For>
 				</Stack>
 			</Container>
+			<Dialog
+				open={addDialog()}
+				onClose={() => setAddDialog(false)}
+			>
+				<DialogTitle>
+					Adaugare afacere
+				</DialogTitle>
+				<DialogContent>
+					<Typography>
+						Pentru adaugarea unui proiect de voluntariat, va rugam sa ne contactati
+						pe email la <Link href="mailto:proiect@ciorogarlaunita.eu.org" target="_blank"><strong>proiect@ciorogarlaunita.eu.org</strong></Link>
+					</Typography>
+				</DialogContent>
+				<DialogActions>
+					<Button
+						variant="text"
+						onClick={() => setAddDialog(false)}
+					>
+						OK
+					</Button>
+				</DialogActions>
+			</Dialog>
 		</>
 	)
 }
