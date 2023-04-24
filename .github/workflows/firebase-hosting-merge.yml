@@ -26,8 +26,6 @@ jobs:
           echo VITE_FIREBASE_MEASUREMENT_ID=${{ secrets.FIREBASE_MEASUREMENT_ID }} >> .env
           echo VITE_FIREBASE_DATABASE_URL=${{ secrets.FIREBASE_DATABASE_URL }} >> .env
           echo VITE_RECAPTCHA_SITE_KEY=${{ secrets.RECAPTCHA_SITE_KEY }} >> .env
-
-          echo VITE_MAPBOX_API_KEY=${{ secrets.MAPBOX_API_KEY }} >> .env
           
       - run: 'npm ci && npm run build'
       - uses: FirebaseExtended/action-hosting-deploy@v0
