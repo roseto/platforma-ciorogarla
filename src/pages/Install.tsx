@@ -11,7 +11,7 @@ import MoreVertIcon from "@suid/icons-material/MoreVert"
 import InstallIcon from "@suid/icons-material/InstallMobile";
 import PaquetIcon from "../resources/icons/paquet.svg?component-solid";
 import PlayIcon from "../resources/icons/play.svg?component-solid";
-import AppStoreIcon from "../resources/icons/app-store.svg?component-solid";
+// import AppStoreIcon from "../resources/icons/app-store.svg?component-solid";
 
 export default function Install() {
 	const deviceVendor = parser.getDevice().vendor;

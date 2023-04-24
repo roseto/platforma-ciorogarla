@@ -1,5 +1,5 @@
 import { RouteDataFuncArgs, useRouteData } from "@solidjs/router";
-import {Avatar, Box, Button, Card, CardActionArea, CardContent, Chip, Container, IconButton, List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Skeleton, Stack, SvgIcon, Typography, useTheme} from "@suid/material";
+import {Avatar, Box, Button, Card, CardContent, Chip, Container, IconButton, List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Skeleton, Stack, SvgIcon, Typography, useTheme} from "@suid/material";
 import CardWithIcon from "../../components/CardWithIcon";
 import {createMemo, Show} from "solid-js";
 import {createResource} from "solid-js";
@@ -16,7 +16,6 @@ import EmailIcon from "@suid/icons-material/Email";
 import PhoneIcon from "@suid/icons-material/Phone";
 import StarIcon from "@suid/icons-material/Star";
 import ListIcon from "@suid/icons-material/Assignment";
-import MarkerIcon from "@suid/icons-material/PinDrop";
 import FacebookSvg from "../../resources/icons/facebook.svg?component-solid";
 import InstagramSvg from "../../resources/icons/instagram.svg?component-solid";
 import {getMapsURL} from "../../lib/maps";

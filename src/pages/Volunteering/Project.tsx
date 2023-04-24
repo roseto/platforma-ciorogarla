@@ -1,6 +1,6 @@
 import {RouteDataFuncArgs, useRouteData} from "@solidjs/router";
-import {Avatar, Box, Button, Card, CardActionArea, CardContent, Chip, Container, ListItemAvatar, ListItemButton, ListItemIcon, ListItemText, Stack, Typography, useTheme} from "@suid/material";
-import {createEffect, createResource, createSignal, Show} from "solid-js";
+import {Avatar, Button, Card, CardContent, Chip, Container, ListItemAvatar, ListItemButton, ListItemText, Stack, Typography, useTheme} from "@suid/material";
+import {createEffect, createResource, Show} from "solid-js";
 import Header from "../../components/Header";
 import {sanityClient, urlFor} from "../../lib/sanity";
 import {Country, Organisation, VolunteeringProject} from "../../types/SanitySchema";

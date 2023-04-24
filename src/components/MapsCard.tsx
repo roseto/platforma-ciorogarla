@@ -1,6 +1,6 @@
 import {AppBar, Dialog, Divider, IconButton, ListItemButton, ListItemIcon, ListItemText, Paper, Skeleton, Slide, Toolbar, Typography, useTheme} from "@suid/material";
 import {getMapsEmbedURL, getMapsURL} from "../lib/maps";
-import {createMemo, createSignal, JSXElement, Show} from "solid-js";
+import {createSignal, JSXElement} from "solid-js";
 
 import MarkerIcon from "@suid/icons-material/PinDrop";
 import StreetViewIcon from "@suid/icons-material/Streetview";
@@ -41,7 +41,7 @@ export default function MapsCard(props: MapsCardProps) {
 			</ListItemButton>
 			<Divider variant="middle" />
 			<ListItemButton
-				// onClick={() => setStreetViewDialog(true)}
+				onClick={() => setStreetViewDialog(true)}
 			>
 				<ListItemIcon sx={{ minWidth: 32 }}>
 					<StreetViewIcon />
