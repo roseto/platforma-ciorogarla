@@ -41,7 +41,7 @@ export default function MapsCard(props: MapsCardProps) {
 			</ListItemButton>
 			<Divider variant="middle" />
 			<ListItemButton
-				onClick={() => setStreetViewDialog(true)}
+				// onClick={() => setStreetViewDialog(true)}
 			>
 				<ListItemIcon sx={{ minWidth: 32 }}>
 					<StreetViewIcon />
