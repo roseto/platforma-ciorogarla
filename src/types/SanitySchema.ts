@@ -156,11 +156,18 @@ export interface Business extends SanityDocument {
     address?: string;
 
     /**
-     * Coordinates — `geopoint`
+     * Plus code — `string`
      *
-     * The coordinates of the location
+     * The plus code of location
      */
-    coordinates?: SanityGeoPoint;
+    plus?: string;
+
+    /**
+     * Street View location — `string`
+     *
+     * Location Street View
+     */
+    locationStreetview?: string;
   };
 
   /**
@@ -328,11 +335,18 @@ export interface VolunteeringProject extends SanityDocument {
     address?: string;
 
     /**
-     * Coordinates — `geopoint`
+     * Plus code — `string`
      *
-     * The coordinates of the location
+     * The plus code of location
      */
-    coordinates?: SanityGeoPoint;
+    plus?: string;
+
+    /**
+     * Street View location — `string`
+     *
+     * Location Street View
+     */
+    locationStreetview?: string;
   };
 
   /**

@@ -7,7 +7,6 @@ import Header from "../../components/Header";
 import {businessTypes} from "../../lib/businessTypes";
 import {sanityClient, urlFor} from "../../lib/sanity";
 import {Business} from "../../types/SanitySchema";
-import {generateStaticMapUrl} from "../../lib/mapbox";
 import {Dynamic} from "solid-js/web";
 import {createEffect} from "solid-js";
 
@@ -20,6 +19,8 @@ import ListIcon from "@suid/icons-material/Assignment";
 import MarkerIcon from "@suid/icons-material/PinDrop";
 import FacebookSvg from "../../resources/icons/facebook.svg?component-solid";
 import InstagramSvg from "../../resources/icons/instagram.svg?component-solid";
+import {getMapsURL} from "../../lib/maps";
+import MapsCard from "../../components/MapsCard";
 
 export default function BusinessPage() {
 	const data = useRouteData<typeof BusinessGetData>();
@@ -107,7 +108,7 @@ export default function BusinessPage() {
 						<Button
 							variant="contained"
 							component="a"
-							href={`https://www.google.com/maps/search/?api=1&query=${data()?.location?.coordinates?.lat},${data()?.location?.coordinates?.lng}`}
+							href={getMapsURL(data()?.location?.plus || "")}
 							target="_blank"
 							color="primary"
 							startIcon={<MapIcon />}
@@ -192,28 +193,11 @@ export default function BusinessPage() {
 						</Show>
 					</Box>
 					<Show when={data()?.location}>
-						<a
-							href={`https://www.google.com/maps/search/?api=1&query=${data()?.location?.coordinates?.lat},${data()?.location?.coordinates?.lng}`}
-							target="_blank"
-						>
-							<Card>
-								<CardActionArea>
-									<CardContent>
-										<Typography gutterBottom>
-										<MarkerIcon fontSize="inherit"/>{" "}
-											{data()?.location?.address}
-										</Typography>
-										<img
-											width="100%"
-											height={200}
-											src={generateStaticMapUrl(data()?.location?.coordinates?.lat!, data()?.location?.coordinates?.lng!, 768, 200, theme.palette.mode)}
-											style={{ "object-fit": "cover", "border-radius": theme.shape.borderRadius / 2 + "px" }}
-											onError={(e) => e.currentTarget.remove()}
-										/>
-									</CardContent>
-								</CardActionArea>
-							</Card>
-						</a>
+						<MapsCard 
+							address={data()?.location?.address!}
+							plusCode={data()?.location?.plus!}
+							streetViewLocation={data()?.location?.locationStreetview!}
+						/>
 					</Show>
 					<Show when={data()?.isSponsor}>
 						<CardWithIcon 

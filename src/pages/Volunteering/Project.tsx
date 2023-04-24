@@ -4,9 +4,7 @@ import {createEffect, createResource, createSignal, Show} from "solid-js";
 import Header from "../../components/Header";
 import {sanityClient, urlFor} from "../../lib/sanity";
 import {Country, Organisation, VolunteeringProject} from "../../types/SanitySchema";
-import {generateStaticMapUrl} from "../../lib/mapbox";
 
-import MarkerIcon from "@suid/icons-material/PinDrop";
 import InfoIcon from "@suid/icons-material/Info";
 import InfoPackIcon from "@suid/icons-material/Feed";
 import MapsCard from "../../components/MapsCard";
@@ -80,8 +78,8 @@ export default function Project() {
 					</Card>
 					<MapsCard
 						address={data()?.location?.address || ""}
-						lat={data()?.location?.coordinates?.lat}
-						lng={data()?.location?.coordinates?.lng}
+						plusCode={data()?.location?.plus || ""}
+						streetViewLocation={data()?.location?.locationStreetview || ""}
 					/>
 					<ListItemButton
 						component="a"

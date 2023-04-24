@@ -10,15 +10,13 @@ import {TransitionProps} from "solid-transition-group";
 
 interface MapsCardProps {
 	address: string;
-	override?: boolean;
-	lat?: number;
-	lng?: number;
+	plusCode: string;
+	streetViewLocation: string;
 }
 
 export default function MapsCard(props: MapsCardProps) {
 	const theme = useTheme();
-	const url = getMapsURL(props.address ?? props.override);
-	const isStreetViewEnabled = createMemo(() => props.lat && props.lng);
+	const url = getMapsURL(props.plusCode);
 	const [streetViewDialog, setStreetViewDialog] = createSignal(false);
 
 	return (
@@ -41,19 +39,17 @@ export default function MapsCard(props: MapsCardProps) {
 					secondary={props.address}
 				/>
 			</ListItemButton>
-			<Show when={isStreetViewEnabled}>
-				<Divider variant="middle" />
-				<ListItemButton
-					onClick={() => setStreetViewDialog(true)}
-				>
-					<ListItemIcon sx={{ minWidth: 32 }}>
-						<StreetViewIcon />
-					</ListItemIcon>
-					<ListItemText
-						primary="View in Street View"
-					/>
-				</ListItemButton>
-			</Show>
+			<Divider variant="middle" />
+			<ListItemButton
+				onClick={() => setStreetViewDialog(true)}
+			>
+				<ListItemIcon sx={{ minWidth: 32 }}>
+					<StreetViewIcon />
+				</ListItemIcon>
+				<ListItemText
+					primary="Vedere in Street View"
+				/>
+			</ListItemButton>
 			<div
 				style={{
 					position: "relative",
@@ -72,7 +68,7 @@ export default function MapsCard(props: MapsCardProps) {
 				changes and iframe registers the changes in the history */}
 				<object
 					type="text/html"
-					data={getMapsEmbedURL("place", props.address ?? props.override)}
+					data={getMapsEmbedURL("place", props.plusCode)}
 					width="100%"
 					height="256px"
 					style={{
@@ -115,7 +111,7 @@ export default function MapsCard(props: MapsCardProps) {
 				</AppBar>
 				<object
 					type="text/html"
-					data={getMapsEmbedURL("streetview", props.address, `${props.lat},${props.lng}`)}
+					data={getMapsEmbedURL("streetview", props.address, props.streetViewLocation)}
 					width="100%"
 					height="100%"
 					style={{
@@ -129,5 +125,6 @@ export default function MapsCard(props: MapsCardProps) {
 
 
 const DialogTransition = function Transition(props: TransitionProps & { children: JSXElement }) {
+	//@ts-expect-error: Some type error I can't be bothered to fix
 	return <Slide direction="up" {...props} />;
 };
