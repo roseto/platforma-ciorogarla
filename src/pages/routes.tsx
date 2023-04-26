@@ -1,10 +1,10 @@
 import {lazy} from "solid-js";
-import { RouteDefinition } from "@solidjs/router";
+import { RouteDefinition, Navigate } from "@solidjs/router";
 import { BusinessesGetData } from "./Businesses/Businesses";
 import { BusinessGetData } from "./Businesses/Business";
 import { VolunteeringProjectsGetData } from "./Volunteering/Projects";
 import { VolunteeringProjectGetData } from "./Volunteering/Project";
-import {HomeGetData} from "./Home";
+import { HomeGetData } from "./Home";
 
 export const routes: RouteDefinition[] = [
 	{
@@ -54,5 +54,9 @@ export const routes: RouteDefinition[] = [
 				data: VolunteeringProjectGetData
 			}
 		]
+	},
+	{
+		path: "*",
+		component: () => <Navigate href="/" />
 	}
 ]

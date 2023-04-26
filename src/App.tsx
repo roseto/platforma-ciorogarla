@@ -1,6 +1,6 @@
 import { createTheme, CssBaseline, ThemeProvider, useMediaQuery } from "@suid/material";
 import { darkTheme, lightTheme, commonTheme } from "./lib/theme";
-import {useRoutes} from "@solidjs/router";
+import {Navigate, Route, useRoutes} from "@solidjs/router";
 import {routes} from "./pages/routes";
 import {createMemo, Suspense} from "solid-js";
 import {createPalette, Palette} from "@suid/material/styles/createPalette";
@@ -11,7 +11,6 @@ import {useA2HS} from "./hooks/useA2HS";
 import {scheduleIdle} from "@solid-primitives/scheduled";
 import {initializeAppCheck, ReCaptchaV3Provider} from "firebase/app-check";
 import WelcomeDialog from "./components/WelcomeDialog";
-import {useAnalyticsState} from "./lib/store";
 
 
 const backgroundTrigger = scheduleIdle(() => {
