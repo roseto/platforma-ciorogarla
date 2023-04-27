@@ -191,7 +191,7 @@ export default function BusinessPage() {
 							/>
 						</Show>
 					</Box>
-					<Show when={data()?.photos}>
+					<Show when={data()?.photos?.length}>
 						<Box
 							displayRaw="flex"
 							flexDirection="row"
