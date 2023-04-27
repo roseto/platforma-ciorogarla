@@ -302,6 +302,13 @@ export interface VolunteeringProject extends SanityDocument {
   topic?: string;
 
   /**
+   * Type — `string`
+   *
+   * Type of project
+   */
+  type?: "erasmus" | "esc";
+
+  /**
    * Organisation — `reference`
    *
    * The organisation that the project belongs to
@@ -362,6 +369,13 @@ export interface VolunteeringProject extends SanityDocument {
    * The country where the project takes place
    */
   country?: SanityReference<Country>;
+
+  /**
+   * Participating Countries — `array`
+   *
+   * The countries that participate in the project
+   */
+  participatingCountries?: Array<SanityKeyedReference<Country>>;
 
   /**
    * Period — `object`

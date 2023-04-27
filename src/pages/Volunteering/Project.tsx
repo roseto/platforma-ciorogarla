@@ -1,13 +1,16 @@
 import {RouteDataFuncArgs, useRouteData} from "@solidjs/router";
-import {Avatar, Button, Card, CardContent, Chip, Container, ListItemAvatar, ListItemButton, ListItemText, Stack, Typography, useTheme} from "@suid/material";
-import {createEffect, createResource, Show} from "solid-js";
+import {Avatar, Box, Button, Card, CardContent, Chip, Container, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Stack, Typography, useTheme} from "@suid/material";
+import {createEffect, createResource, For, Show} from "solid-js";
 import Header from "../../components/Header";
 import {sanityClient, urlFor} from "../../lib/sanity";
 import {Country, Organisation, VolunteeringProject} from "../../types/SanitySchema";
+import {projectTypes} from "../../lib/projectTypes";
+import MapsCard from "../../components/MapsCard";
 
 import InfoIcon from "@suid/icons-material/Info";
 import InfoPackIcon from "@suid/icons-material/Feed";
-import MapsCard from "../../components/MapsCard";
+import DepartureIcon from "@suid/icons-material/FlightTakeoff";
+import ReturnIcon from "@suid/icons-material/FlightLand";
 
 export default function Project() {
 	const data = useRouteData<typeof VolunteeringProjectGetData>();
@@ -36,7 +39,7 @@ export default function Project() {
 					}}
 				/>
 			</Show>
-			<Container>
+			<Container sx={{ mb: 2 }}>
 				<Stack>
 					<Typography variant="h3">
 						{data()?.name}
@@ -47,10 +50,19 @@ export default function Project() {
 					<Typography>
 						{data()?.description}
 					</Typography>
-					<Chip
-						label={(data()?.country as unknown as Country)?.name}
-						sx={{ alignSelf: "start" }}
-					/>
+					<Box
+						displayRaw="flex"
+						flexDirection="row"
+						flexWrap="wrap"
+						gap={1}
+					>
+						<Chip
+							label={(data()?.country as unknown as Country)?.name}
+						/>
+						<Chip
+							label={projectTypes.get(data()?.type || "")?.name}
+						/>
+					</Box>
 					<Card>
 						<CardContent>
 							<Typography>
@@ -76,6 +88,49 @@ export default function Project() {
 							</Show>
 						</CardContent>
 					</Card>
+					<Show when={data()?.participatingCountries ? data()?.participatingCountries?.length! > 1 : false}>
+						<Typography variant="h5">
+							Tari participante
+						</Typography>
+						<Box
+							displayRaw="flex"
+							flexDirection="row"
+							flexWrap="wrap"
+							gap={1}
+						>
+							<For each={data()?.participatingCountries}>
+								{(country) => (
+									<Chip
+										label={(country as unknown as Country).name}
+									/>
+								)}
+							</For>
+						</Box>
+					</Show>
+					<List>
+						<ListItem>
+							<ListItemAvatar>
+								<Avatar sx={{ backgroundColor: "secondary.main" }}>
+									<DepartureIcon />
+								</Avatar>
+							</ListItemAvatar>
+							<ListItemText
+								primary="Plecare"
+								secondary={new Date(data()?.period?.fromDate).toLocaleDateString("RO")}
+							/>
+						</ListItem>
+						<ListItem>
+							<ListItemAvatar>
+								<Avatar sx={{ backgroundColor: "secondary.main" }}>
+									<ReturnIcon />
+								</Avatar>
+							</ListItemAvatar>
+							<ListItemText
+								primary="Intoarcere"
+								secondary={new Date(data()?.period?.toDate).toLocaleDateString("RO")}
+							/>
+						</ListItem>
+					</List>
 					<MapsCard
 						address={data()?.location?.address || ""}
 						plusCode={data()?.location?.plus || ""}
@@ -121,9 +176,12 @@ const fetcher = async (id: string) => {
 				asset->{...,url}
 			},
 			organisation->{...}, 
-			country->{...}
+			country->{...},
+			participatingCountries[]->{...}
 		}`, { slug: id })
 		.catch(() => null);
+
+	console.log(data);
 
 	return data;
 }
