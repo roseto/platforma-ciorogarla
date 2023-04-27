@@ -52,7 +52,7 @@ export default function BusinessPage() {
 				)}
 			>
 				<img 
-					src={urlFor(data()?.cover).width(windowWidth * 2).height(256).url() ?? ""}
+					src={urlFor(data()?.cover).width(windowWidth * 2).height(256).blur(32).url() ?? ""}
 					alt={data()?.name ?? ""}
 					width={windowWidth}
 					height="128px"
