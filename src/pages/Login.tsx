@@ -1,6 +1,6 @@
 import {Button, Container, TextField, Stack, SvgIcon, Typography, Divider, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Link} from "@suid/material";
 import {useAuth, useFirebaseApp} from "solid-firebase";
-import { getAuth, GoogleAuthProvider, signInWithPopup, updateProfile, TwitterAuthProvider, GithubAuthProvider, sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithPopup, updateProfile, TwitterAuthProvider, GithubAuthProvider, sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink, setPersistence, browserLocalPersistence } from "firebase/auth";
 import Header from "../components/Header";
 import {useNavigate} from "@solidjs/router";
 import {createEffect, createSignal} from "solid-js";
@@ -34,6 +34,7 @@ export default function Login() {
 			emailConfirm = window.prompt("Please provide your email for confirmation") || "";
 		}
 
+		setPersistence(auth, browserLocalPersistence);
 		signInWithEmailLink(auth, emailConfirm, window.location.href)
 			.catch(() => {
 				setErrorDialogOpen(true)
@@ -44,6 +45,7 @@ export default function Login() {
 
 	const login = async (provider: GoogleAuthProvider) => {
 		setLoading(true);
+		setPersistence(auth, browserLocalPersistence);
 		signInWithPopup(auth, provider).then((res) => {
 			const providerId = res.providerId;
 
@@ -68,6 +70,7 @@ export default function Login() {
 		e.preventDefault();
 		setLoading(true);
 
+		setPersistence(auth, browserLocalPersistence);
 		sendSignInLinkToEmail(auth, email(), {
 			url: window.location.origin + "/login?email=" + email(),
 			handleCodeInApp: true,
