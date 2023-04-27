@@ -1,5 +1,5 @@
-import * as functions from "firebase-functions";
-import {createSanityClient, SANITY_TOKEN} from "./lib/sanityClient";
+// import * as functions from "firebase-functions";
+// import {createSanityClient, SANITY_TOKEN} from "./lib/sanityClient";
 
 // // Start writing functions
 // // https://firebase.google.com/docs/functions/typescript
