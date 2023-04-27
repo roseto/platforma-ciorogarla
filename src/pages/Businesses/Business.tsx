@@ -1,7 +1,7 @@
 import { RouteDataFuncArgs, useRouteData } from "@solidjs/router";
 import {Avatar, Box, Button, Card, CardContent, Chip, Container, IconButton, List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Skeleton, Stack, SvgIcon, Typography, useTheme} from "@suid/material";
 import CardWithIcon from "../../components/CardWithIcon";
-import {createMemo, Show} from "solid-js";
+import {createMemo, For, Show} from "solid-js";
 import {createResource} from "solid-js";
 import Header from "../../components/Header";
 import {businessTypes} from "../../lib/businessTypes";
@@ -191,6 +191,27 @@ export default function BusinessPage() {
 							/>
 						</Show>
 					</Box>
+					<Show when={data()?.photos}>
+						<Box
+							displayRaw="flex"
+							flexDirection="row"
+							gap={1}
+							overflow="scroll"
+						>
+							<For each={data()?.photos}>
+								{(photo) => (
+									<img
+										style={{
+											"max-height": "512px",
+											"border-radius": theme.shape.borderRadius + "px",
+										}}
+										src={urlFor(photo).maxHeight(512).maxWidth(1024).url()}
+										alt=""
+									/>
+								)}
+							</For>
+						</Box>
+					</Show>
 					<Show when={data()?.location}>
 						<MapsCard 
 							address={data()?.location?.address!}
