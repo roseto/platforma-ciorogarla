@@ -92,7 +92,7 @@ export default function Install() {
 function IosInstructionsSafari() {
 	return (
 		<ol> 
-			<li>Apasă pe butonul <IosShareIcon fontSize="inherit"/> din partea de sus a ecranului.</li> 
+			<li>Apasă pe butonul <IosShareIcon fontSize="inherit"/> din partea de jos a ecranului.</li> 
 			<li>Alege "Adaugă pe ecranul principal".</li> 
 			<li>Apasă pe butonul "Adaugă".</li> 
 		</ol>
@@ -103,7 +103,7 @@ function IosInstructionsNotSafari() {
 	return (
 		<ol>
 			<li>Deschide <Link href="https://ciorogarlaunita.web.app">ciorogarlaunita.web.app</Link> in Safari.</li>
-			<li>Apasa pe butonul <IosShareIcon fontSize="inherit"/> din partea de sus a ecranului.</li>
+			<li>Apasa pe butonul <IosShareIcon fontSize="inherit"/> din partea de jos a ecranului.</li>
 			<li>Alege "Adauga pe ecranul principal".</li>
 			<li>Apasa pe butonul "Adauga".</li>
 		</ol>
