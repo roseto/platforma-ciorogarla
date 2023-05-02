@@ -1,5 +1,5 @@
 import {RouteDataFuncArgs, useRouteData} from "@solidjs/router";
-import {Avatar, Box, Button, Card, CardContent, Chip, Container, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Stack, Typography, useTheme} from "@suid/material";
+import {Avatar, Box, Button, Card, CardContent, Chip, Container, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Paper, Stack, Typography, useTheme} from "@suid/material";
 import {createEffect, createResource, For, Show} from "solid-js";
 import Header from "../../components/Header";
 import {sanityClient, urlFor} from "../../lib/sanity";
@@ -11,6 +11,7 @@ import InfoIcon from "@suid/icons-material/Info";
 import InfoPackIcon from "@suid/icons-material/Feed";
 import DepartureIcon from "@suid/icons-material/FlightTakeoff";
 import ReturnIcon from "@suid/icons-material/FlightLand";
+import FormIcon from "@suid/icons-material/Assignment";
 
 export default function Project() {
 	const data = useRouteData<typeof VolunteeringProjectGetData>();
@@ -50,6 +51,16 @@ export default function Project() {
 					<Typography>
 						{data()?.description}
 					</Typography>
+					<Show when={data()?.applicationForm}>
+						<a href={data()?.applicationForm} target="_blank">
+							<Button
+								fullWidth
+								startIcon={<FormIcon />}
+							>
+								Aplică
+							</Button>
+						</a>
+					</Show>
 					<Box
 						displayRaw="flex"
 						flexDirection="row"
@@ -66,7 +77,7 @@ export default function Project() {
 					<Card>
 						<CardContent>
 							<Typography>
-								Made possible by
+								Făcut posibil cu
 							</Typography>
 							<Show when={data()?.organisation}>
 								<Button
@@ -90,7 +101,7 @@ export default function Project() {
 					</Card>
 					<Show when={data()?.participatingCountries ? data()?.participatingCountries?.length! > 1 : false}>
 						<Typography variant="h5">
-							Tari participante
+							Țări participante
 						</Typography>
 						<Box
 							displayRaw="flex"
@@ -107,30 +118,32 @@ export default function Project() {
 							</For>
 						</Box>
 					</Show>
-					<List>
-						<ListItem>
-							<ListItemAvatar>
-								<Avatar sx={{ backgroundColor: "secondary.main" }}>
-									<DepartureIcon />
-								</Avatar>
-							</ListItemAvatar>
-							<ListItemText
-								primary="Plecare"
-								secondary={new Date(data()?.period?.fromDate).toLocaleDateString("RO")}
-							/>
-						</ListItem>
-						<ListItem>
-							<ListItemAvatar>
-								<Avatar sx={{ backgroundColor: "secondary.main" }}>
-									<ReturnIcon />
-								</Avatar>
-							</ListItemAvatar>
-							<ListItemText
-								primary="Intoarcere"
-								secondary={new Date(data()?.period?.toDate).toLocaleDateString("RO")}
-							/>
-						</ListItem>
-					</List>
+					<Paper variant="outlined" sx={{ backgroundColor: "transparent" }}>
+						<List>
+							<ListItem>
+								<ListItemAvatar>
+									<Avatar sx={{ backgroundColor: "secondary.main" }}>
+										<DepartureIcon />
+									</Avatar>
+								</ListItemAvatar>
+								<ListItemText
+									primary="Plecare"
+									secondary={new Date(data()?.period?.fromDate || "").toLocaleDateString("RO")}
+								/>
+							</ListItem>
+							<ListItem>
+								<ListItemAvatar>
+									<Avatar sx={{ backgroundColor: "secondary.main" }}>
+										<ReturnIcon />
+									</Avatar>
+								</ListItemAvatar>
+								<ListItemText
+									primary="Intoarcere"
+									secondary={new Date(data()?.period?.toDate || "").toLocaleDateString("RO")}
+								/>
+							</ListItem>
+						</List>
+					</Paper>
 					<MapsCard
 						address={data()?.location?.address || ""}
 						plusCode={data()?.location?.plus || ""}
@@ -154,8 +167,8 @@ export default function Project() {
 					</ListItemButton>
 					<Typography color="textSecondary" variant="body2">
 						<InfoIcon fontSize="inherit"/>{" "}
-						Nu putem urmari disponibilitatea locurilor libere pentru acest proiect, 
-						asa ca te rugam sa contactezi organizatorul pentru a afla mai multe.
+						Nu putem urmări disponibilitatea locurilor libere pentru acest proiect, 
+						așa că te rugăm să contactezi organizatorul pentru a află mai multe.
 					</Typography>
 				</Stack>
 			</Container>

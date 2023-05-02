@@ -309,6 +309,13 @@ export interface VolunteeringProject extends SanityDocument {
   type?: "erasmus" | "esc";
 
   /**
+   * Application Form — `url`
+   *
+   * The application form of the project
+   */
+  applicationForm?: string;
+
+  /**
    * Organisation — `reference`
    *
    * The organisation that the project belongs to
@@ -400,39 +407,4 @@ export interface VolunteeringProject extends SanityDocument {
   };
 }
 
-/**
- * User
- *
- *
- */
-export interface User extends SanityDocument {
-  _type: "user";
-
-  /**
-   * Display Name — `string`
-   *
-   *
-   */
-  displayName?: string;
-
-  /**
-   * Photo URL — `url`
-   *
-   *
-   */
-  photoURL?: string;
-
-  /**
-   * UID — `string`
-   *
-   *
-   */
-  uid?: string;
-}
-
-export type Documents =
-  | Business
-  | Organisation
-  | Country
-  | VolunteeringProject
-  | User;
+export type Documents = Business | Organisation | Country | VolunteeringProject;

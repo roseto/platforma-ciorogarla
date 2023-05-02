@@ -43,8 +43,8 @@ export default function Header(props: HeaderProps) {
 									`${theme.palette.background.default}${triggered() && isIos() ? "cc" : ""}` 
 									:
 									"transparent",
-						backdropFilter: triggered() ? "blur(16px)" : undefined,
-						WebkitBackdropFilter: triggered() ? "blur(16px)" : undefined,
+						backdropFilter: triggered() && isIos() ? "blur(16px)" : undefined,
+						WebkitBackdropFilter: triggered() && isIos() ? "blur(16px)" : undefined,
 						transition: "background-color 0.2s ease-in-out",
 					}}
 				>

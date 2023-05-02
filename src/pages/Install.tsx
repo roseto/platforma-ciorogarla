@@ -50,40 +50,30 @@ export default function Install() {
 						</Button>
 					</Show>
 					<Typography variant="h5" gutterBottom>
-						Instructiuni
+						Instrucțiuni
 					</Typography>
 					<Switch>
 						<Match when={deviceVendor === "Apple" && browserName === "Mobile Safari"}>
 							<IosInstructionsSafari/>
-							{/*<Button
-								startIcon={<SvgIcon><AppStoreIcon/></SvgIcon>}
-							>
-								Descarca pe App Store
-							</Button>*/}
 						</Match>
 						<Match when={deviceVendor === "Apple" && browserName !== "Mobile Safari"}>
 							<IosInstructionsNotSafari/>
-							{/* <Button
-								startIcon={<SvgIcon><AppStoreIcon/></SvgIcon>}
-							>
-								Descarca pe App Store
-							</Button> */}
 						</Match>
 						<Match when={deviceOs === "Android"}>
 							<AndroidInstructions/>
-							<Button
-								component="a"
-								href="https://play.google.com/store/apps/details?id=org.eu.ciorogarlaunita.app"
-								target="_blank"
-								startIcon={<SvgIcon><PlayIcon/></SvgIcon>}
-							>
-								Descarca pe Google Play
-							</Button>
 						</Match>
 						<Match when={!parser.getDevice().type}>
 							<DesktopInstructions/>
 						</Match>
 					</Switch>
+					<Button
+						component="a"
+						href="https://play.google.com/store/apps/details?id=org.eu.ciorogarlaunita.app"
+						target="_blank"
+						startIcon={<SvgIcon><PlayIcon/></SvgIcon>}
+						>
+						Descarcă pe Google Play
+					</Button>
 					<Button
 						startIcon={<SvgIcon><PaquetIcon/></SvgIcon>}
 						variant="outlined"
@@ -101,10 +91,10 @@ export default function Install() {
 
 function IosInstructionsSafari() {
 	return (
-		<ol>
-			<li>Apasa pe butonul <IosShareIcon fontSize="inherit"/> din partea de sus a ecranului.</li>
-			<li>Alege "Adauga pe ecranul principal".</li>
-			<li>Apasa pe butonul "Adauga".</li>
+		<ol> 
+			<li>Apasă pe butonul <IosShareIcon fontSize="inherit"/> din partea de sus a ecranului.</li> 
+			<li>Alege "Adaugă pe ecranul principal".</li> 
+			<li>Apasă pe butonul "Adaugă".</li> 
 		</ol>
 	)
 }
