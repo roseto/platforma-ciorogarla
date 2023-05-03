@@ -34,13 +34,15 @@ export default function Login() {
 			emailConfirm = window.prompt("Please provide your email for confirmation") || "";
 		}
 
-		await setPersistence(auth, browserLocalPersistence);
-		signInWithEmailLink(auth, emailConfirm, window.location.href)
-			.catch(() => {
-				setErrorDialogOpen(true)
-			}).finally(() => {
-				setLoading(false)
-			});
+		setPersistence(auth, browserLocalPersistence)
+			.then(() => {
+				signInWithEmailLink(auth, emailConfirm, window.location.href)
+					.catch(() => {
+						setErrorDialogOpen(true)
+					}).finally(() => {
+						setLoading(false)
+				});
+		});
 	}
 
 	const login = async (provider: GoogleAuthProvider) => {
