@@ -331,6 +331,13 @@ export interface VolunteeringProject extends SanityDocument {
   slug?: { _type: "slug"; current: string };
 
   /**
+   * Deadline — `date`
+   *
+   * The deadline of the project
+   */
+  deadline?: string;
+
+  /**
    * Topic — `string`
    *
    * The topic of the project
@@ -405,6 +412,13 @@ export interface VolunteeringProject extends SanityDocument {
    * The infopack of the project
    */
   infopack?: { _type: "file"; asset: SanityReference<any> };
+
+  /**
+   * Info Link — `url`
+   *
+   * The link to the info of the project
+   */
+  infoLink?: string;
 
   /**
    * Country — `reference`

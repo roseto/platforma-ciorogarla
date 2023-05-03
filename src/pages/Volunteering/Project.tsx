@@ -11,7 +11,9 @@ import InfoPackIcon from "@suid/icons-material/Feed";
 import DepartureIcon from "@suid/icons-material/FlightTakeoff";
 import ReturnIcon from "@suid/icons-material/FlightLand";
 import FormIcon from "@suid/icons-material/Assignment";
+import LinkIcon from "@suid/icons-material/Link";
 import ContactList from "../../components/ContactList";
+import EmailIcon from "@suid/icons-material/Email";
 
 export default function Project() {
 	const data = useRouteData<typeof VolunteeringProjectGetData>();
@@ -62,6 +64,25 @@ export default function Project() {
 								startIcon={<FormIcon />}
 							>
 								Aplică
+							</Button>
+						</a>
+					</Show>
+					<Show when={data()?.deadline}>
+						<Typography>
+							Limita de aplicare: {new Date(data()?.deadline || "").toLocaleDateString("RO")}
+						</Typography>
+					</Show>
+					<Show when={(data()?.organisation as unknown as Organisation).contact?.email && !data()?.applicationForm}>
+						<a 
+							href={`mailto:${(data()?.organisation as unknown as Organisation).contact?.email}`} 
+							target="_blank" 
+							rel="noreferrer noopener"
+						>
+							<Button
+								fullWidth
+								startIcon={<EmailIcon />}
+							>
+								Contact
 							</Button>
 						</a>
 					</Show>
@@ -153,22 +174,42 @@ export default function Project() {
 						plusCode={data()?.location?.plus || ""}
 						streetViewLocation={data()?.location?.locationStreetview || ""}
 					/>
-					<ListItemButton
-						component="a"
-						//@ts-ignore: URL added manually
-						href={data()?.infopack?.asset.url}
-						target="_blank"
-					>
-						<ListItemAvatar>
-							<Avatar sx={{ backgroundColor: "primary.main" }}>
-								<InfoPackIcon />
-							</Avatar>
-						</ListItemAvatar>
-						<ListItemText
-							primary="Info Pack"
-							secondary="Descarca informatiile despre acest proiect"
-						/>
-					</ListItemButton>
+					<Show when={data()?.infopack}>
+						<ListItemButton
+							component="a"
+							//@ts-ignore: URL added manually
+							href={data()?.infopack?.asset.url}
+							target="_blank"
+							>
+							<ListItemAvatar>
+								<Avatar sx={{ backgroundColor: "primary.main" }}>
+									<InfoPackIcon />
+								</Avatar>
+							</ListItemAvatar>
+							<ListItemText
+								primary="Info Pack"
+								secondary="Descarca informatiile despre acest proiect"
+							/>
+						</ListItemButton>
+					</Show>
+					<Show when={data()?.infoLink}>
+						<ListItemButton
+							component="a"
+							rel="noreferrer noopener"
+							href={data()?.infoLink}
+							target="_blank"
+						>
+							<ListItemAvatar>
+								<Avatar sx={{ backgroundColor: "primary.main" }}>
+									<LinkIcon />
+								</Avatar>
+							</ListItemAvatar>
+							<ListItemText
+								primary="Info"
+								secondary="Afla mai multe informatii despre acest proiect"
+							/>
+						</ListItemButton>
+					</Show>
 					<ContactList 
 						email={(data()?.organisation as unknown as Organisation)?.contact?.email}
 						phone={(data()?.organisation as unknown as Organisation)?.contact?.phone}

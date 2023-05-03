@@ -116,7 +116,7 @@ export default function Businesses() {
 							A aparut o eroare
 						</Alert>
 					</Show>
-					<Show when={data()}>
+					<Show when={data()?.length}>
 						<Paper>
 							<List>
 								<For each={data()}>

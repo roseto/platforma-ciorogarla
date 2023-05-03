@@ -142,9 +142,9 @@ export function HomeGetData() {
 }
 
 
-function BusinessSection(props: { businesses: Business[] }) {
+function BusinessSection(props: { businesses?: Business[] }) {
 	return (
-		<Show when={props.businesses}>
+		<Show when={props.businesses?.length}>
 			<List>
 				<ListSubheader
 					disableSticky
@@ -186,9 +186,10 @@ function BusinessSection(props: { businesses: Business[] }) {
 }
 
 
-function ProjectsSection(props: { projects: VolunteeringProject[] }) {
+function ProjectsSection(props: { projects?: VolunteeringProject[] }) {
+
 	return (
-		<Show when={props.projects}>
+		<Show when={props.projects?.length}>
 			<List>
 				<ListSubheader
 					disableSticky
