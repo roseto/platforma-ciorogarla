@@ -52,7 +52,11 @@ export default function Project() {
 						{data()?.description}
 					</Typography>
 					<Show when={data()?.applicationForm}>
-						<a href={data()?.applicationForm} target="_blank">
+						<a 
+							href={data()?.applicationForm} 
+							target="_blank" 
+							rel="noreferrer noopener"
+						>
 							<Button
 								fullWidth
 								startIcon={<FormIcon />}
