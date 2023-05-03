@@ -1,4 +1,4 @@
-import {Button, Container, Link, Stack, SvgIcon, Typography} from "@suid/material";
+import {Alert, Button, Container, Link, Stack, SvgIcon, Typography} from "@suid/material";
 import Header from "../components/Header";
 import {isInstalled, parser} from "../lib/device";
 import {Match, Show, Switch} from "solid-js";
@@ -35,10 +35,15 @@ export default function Install() {
 			/>
 			<Container>
 				<Stack>
+					<Show when={deviceVendor !== "Apple"}>
+						<Alert severity="info">
+							Recomandăm instalarea aplicației prin magazinele de aplicații.
+							Dacă asta nu este posibil, vă instalarea prin Chrome.
+						</Alert>
+					</Show>
 					<Typography color="textSecondary">
 						<InfoIcon fontSize="inherit"/>{" "}
-						
-						Am detectat ca folosesti un
+						Am detectat că folosești un
 						{deviceVendor ? " " + deviceVendor : ""} {deviceModel ? deviceModel : "dispozitiv" + (mobile ? " mobil" : "")}
 						{browserName ? " cu " + browserName : ""}.
 					</Typography>

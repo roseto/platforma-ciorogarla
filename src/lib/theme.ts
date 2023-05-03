@@ -53,6 +53,9 @@ export const lightTheme: Partial<ThemeInput> = {
 			default: "#fbfdf8",
 			paper: "#d1e8d5"
 		},
+		info: {
+			main: "#006d3f",
+		}
 	}
 }
 
@@ -69,5 +72,8 @@ export const darkTheme: Partial<ThemeInput> = {
 			default: "#191c1a",
 			paper: "#213528"
 		},
+		info: {
+			main: "#79da9e",
+		}
 	}
 };

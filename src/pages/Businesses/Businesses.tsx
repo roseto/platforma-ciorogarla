@@ -1,5 +1,5 @@
 import { A, RouteDataFuncArgs, useRouteData, useSearchParams } from "@solidjs/router";
-import {Avatar, Box, Button, Chip, Container, Dialog, DialogActions, DialogContent, DialogTitle, Link, List, ListItemAvatar, ListItemButton, ListItemText, Paper, Stack, Typography} from "@suid/material";
+import {Alert, Avatar, Box, Button, Chip, Container, Dialog, DialogActions, DialogContent, DialogTitle, Link, List, ListItemAvatar, ListItemButton, ListItemText, Paper, Stack, Typography} from "@suid/material";
 import {createResource, createSignal, For, Show} from "solid-js";
 import Header from "../../components/Header";
 import Searchbox from "../../components/Searchbox";
@@ -101,44 +101,46 @@ export default function Businesses() {
 					</Box>
 
 
-					<Paper>
-						<Show when={data()?.length === 0}>
-							<Typography textAlign="center" pt={2}>
-								Fara rezultate
-							</Typography>
-						</Show>
-						<Show when={data() === undefined}>
-							<Typography textAlign="center" pt={2}>
-								Se incarca...
-							</Typography>
-						</Show>
-						<Show when={data() === null}>
-							<Typography textAlign="center" pt={2}>
-								A aparut o eroare
-							</Typography>
-						</Show>
-						<List>
-							<For each={data()}>
-								{(business) => (
-									<A href={`/businesses/${business.slug?.current}`}>
-										<ListItemButton>
-											<ListItemAvatar>
-												<Avatar 
-													src={urlFor(business.logo).width(64).height(64).url()}
-													variant="rounded"
+					<Show when={data()?.length === 0}>
+						<Alert severity="warning">
+							Fara rezultate
+						</Alert>
+					</Show>
+					<Show when={data() === undefined}>
+						<Alert severity="info">
+							Se incarca...
+						</Alert>
+					</Show>
+					<Show when={data() === null}>
+						<Alert severity="error">
+							A aparut o eroare
+						</Alert>
+					</Show>
+					<Show when={data()}>
+						<Paper>
+							<List>
+								<For each={data()}>
+									{(business) => (
+										<A href={`/businesses/${business.slug?.current}`}>
+											<ListItemButton>
+												<ListItemAvatar>
+													<Avatar 
+														src={urlFor(business.logo).width(64).height(64).url()}
+														variant="rounded"
+													/>
+												</ListItemAvatar>
+												<ListItemText 
+													primary={business.name} 
+													secondary={business.description} 
+													secondaryTypographyProps={{ noWrap: true }}
 												/>
-											</ListItemAvatar>
-											<ListItemText 
-												primary={business.name} 
-												secondary={business.description} 
-												secondaryTypographyProps={{ noWrap: true }}
-											/>
-										</ListItemButton>
-									</A>
-								)}
-							</For>
-						</List>
-					</Paper>
+											</ListItemButton>
+										</A>
+									)}
+								</For>
+							</List>
+						</Paper>
+					</Show>
 				</Stack>
 				<Dialog
 					open={addDialog()}

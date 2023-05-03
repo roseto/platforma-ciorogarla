@@ -1,8 +1,7 @@
 import { RouteDataFuncArgs, useRouteData } from "@solidjs/router";
-import {Avatar, Box, Button, Card, CardContent, Chip, Container, IconButton, List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Skeleton, Stack, SvgIcon, Typography, useTheme} from "@suid/material";
+import {Alert, Avatar, Box, Button, Card, CardContent, Chip, Container, IconButton, Link, Skeleton, Stack, SvgIcon, Typography, useTheme} from "@suid/material";
 import CardWithIcon from "../../components/CardWithIcon";
-import {createMemo, For, Show} from "solid-js";
-import {createResource} from "solid-js";
+import {createMemo, For, Show, createResource} from "solid-js";
 import Header from "../../components/Header";
 import {businessTypes} from "../../lib/businessTypes";
 import {sanityClient, urlFor} from "../../lib/sanity";
@@ -12,14 +11,13 @@ import {createEffect} from "solid-js";
 
 import MapIcon from "@suid/icons-material/Map";
 import WebsiteIcon from "@suid/icons-material/Link";
-import EmailIcon from "@suid/icons-material/Email";
-import PhoneIcon from "@suid/icons-material/Phone";
 import StarIcon from "@suid/icons-material/Star";
 import ListIcon from "@suid/icons-material/Assignment";
 import FacebookSvg from "../../resources/icons/facebook.svg?component-solid";
 import InstagramSvg from "../../resources/icons/instagram.svg?component-solid";
 import {getMapsURL} from "../../lib/maps";
 import MapsCard from "../../components/MapsCard";
+import ContactList from "../../components/ContactList";
 
 export default function BusinessPage() {
 	const data = useRouteData<typeof BusinessGetData>();
@@ -196,7 +194,7 @@ export default function BusinessPage() {
 							displayRaw="flex"
 							flexDirection="row"
 							gap={1}
-							overflow="scroll"
+							sx={{ overflowX: "scroll" }}
 						>
 							<For each={data()?.photos}>
 								{(photo) => (
@@ -243,40 +241,23 @@ export default function BusinessPage() {
 							</CardContent>
 						</CardWithIcon>
 					</Show>
-					<List>
-						<ListSubheader disableSticky>
-							Contact
-						</ListSubheader>
-						<Show when={data()?.contact?.email}>
-							<ListItemButton 
-								component="a"
-								href={`mailto:${data()?.contact?.email}`} 
-								target="_blank"
-							>
-								<ListItemIcon>
-									<EmailIcon />
-								</ListItemIcon>
-								<ListItemText 
-									primary="Email"
-									secondary={data()?.contact?.email}
-								/>
-							</ListItemButton>
-						</Show>
-						<Show when={data()?.contact?.phone}>
-							<ListItemButton
-								component="a"
-								href={`tel:${data()?.contact?.phone}`}
-							>
-								<ListItemIcon>
-									<PhoneIcon />
-								</ListItemIcon>
-								<ListItemText 
-									primary="Phone"
-									secondary={data()?.contact?.phone}
-								/>
-							</ListItemButton>
-						</Show>
-					</List>
+					<ContactList
+						website={data()?.contact?.website}
+						facebook={data()?.contact?.facebook}
+						instagram={data()?.contact?.instagram}
+						email={data()?.contact?.email}
+						phone={data()?.contact?.phone}
+					/>
+					<Alert severity="info">
+						Facem tot posibilul să ținem detaliile despre această
+						afacere actualizate. Dacă observi că ceva nu este corect,
+						te rugăm să ne anunți la adresa de email{" "}
+						<Link href="mailto:afacere@ciorogarlaunita.eu.org">
+							<strong>
+								afacere@ciorogarlaunita.eu.org
+							</strong>
+						</Link>
+					</Alert>
 				</Stack>
 			</Container>
 		</>

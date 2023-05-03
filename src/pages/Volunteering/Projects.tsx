@@ -1,6 +1,6 @@
 import {debounce} from "@solid-primitives/scheduled";
 import {A, RouteDataFuncArgs, useRouteData, useSearchParams} from "@solidjs/router";
-import {Avatar, Box, Button, Card, CardActionArea, CardContent, CardMedia, Chip, Container, Dialog, DialogActions, DialogContent, DialogTitle, Link, Paper, Stack, Typography} from "@suid/material";
+import {Alert, Avatar, Box, Button, Card, CardActionArea, CardContent, CardMedia, Chip, Container, Dialog, DialogActions, DialogContent, DialogTitle, Link, Paper, Stack, Typography} from "@suid/material";
 import {createResource, createSignal, For, Show} from "solid-js";
 import Header from "../../components/Header";
 import Searchbox from "../../components/Searchbox";
@@ -42,21 +42,22 @@ export default function Projects() {
 							debounceSearch(value);
 						}}
 					/>
-					<Show when={data() === null}>
-						<Paper>
-							<Typography textAlign="center" py={2}>
-								Nu există niciun proiect de voluntariat.
-								Cautam proiecte de voluntariat constant,
-								asa ca incearca mai tarziu.
-							</Typography>
-						</Paper>
-					</Show>
 					<Show when={data()?.length === 0}>
-						<Paper>
-							<Typography textAlign="center" py={2}>
-								Fara rezultate.
-							</Typography>
-						</Paper>
+						<Alert severity="info">
+							Nu există niciun proiect de voluntariat.
+							Cautam proiecte de voluntariat constant,
+							asa ca incearca mai tarziu.
+						</Alert>
+					</Show>
+					<Show when={data() === undefined}>
+						<Alert severity="info">
+							Se incarca...
+						</Alert>
+					</Show>
+					<Show when={data() === null}>
+						<Alert severity="error">
+							A aparut o eroare
+						</Alert>
 					</Show>
 					<For each={data()}>
 						{(project) => (

@@ -1,5 +1,5 @@
 import {RouteDataFuncArgs, useRouteData} from "@solidjs/router";
-import {Avatar, Box, Button, Card, CardContent, Chip, Container, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Paper, Stack, Typography, useTheme} from "@suid/material";
+import {Alert, Avatar, Box, Button, Card, CardContent, Chip, Container, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Paper, Stack, Typography, useTheme} from "@suid/material";
 import {createEffect, createResource, For, Show} from "solid-js";
 import Header from "../../components/Header";
 import {sanityClient, urlFor} from "../../lib/sanity";
@@ -7,11 +7,11 @@ import {Country, Organisation, VolunteeringProject} from "../../types/SanitySche
 import {projectTypes} from "../../lib/projectTypes";
 import MapsCard from "../../components/MapsCard";
 
-import InfoIcon from "@suid/icons-material/Info";
 import InfoPackIcon from "@suid/icons-material/Feed";
 import DepartureIcon from "@suid/icons-material/FlightTakeoff";
 import ReturnIcon from "@suid/icons-material/FlightLand";
 import FormIcon from "@suid/icons-material/Assignment";
+import ContactList from "../../components/ContactList";
 
 export default function Project() {
 	const data = useRouteData<typeof VolunteeringProjectGetData>();
@@ -86,7 +86,7 @@ export default function Project() {
 							<Show when={data()?.organisation}>
 								<Button
 									component="a"
-									href={(data()?.organisation as unknown as Organisation).link}
+									href={(data()?.organisation as unknown as Organisation)?.contact?.website}
 									target="_blank"
 									startIcon={
 										<Avatar
@@ -169,11 +169,17 @@ export default function Project() {
 							secondary="Descarca informatiile despre acest proiect"
 						/>
 					</ListItemButton>
-					<Typography color="textSecondary" variant="body2">
-						<InfoIcon fontSize="inherit"/>{" "}
+					<ContactList 
+						email={(data()?.organisation as unknown as Organisation)?.contact?.email}
+						phone={(data()?.organisation as unknown as Organisation)?.contact?.phone}
+						instagram={(data()?.organisation as unknown as Organisation)?.contact?.instagram}
+						facebook={(data()?.organisation as unknown as Organisation)?.contact?.facebook}
+						website={(data()?.organisation as unknown as Organisation)?.contact?.website}
+					/>
+					<Alert severity="info">
 						Nu putem urmări disponibilitatea locurilor libere pentru acest proiect, 
-						așa că te rugăm să contactezi organizatorul pentru a află mai multe.
-					</Typography>
+						așa că te rugăm să contactezi organizatorul pentru a afla mai multe detalii.
+					</Alert>
 				</Stack>
 			</Container>
 		</>
@@ -197,8 +203,6 @@ const fetcher = async (id: string) => {
 			participatingCountries[]->{...}
 		}`, { slug: id })
 		.catch(() => null);
-
-	console.log(data);
 
 	return data;
 }
