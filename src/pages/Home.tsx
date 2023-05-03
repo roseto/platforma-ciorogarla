@@ -197,7 +197,7 @@ function ProjectsSection(props: { projects: VolunteeringProject[] }) {
 				</ListSubheader>
 				<For each={props.projects}>
 					{(project) => (
-						<A href={`/businesses/${project.slug?.current}`}>
+						<A href={`/volunteering/${project.slug?.current}`}>
 							<ListItemButton>
 								<ListItemAvatar>
 									<Avatar
@@ -214,7 +214,7 @@ function ProjectsSection(props: { projects: VolunteeringProject[] }) {
 						</A>
 					)}
 				</For>
-				<A href="/businesses">
+				<A href="/volunteering">
 					<ListItemButton>
 						<ListItemText
 							primary="Mai multe"
