@@ -8,7 +8,7 @@ import {modules} from "../lib/modules";
 import {A, useRouteData} from "@solidjs/router";
 import {isInstalled} from "../lib/device";
 import SettingsDialog from "../components/SettingsDialog";
-import {Business} from "../types/SanitySchema";
+import {Business, VolunteeringProject} from "../types/SanitySchema";
 
 import ArrowForwardIcon from "@suid/icons-material/ArrowForward";
 import {sanityClient, urlFor} from "../lib/sanity";
@@ -78,6 +78,7 @@ export default function Home() {
 						</A>
 					</Show>
 					<BusinessSection businesses={data.businesses()}/>
+					<ProjectsSection projects={data.projects()}/>
 					<For each={modules}>
 						{(module) => (
 							<A href={module.disabled ? "" : module.path || ""}>
@@ -122,11 +123,21 @@ const fetcherBusinesses = async () => {
 	return data;
 }
 
+
+const fetcherProjects = async () => {
+	const data = sanityClient.fetch(`*[_type == "volunteeringProject"] | order(_createdAt desc)[0...3]`)
+		.catch(() => null);
+
+	return data;
+}
+
 export function HomeGetData() {
 	const [businesses] = createResource(fetcherBusinesses);
+	const [projects] = createResource(fetcherProjects);
 
 	return {
-		businesses
+		businesses,
+		projects
 	}
 }
 
@@ -153,6 +164,50 @@ function BusinessSection(props: { businesses: Business[] }) {
 								<ListItemText
 									primary={business.name}
 									secondary={business.description}
+									secondaryTypographyProps={{ noWrap: true }}
+								/>
+							</ListItemButton>
+						</A>
+					)}
+				</For>
+				<A href="/businesses">
+					<ListItemButton>
+						<ListItemText
+							primary="Mai multe"
+						/>
+						<ListItemSecondaryAction>
+						<ArrowForwardIcon />
+						</ListItemSecondaryAction>
+					</ListItemButton>
+				</A>
+			</List>
+		</Show>
+	)
+}
+
+
+function ProjectsSection(props: { projects: VolunteeringProject[] }) {
+	return (
+		<Show when={props.projects}>
+			<List>
+				<ListSubheader
+					disableSticky
+				>
+					Proiecte noi adaugate
+				</ListSubheader>
+				<For each={props.projects}>
+					{(project) => (
+						<A href={`/businesses/${project.slug?.current}`}>
+							<ListItemButton>
+								<ListItemAvatar>
+									<Avatar
+										src={urlFor(project.image).width(64).height(64).url()}
+										variant="rounded"
+									/>
+								</ListItemAvatar>
+								<ListItemText
+									primary={project.name}
+									secondary={project.description}
 									secondaryTypographyProps={{ noWrap: true }}
 								/>
 							</ListItemButton>

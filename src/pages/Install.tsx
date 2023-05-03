@@ -11,6 +11,7 @@ import MoreVertIcon from "@suid/icons-material/MoreVert"
 import InstallIcon from "@suid/icons-material/InstallMobile";
 import PaquetIcon from "../resources/icons/paquet.svg?component-solid";
 import PlayIcon from "../resources/icons/play.svg?component-solid";
+import HuaweiIcon from "../resources/icons/huawei.svg?component-solid";
 // import AppStoreIcon from "../resources/icons/app-store.svg?component-solid";
 
 export default function Install() {
@@ -71,8 +72,16 @@ export default function Install() {
 						href="https://play.google.com/store/apps/details?id=org.eu.ciorogarlaunita.app"
 						target="_blank"
 						startIcon={<SvgIcon><PlayIcon/></SvgIcon>}
-						>
+					>
 						Descarcă pe Google Play
+					</Button>
+					<Button
+						component="a"
+						href="https://appgallery.huawei.com/app/C108094061"
+						target="_blank"
+						startIcon={<SvgIcon><HuaweiIcon/></SvgIcon>}
+					>
+						Descarcă pe AppGallery
 					</Button>
 					<Button
 						startIcon={<SvgIcon><PaquetIcon/></SvgIcon>}
@@ -81,7 +90,7 @@ export default function Install() {
 						href="https://paquet.shop/app/013c536e-4a2d-4bce-90fd-c33c954bdc04"
 						target="_blank"
 					>
-						Descarca pe Paquet
+						Deschide pe Paquet
 					</Button>
 				</Stack>
 			</Container>
