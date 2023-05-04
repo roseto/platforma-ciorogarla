@@ -42,7 +42,7 @@ export default function Login() {
 		});
 	}
 
-	const login = async (provider: GoogleAuthProvider) => {
+	const login = (provider: GoogleAuthProvider) => {
 		setLoading(true);
 		signInWithPopup(auth, provider).then((res) => {
 			const providerId = res.providerId;
@@ -64,7 +64,7 @@ export default function Login() {
 		})
 	}
 
-	const loginWithEmail = async (e: Event) => {
+	const loginWithEmail = (e: Event) => {
 		e.preventDefault();
 		setLoading(true);
 
