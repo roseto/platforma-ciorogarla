@@ -34,16 +34,20 @@ export default function Login() {
 			emailConfirm = window.prompt("Please provide your email for confirmation") || "";
 		}
 
-		signInWithEmailLink(auth, emailConfirm, window.location.href)
-			.catch(() => {
-				setErrorDialogOpen(true)
+		setPersistence(auth, browserLocalPersistence).finally(() => {
+			signInWithEmailLink(auth, emailConfirm, window.location.href)
+				.catch(() => {
+					setErrorDialogOpen(true)
 			}).finally(() => {
-				setLoading(false)
-		});
+					setLoading(false)
+			});
+		})
+
 	}
 
-	const login = (provider: GoogleAuthProvider) => {
+	const login = async (provider: GoogleAuthProvider) => {
 		setLoading(true);
+		await setPersistence(auth, browserLocalPersistence);
 		signInWithPopup(auth, provider).then((res) => {
 			const providerId = res.providerId;
 
@@ -64,10 +68,11 @@ export default function Login() {
 		})
 	}
 
-	const loginWithEmail = (e: Event) => {
+	const loginWithEmail = async (e: Event) => {
 		e.preventDefault();
 		setLoading(true);
 
+		await setPersistence(auth, browserLocalPersistence);
 		sendSignInLinkToEmail(auth, email(), {
 			url: window.location.origin + "/login?email=" + email(),
 			handleCodeInApp: true,
