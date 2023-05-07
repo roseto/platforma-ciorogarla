@@ -20,6 +20,7 @@ export default function Login() {
 	const auth = getAuth(firebase);
 	const user = useAuth(auth);
 	const navigate = useNavigate();
+	setPersistence(auth, browserLocalPersistence);
 
 	createEffect(() => {
 		if (!user.loading && user.data) {
@@ -34,20 +35,17 @@ export default function Login() {
 			emailConfirm = window.prompt("Please provide your email for confirmation") || "";
 		}
 
-		setPersistence(auth, browserLocalPersistence).finally(() => {
-			signInWithEmailLink(auth, emailConfirm, window.location.href)
-				.catch(() => {
-					setErrorDialogOpen(true)
-			}).finally(() => {
-					setLoading(false)
-			});
-		})
-
+		
+		signInWithEmailLink(auth, emailConfirm, window.location.href)
+			.catch(() => {
+				setErrorDialogOpen(true)
+		}).finally(() => {
+				setLoading(false)
+		});
 	}
 
-	const login = async (provider: GoogleAuthProvider) => {
+	const login = (provider: GoogleAuthProvider) => {
 		setLoading(true);
-		await setPersistence(auth, browserLocalPersistence);
 		signInWithPopup(auth, provider).then((res) => {
 			const providerId = res.providerId;
 
@@ -68,11 +66,10 @@ export default function Login() {
 		})
 	}
 
-	const loginWithEmail = async (e: Event) => {
+	const loginWithEmail = (e: Event) => {
 		e.preventDefault();
 		setLoading(true);
 
-		await setPersistence(auth, browserLocalPersistence);
 		sendSignInLinkToEmail(auth, email(), {
 			url: window.location.origin + "/login?email=" + email(),
 			handleCodeInApp: true,
