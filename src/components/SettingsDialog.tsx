@@ -38,6 +38,7 @@ export default function SettingsDialog(props: SettingsDialogProps) {
 			<DialogContent sx={{ p: 1 }}>
 				<Paper>
 					<ListItemButton
+						sx={{ width: "100%" }}
 						component={user.data ? "button" : A}
 						href={user.data ? "" : "/login"}
 						onClick={user.data ? ((e: Event) => {
