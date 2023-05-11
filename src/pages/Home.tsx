@@ -50,7 +50,7 @@ export default function Home() {
 						my={2}
 					>
 						<Avatar
-							src="/favicon-32x32.png"
+							src="/android-chrome-192x192.png"
 							sx={{
 								width: "32px",
 								height: "32px",
