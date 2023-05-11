@@ -72,9 +72,9 @@ export default function Project() {
 							Limita de aplicare: {new Date(data()?.deadline || "").toLocaleDateString("RO")}
 						</Typography>
 					</Show>
-					<Show when={(data()?.organisation as unknown as Organisation).contact?.email && !data()?.applicationForm}>
+					<Show when={(data()?.organisation as unknown as Organisation)?.contact?.email && !data()?.applicationForm}>
 						<a 
-							href={`mailto:${(data()?.organisation as unknown as Organisation).contact?.email}`} 
+							href={`mailto:${(data()?.organisation as unknown as Organisation)?.contact?.email}`} 
 							target="_blank" 
 							rel="noreferrer noopener"
 						>

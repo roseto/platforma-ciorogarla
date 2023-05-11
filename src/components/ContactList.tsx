@@ -23,7 +23,7 @@ export default function ContactList(props: ContactList) {
 			<ListSubheader disableSticky>
 				Contact
 			</ListSubheader>
-			<Show when={props.website}>
+			<Show when={props?.website}>
 				<ListItemButton 
 					component="a"
 					href={props.website} 
@@ -38,7 +38,7 @@ export default function ContactList(props: ContactList) {
 					/>
 				</ListItemButton>
 			</Show>
-			<Show when={props.email}>
+			<Show when={props?.email}>
 				<ListItemButton 
 					component="a"
 					href={`mailto:${props.email}`} 
@@ -53,7 +53,7 @@ export default function ContactList(props: ContactList) {
 					/>
 				</ListItemButton>
 			</Show>
-			<Show when={props.phone}>
+			<Show when={props?.phone}>
 				<ListItemButton
 					component="a"
 					href={`tel:${props.phone}`}
@@ -67,7 +67,7 @@ export default function ContactList(props: ContactList) {
 					/>
 				</ListItemButton>
 			</Show>
-			<Show when={props.facebook}>
+			<Show when={props?.facebook}>
 				<ListItemButton
 					component="a"
 					href={props.facebook}
@@ -83,7 +83,7 @@ export default function ContactList(props: ContactList) {
 					/>
 				</ListItemButton>
 			</Show>
-			<Show when={props.instagram}>
+			<Show when={props?.instagram}>
 				<ListItemButton
 					component="a"
 					href={props.instagram}
