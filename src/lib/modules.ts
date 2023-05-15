@@ -19,6 +19,12 @@ export const modules = [
 		path: "/volunteering",
 	},
 	{
+		name: "News",
+		description: "Noutăți din Ciorogârla",
+		icon: NewsIcon,
+		path: "/news",
+	},
+	{
 		name: "ChatGPT Plugin",
 		description: "Plugin prin care poti conversa cu ChatGPT pentru a afla mai multe informatii",
 		icon: AIIcon,
@@ -28,12 +34,6 @@ export const modules = [
 		name: "Calendar de evenimente",
 		description: "Evenimentele din Ciorogârla",
 		icon: CalendarIcon,
-		disabled: true
-	},
-	{
-		name: "News",
-		description: "Noutăți din Ciorogârla",
-		icon: NewsIcon,
 		disabled: true
 	},
 	{

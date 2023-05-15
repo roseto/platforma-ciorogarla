@@ -4,6 +4,8 @@ import { BusinessesGetData } from "./Businesses/Businesses";
 import { BusinessGetData } from "./Businesses/Business";
 import { VolunteeringProjectsGetData } from "./Volunteering/Projects";
 import { VolunteeringProjectGetData } from "./Volunteering/Project";
+import { ArticlesGetData } from "./News/Articles";
+import { ArticleGetData } from "./News/Article";
 import { HomeGetData } from "./Home";
 
 export const routes: RouteDefinition[] = [
@@ -52,6 +54,21 @@ export const routes: RouteDefinition[] = [
 				path: "/:id",
 				component: lazy(() => import("./Volunteering/Project")),
 				data: VolunteeringProjectGetData
+			}
+		]
+	},
+	{
+		path: "/news",
+		children: [
+			{
+				path: "/",
+				component: lazy(() => import("./News/Articles")),
+				data: ArticlesGetData
+			},
+			{
+				path: "/:id",
+				component: lazy(() => import("./News/Article")),
+				data: ArticleGetData
 			}
 		]
 	},
