@@ -458,12 +458,12 @@ export interface VolunteeringProject extends SanityDocument {
 }
 
 /**
- * News
+ * Article
  *
  *
  */
-export interface News extends SanityDocument {
-  _type: "news";
+export interface Article extends SanityDocument {
+  _type: "article";
 
   /**
    * Title — `string`
@@ -487,6 +487,18 @@ export interface News extends SanityDocument {
   tags?: Array<SanityKeyed<string>>;
 
   /**
+   * Cover — `image`
+   *
+   * The cover of the news article
+   */
+  cover?: {
+    _type: "image";
+    asset: SanityReference<SanityImageAsset>;
+    crop?: SanityImageCrop;
+    hotspot?: SanityImageHotspot;
+  };
+
+  /**
    * Urgent — `boolean`
    *
    * Is this news article urgent?
@@ -506,7 +518,7 @@ export type Documents =
   | Organisation
   | Country
   | VolunteeringProject
-  | News;
+  | Article;
 
 /**
  * This interface is a stub. It was referenced in your sanity schema but

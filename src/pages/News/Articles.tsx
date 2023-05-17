@@ -3,7 +3,7 @@ import {Chip, Container, List, ListItem, ListItemButton, ListItemText, ListSubhe
 import {createResource, For} from "solid-js";
 import Header from "../../components/Header";
 import {sanityClient} from "../../lib/sanity";
-import {News} from "../../types/SanitySchema";
+import {Article} from "../../types/SanitySchema";
 
 export default function Articles() {
 	const data = useRouteData<typeof ArticlesGetData>();
@@ -20,7 +20,7 @@ export default function Articles() {
 						Recent
 					</ListSubheader>
 					<For each={data.recent()}>
-						{(article: News) => (
+						{(article: Article) => (
 							<ListItemButton component={A} href={`/news/${article.slug?.current}`}>
 								<ListItemText
 									primary={<Typography>{article.title}</Typography>}
@@ -45,7 +45,7 @@ export default function Articles() {
 }
 
 const recentFecher = async () => {
-	const data = await sanityClient.fetch<News[]>(`*[_type == "news"] | order(_createdAt desc) [0..5]`)
+	const data = await sanityClient.fetch<Article[]>(`*[_type == "article"] | order(_createdAt desc) [0..5]`)
 		.catch(() => null);
 
 	return data;
