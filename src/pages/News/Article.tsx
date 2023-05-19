@@ -35,7 +35,7 @@ export default function ArticlePage() {
 					}}
 				/>
 			</Show>
-			<Container>
+			<Container sx={{ mb: 2 }}>
 				<Stack>
 					<Typography variant="h1" sx={{ mt: data()?.cover ? 0 : 8 }}>
 						{data()?.title}
@@ -60,6 +60,7 @@ export default function ArticlePage() {
 					<Show when={data()?.content}>
 						<Markdown 
 							children={data()?.content}
+
 							components={{
 								a: (props) => <Link {...props} target="_blank" />,
 								h1: (props) => <Typography component="h1" variant="h1" {...props} />,
@@ -68,7 +69,7 @@ export default function ArticlePage() {
 								h4: (props) => <Typography component="h4" variant="h4" {...props} />,
 								h5: (props) => <Typography component="h5" variant="h5" {...props} />,
 								h6: (props) => <Typography component="h6" variant="h6" {...props} />,
-								p: (props) => <Typography component="p" variant="body1" {...props} />,
+								p: (props) => <Typography component="p" variant="body1" gutterBottom {...props} />,
 								blockquote: (props) => <Typography component="blockquote" sx={{ py: 1 }} variant="body1" color="textSecondary" {...props} />,
 							}}
 						/>
