@@ -77,9 +77,12 @@ export default function Home() {
 							</Paper>
 						</A>
 					</Show>
+
 					<UrgentArticleSection article={data.urgentArticle()} />
+					<NewsSection articles={data.articles()} />
 					<BusinessSection businesses={data.businesses()}/>
 					<ProjectsSection projects={data.projects()}/>
+
 					<For each={modules}>
 						{(module) => (
 							<A href={module.disabled ? "" : module.path || ""}>
@@ -125,6 +128,14 @@ const fetcherUrgentArticle = async () => {
 	return data;
 }
 
+
+const fetcherNews = async () => {
+	const data = sanityClient.fetch<Article[]>(`*[_type == "article"] | order(_createdAt desc)[0..3]`)
+		.catch(() => null);
+
+	return data;
+}
+
 const fetcherBusinesses = async () => {
 	const data = sanityClient.fetch<Business[]>(`*[_type == "business"] | order(_createdAt desc)[0...3]`)
 		.catch(() => null);
@@ -142,17 +153,19 @@ const fetcherProjects = async () => {
 
 export function HomeGetData() {
 	const [urgentArticle] = createResource(fetcherUrgentArticle);
+	const [articles] = createResource(fetcherNews);
 	const [businesses] = createResource(fetcherBusinesses);
 	const [projects] = createResource(fetcherProjects);
 
 	return {
 		urgentArticle,
+		articles,
 		businesses,
 		projects
 	}
 }
 
-function UrgentArticleSection(props: { article?: Article | null }) {
+export function UrgentArticleSection(props: { article?: Article | null }) {
 	return (
 		<Show when={props.article}>
 			<ButtonBase 
@@ -162,7 +175,7 @@ function UrgentArticleSection(props: { article?: Article | null }) {
 				component={A}
 				href={`/news/${props.article?.slug?.current}`}
 			>
-				<Alert severity="error">
+				<Alert severity="error" sx={{ width: "100%" }}>
 					<Typography variant="caption" color="textSecondary">
 						URGENT
 					</Typography>
@@ -184,13 +197,52 @@ function UrgentArticleSection(props: { article?: Article | null }) {
 	)
 }
 
+function NewsSection(props: { articles?: Article[] | null }) {
+	return (
+		<Show when={props.articles?.length}>
+			<List>
+				<ListSubheader>
+					Stiri recente
+				</ListSubheader>
+				<For each={props.articles}>
+					{(article) => (
+						<A href={`/news/${article.slug?.current}`}>
+							<ListItemButton>
+								<Show when={article.cover}>
+									<ListItemAvatar>
+										<Avatar
+											src={urlFor(article.cover).width(48).height(48).url()}
+										/>
+									</ListItemAvatar>
+								</Show>
+								<ListItemText
+									primary={article.title}
+									secondary={new Date(article._createdAt || "").toLocaleDateString("ro")}
+								/>
+							</ListItemButton>
+						</A>
+					)}
+				</For>
+				<A href="/news">
+					<ListItemButton>
+						<ListItemText
+							primary="Mai multe"
+						/>
+						<ListItemSecondaryAction>
+							<ArrowForwardIcon />
+						</ListItemSecondaryAction>
+					</ListItemButton>
+				</A>
+			</List>
+		</Show>
+	)
+}
+
 function BusinessSection(props: { businesses?: Business[] | null }) {
 	return (
 		<Show when={props.businesses?.length}>
 			<List>
-				<ListSubheader
-					disableSticky
-				>
+				<ListSubheader>
 					Afaceri noi adaugate
 				</ListSubheader>
 				<For each={props.businesses}>
@@ -233,9 +285,7 @@ function ProjectsSection(props: { projects?: VolunteeringProject[] | null }) {
 	return (
 		<Show when={props.projects?.length}>
 			<List>
-				<ListSubheader
-					disableSticky
-				>
+				<ListSubheader>
 					Proiecte noi adaugate
 				</ListSubheader>
 				<For each={props.projects}>

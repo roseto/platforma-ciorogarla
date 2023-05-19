@@ -36,7 +36,12 @@ export const commonTheme: Partial<ThemeInput> = {
 			defaultProps: {
 				spacing: 1
 			}
-		}
+		},
+		MuiListSubheader: {
+			defaultProps: {
+				disableSticky: true
+			}
+		},
 	}
 }
 

@@ -1,12 +1,13 @@
 import {lazy} from "solid-js";
 import { RouteDefinition, Navigate } from "@solidjs/router";
+import { HomeGetData } from "./Home";
 import { BusinessesGetData } from "./Businesses/Businesses";
 import { BusinessGetData } from "./Businesses/Business";
 import { VolunteeringProjectsGetData } from "./Volunteering/Projects";
 import { VolunteeringProjectGetData } from "./Volunteering/Project";
 import { ArticlesGetData } from "./News/Articles";
 import { ArticleGetData } from "./News/Article";
-import { HomeGetData } from "./Home";
+import { ArchiveGetData } from "./News/Archive";
 
 export const routes: RouteDefinition[] = [
 	{
@@ -69,6 +70,11 @@ export const routes: RouteDefinition[] = [
 				path: "/:id",
 				component: lazy(() => import("./News/Article")),
 				data: ArticleGetData
+			},
+			{
+				path: "/archive",
+				component: lazy(() => import("./News/Archive")),
+				data: ArchiveGetData
 			}
 		]
 	},

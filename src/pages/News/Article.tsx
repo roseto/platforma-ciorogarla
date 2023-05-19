@@ -4,7 +4,7 @@ import {createEffect, createResource, For, Show} from "solid-js";
 import Header from "../../components/Header";
 import {sanityClient, urlFor} from "../../lib/sanity";
 import {Article} from "../../types/SanitySchema";
-import {Chip, Container, Link, Typography, useTheme} from "@suid/material";
+import {Box, Chip, Container, Divider, Link, Stack, Typography, useTheme} from "@suid/material";
 
 import ErrorIcon from "@suid/icons-material/Error";
 
@@ -36,34 +36,44 @@ export default function ArticlePage() {
 				/>
 			</Show>
 			<Container>
-				<Typography variant="h1" sx={{ mt: data()?.cover ? 0 : 8, mb: 1 }}>
-					{data()?.title}
-				</Typography>
-				<Show when={data()?.urgent}>
-					<Chip icon={<ErrorIcon />} label="STIRE URGENTA" color="error" sx={{ mb: 1 }}/>
-					<br/>
-				</Show>
-				<For each={data()?.tags}>
-					{(tag) => (
-						<Chip label={`#${tag}`} size="small" variant="outlined" sx={{ mr: .5, mb: 1 }} />
-					)}
-				</For>
-				<Show when={data()?.content}>
-					<Markdown 
-						children={data()?.content}
-						components={{
-							a: (props) => <Link {...props} target="_blank" />,
-							h1: (props) => <Typography component="h1" variant="h1" {...props} />,
-							h2: (props) => <Typography component="h2" variant="h2" {...props} />,
-							h3: (props) => <Typography component="h3" variant="h3" {...props} />,
-							h4: (props) => <Typography component="h4" variant="h4" {...props} />,
-							h5: (props) => <Typography component="h5" variant="h5" {...props} />,
-							h6: (props) => <Typography component="h6" variant="h6" {...props} />,
-							p: (props) => <Typography component="p" variant="body1" {...props} />,
-							blockquote: (props) => <Typography component="blockquote" sx={{ py: 1 }} variant="body1" color="textSecondary" {...props} />,
-						}}
-					/>
-				</Show>
+				<Stack>
+					<Typography variant="h1" sx={{ mt: data()?.cover ? 0 : 8 }}>
+						{data()?.title}
+					</Typography>
+					<Typography
+						variant="body2"
+						color="textSecondary"
+					>
+						{new Date(data()?._createdAt || "").toLocaleDateString("ro")}
+					</Typography>
+					<Show when={data()?.urgent}>
+						<Chip icon={<ErrorIcon />} label="STIRE URGENTA" color="error" sx={{ alignSelf: "flex-start" }} />
+					</Show>
+					<Box>
+						<For each={data()?.tags}>
+							{(tag) => (
+								<Chip label={`#${tag}`} size="small" variant="outlined" sx={{ mr: .5 }} />
+							)}
+						</For>
+					</Box>
+					<Divider/>
+					<Show when={data()?.content}>
+						<Markdown 
+							children={data()?.content}
+							components={{
+								a: (props) => <Link {...props} target="_blank" />,
+								h1: (props) => <Typography component="h1" variant="h1" {...props} />,
+								h2: (props) => <Typography component="h2" variant="h2" {...props} />,
+								h3: (props) => <Typography component="h3" variant="h3" {...props} />,
+								h4: (props) => <Typography component="h4" variant="h4" {...props} />,
+								h5: (props) => <Typography component="h5" variant="h5" {...props} />,
+								h6: (props) => <Typography component="h6" variant="h6" {...props} />,
+								p: (props) => <Typography component="p" variant="body1" {...props} />,
+								blockquote: (props) => <Typography component="blockquote" sx={{ py: 1 }} variant="body1" color="textSecondary" {...props} />,
+							}}
+						/>
+					</Show>
+				</Stack>
 			</Container>
 		</>
 	)
