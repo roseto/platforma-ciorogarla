@@ -1,11 +1,4 @@
-// First domain is the primary one
-export const DOMAINS = [
-	"app.ciorogarlaunita.eu.org",
-	"ciorogarla.eu.org",
-	"ciorogarlaunita.web.app",
-]
-
-export const PRIMARY_DOMAIN = DOMAINS[0];
+export const PRIMARY_DOMAIN = "app.ciorogarlaunita.eu.org";
 
 // Since we are using Firebase Hosting,
 // we also have .web.app and .firebaseapp.com domains
@@ -15,7 +8,7 @@ export const checkDomain = () => {
 
 	const domain = window.location.hostname;
 
-	if (!DOMAINS.includes(domain)) {
+	if (domain !== PRIMARY_DOMAIN) {
 		console.log("Redirecting to", PRIMARY_DOMAIN);
 		window.location.href = "https://" + PRIMARY_DOMAIN;
 	}
