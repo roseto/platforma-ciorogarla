@@ -1,7 +1,7 @@
 // First domain is the primary one
 export const DOMAINS = [
 	"app.ciorogarlaunita.eu.org",
-	"cirogarla.eu.org",
+	"ciorogarla.eu.org",
 	"ciorogarlaunita.web.app",
 ]
 
