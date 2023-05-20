@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics, initializeAnalytics, logEvent } from "firebase/analytics";
-import { initializePerformance } from "firebase/performance";
+import { getPerformance } from "firebase/performance";
 import {firebaseConfig} from "./lib/firebaseConfig";
 import {useAnalyticsState} from "./lib/store";
 
@@ -13,7 +13,7 @@ const ANALYTICS_ENABLED = import.meta.env.MODE === "production" && analyticsStat
 const analytics = ANALYTICS_ENABLED ? getAnalytics(app) : undefined;
 
 const initializeDataCollection = async () => {
-	initializePerformance(app);
+	getPerformance(app);
 	initializeAnalytics(app, {
 		config: {
 			allow_ad_personalization_signals: false,
