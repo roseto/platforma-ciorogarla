@@ -9,20 +9,17 @@ import App from './App';
 import { registerSW } from "virtual:pwa-register";
 import {FirebaseProvider} from 'solid-firebase';
 import {firebaseConfig} from './lib/firebaseConfig';
-import {checkDomain} from './lib/safeGuard';
 
 registerSW({
 	immediate: true,
 });
 
-checkDomain();
-
 const root = document.getElementById('root');
 
 if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
-  throw new Error(
-    'Root element not found. Did you forget to add it to your index.html? Or maybe the id attribute got mispelled?',
-  );
+	throw new Error(
+		'Root element not found. Did you forget to add it to your index.html? Or maybe the id attribute got mispelled?',
+	);
 }
 
 
