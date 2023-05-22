@@ -37,7 +37,7 @@ export default function ArticlePage() {
 			</Show>
 			<Container sx={{ mb: 2 }}>
 				<Stack>
-					<Typography variant="h1" sx={{ mt: data()?.cover ? 0 : 8 }}>
+					<Typography variant="h2" sx={{ mt: data()?.cover ? 0 : 8 }}>
 						{data()?.title}
 					</Typography>
 					<Typography
