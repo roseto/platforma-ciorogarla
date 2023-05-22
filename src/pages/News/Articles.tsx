@@ -1,14 +1,16 @@
 import {A, useRouteData} from "@solidjs/router";
-import {Alert, Chip, Container, List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Paper, Stack, Typography} from "@suid/material";
-import {createResource, For, Show} from "solid-js";
+import {Alert, Button, Chip, Container, Dialog, DialogActions, DialogContent, DialogTitle, Link, List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Paper, Stack, Typography} from "@suid/material";
+import {createResource, createSignal, For, Show} from "solid-js";
 import Header from "../../components/Header";
 import {sanityClient} from "../../lib/sanity";
 import {Article} from "../../types/SanitySchema";
 
 import ArchiveIcon from "@suid/icons-material/Archive";
+import PostAddIcon from "@suid/icons-material/PostAdd";
 import {UrgentArticleSection} from "../Home";
 
 export default function Articles() {
+	const [addDialog, setAddDialog] = createSignal(false);
 	const data = useRouteData<typeof ArticlesGetData>();
 
 	return (
@@ -16,6 +18,12 @@ export default function Articles() {
 			<Header 
 				title="Stiri"
 				back
+				actions={[
+					{
+						icon: PostAddIcon,
+						onClick: () => setAddDialog(true),
+					}
+				]}
 			/>
 			<Container>
 				<Stack>
@@ -71,6 +79,28 @@ export default function Articles() {
 					</ListItemButton>
 				</Stack>
 			</Container>
+			<Dialog
+				open={addDialog()}
+				onClose={() => setAddDialog(false)}
+			>
+				<DialogTitle>
+					Adaugare stire
+				</DialogTitle>
+				<DialogContent>
+					<Typography>
+						Pentru a adauga o stire, trimite un email cu titlul, continutul si tagurile stirii
+						pe email la <Link href="mailto:stire@ciorogarlaunita.eu.org" target="_blank"><strong>stire@ciorogarlaunita.eu.org</strong></Link>
+					</Typography>
+				</DialogContent>
+				<DialogActions>
+					<Button
+						variant="text"
+						onClick={() => setAddDialog(false)}
+					>
+						OK
+					</Button>
+				</DialogActions>
+			</Dialog>
 		</>
 	)
 }

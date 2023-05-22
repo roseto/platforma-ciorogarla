@@ -123,7 +123,7 @@ export default function Projects() {
 				onClose={() => setAddDialog(false)}
 			>
 				<DialogTitle>
-					Adaugare afacere
+					Adaugare proiect
 				</DialogTitle>
 				<DialogContent>
 					<Typography>

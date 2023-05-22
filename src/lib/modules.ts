@@ -19,7 +19,7 @@ export const modules = [
 		path: "/volunteering",
 	},
 	{
-		name: "News",
+		name: "Stiri",
 		description: "Noutăți din Ciorogârla",
 		icon: NewsIcon,
 		path: "/news",
