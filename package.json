@@ -33,7 +33,7 @@
 		"@suid/material": "^0.11.1",
 		"firebase": "^9.19.1",
 		"solid-firebase": "^0.1.7",
-		"solid-js": "^1.6.10",
+		"solid-js": "^1.7.5",
 		"solid-markdown": "^1.2.2",
 		"solid-transition-group": "^0.2.2",
 		"solid-zustand": "^1.5.0",
