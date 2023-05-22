@@ -1,14 +1,14 @@
-import {Avatar, Box, CardActionArea, CardContent, Chip, Container, List, ListItemAvatar, ListItemButton, ListItemIcon, ListItemSecondaryAction, ListItemText, ListSubheader, Paper, Stack, Typography, useTheme} from "@suid/material";
+import {Alert, Avatar, Box, ButtonBase, CardActionArea, CardContent, Chip, Container, List, ListItemAvatar, ListItemButton, ListItemIcon, ListItemSecondaryAction, ListItemText, ListSubheader, Paper, Stack, Typography, useTheme} from "@suid/material";
 import SettingsIcon from "@suid/icons-material/Settings";
 import InstallIcon from "@suid/icons-material/InstallMobile";
 import CardWithIcon from "../components/CardWithIcon";
 import Header from "../components/Header";
-import {createResource, createSignal, For, Show} from "solid-js";
+import {createEffect, createResource, createSignal, For, Show} from "solid-js";
 import {modules} from "../lib/modules";
 import {A, useRouteData} from "@solidjs/router";
 import {isInstalled} from "../lib/device";
 import SettingsDialog from "../components/SettingsDialog";
-import {Business, VolunteeringProject} from "../types/SanitySchema";
+import {Article, Business, VolunteeringProject} from "../types/SanitySchema";
 
 import ArrowForwardIcon from "@suid/icons-material/ArrowForward";
 import {sanityClient, urlFor} from "../lib/sanity";
@@ -77,8 +77,12 @@ export default function Home() {
 							</Paper>
 						</A>
 					</Show>
+
+					<UrgentArticleSection article={data.urgentArticle()} />
+					<NewsSection articles={data.articles()} />
 					<BusinessSection businesses={data.businesses()}/>
 					<ProjectsSection projects={data.projects()}/>
+
 					<For each={modules}>
 						{(module) => (
 							<A href={module.disabled ? "" : module.path || ""}>
@@ -116,8 +120,24 @@ export default function Home() {
 	)
 }
 
+
+const fetcherUrgentArticle = async () => {
+	const data = sanityClient.fetch<Article>(`*[_type == "article" && urgent] | order(_createdAt desc)[0]`)
+		.catch(() => null);
+
+	return data;
+}
+
+
+const fetcherNews = async () => {
+	const data = sanityClient.fetch<Article[]>(`*[_type == "article"] | order(_createdAt desc)[0..3]`)
+		.catch(() => null);
+
+	return data;
+}
+
 const fetcherBusinesses = async () => {
-	const data = sanityClient.fetch(`*[_type == "business"] | order(_createdAt desc)[0...3]`)
+	const data = sanityClient.fetch<Business[]>(`*[_type == "business"] | order(_createdAt desc)[0...3]`)
 		.catch(() => null);
 
 	return data;
@@ -125,30 +145,104 @@ const fetcherBusinesses = async () => {
 
 
 const fetcherProjects = async () => {
-	const data = sanityClient.fetch(`*[_type == "volunteeringProject"] | order(_createdAt desc)[0...3]`)
+	const data = sanityClient.fetch<VolunteeringProject[]>(`*[_type == "volunteeringProject"] | order(_createdAt desc)[0...3]`)
 		.catch(() => null);
 
 	return data;
 }
 
 export function HomeGetData() {
+	const [urgentArticle] = createResource(fetcherUrgentArticle);
+	const [articles] = createResource(fetcherNews);
 	const [businesses] = createResource(fetcherBusinesses);
 	const [projects] = createResource(fetcherProjects);
 
 	return {
+		urgentArticle,
+		articles,
 		businesses,
 		projects
 	}
 }
 
+export function UrgentArticleSection(props: { article?: Article | null }) {
+	return (
+		<Show when={props.article}>
+			<ButtonBase 
+				sx={{
+					textAlign: "start",
+				}}
+				component={A}
+				href={`/news/${props.article?.slug?.current}`}
+			>
+				<Alert severity="error" sx={{ width: "100%" }}>
+					<Typography variant="caption" color="textSecondary">
+						URGENT
+					</Typography>
+					<br />
+					<strong>{props.article?.title}</strong>
+					<br />
+					<For each={props.article?.tags}>
+						{(tag) => (
+							<Chip label={`#${tag}`} size="small" variant="outlined" sx={{ mr: .5, my: .25 }} />
+						)}
+					</For>
+					<br />
+					<Typography variant="overline" color="textSecondary">
+						{new Date(props.article?._createdAt || "").toLocaleDateString("ro-RO")}
+					</Typography>
+				</Alert>
+			</ButtonBase>
+		</Show>
+	)
+}
 
-function BusinessSection(props: { businesses?: Business[] }) {
+function NewsSection(props: { articles?: Article[] | null }) {
+	return (
+		<Show when={props.articles?.length}>
+			<List>
+				<ListSubheader>
+					Stiri recente
+				</ListSubheader>
+				<For each={props.articles}>
+					{(article) => (
+						<A href={`/news/${article.slug?.current}`}>
+							<ListItemButton>
+								<Show when={article.cover}>
+									<ListItemAvatar>
+										<Avatar
+											src={urlFor(article.cover).width(48).height(48).url()}
+										/>
+									</ListItemAvatar>
+								</Show>
+								<ListItemText
+									primary={article.title}
+									secondary={new Date(article._createdAt || "").toLocaleDateString("ro")}
+								/>
+							</ListItemButton>
+						</A>
+					)}
+				</For>
+				<A href="/news">
+					<ListItemButton>
+						<ListItemText
+							primary="Mai multe"
+						/>
+						<ListItemSecondaryAction>
+							<ArrowForwardIcon />
+						</ListItemSecondaryAction>
+					</ListItemButton>
+				</A>
+			</List>
+		</Show>
+	)
+}
+
+function BusinessSection(props: { businesses?: Business[] | null }) {
 	return (
 		<Show when={props.businesses?.length}>
 			<List>
-				<ListSubheader
-					disableSticky
-				>
+				<ListSubheader>
 					Afaceri noi adaugate
 				</ListSubheader>
 				<For each={props.businesses}>
@@ -186,14 +280,12 @@ function BusinessSection(props: { businesses?: Business[] }) {
 }
 
 
-function ProjectsSection(props: { projects?: VolunteeringProject[] }) {
+function ProjectsSection(props: { projects?: VolunteeringProject[] | null }) {
 
 	return (
 		<Show when={props.projects?.length}>
 			<List>
-				<ListSubheader
-					disableSticky
-				>
+				<ListSubheader>
 					Proiecte noi adaugate
 				</ListSubheader>
 				<For each={props.projects}>

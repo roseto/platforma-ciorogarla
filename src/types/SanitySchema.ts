@@ -457,4 +457,72 @@ export interface VolunteeringProject extends SanityDocument {
   };
 }
 
-export type Documents = Business | Organisation | Country | VolunteeringProject;
+/**
+ * Article
+ *
+ *
+ */
+export interface Article extends SanityDocument {
+  _type: "article";
+
+  /**
+   * Title — `string`
+   *
+   * The title of the news article
+   */
+  title?: string;
+
+  /**
+   * Slug — `slug`
+   *
+   * The slug of the news article
+   */
+  slug?: { _type: "slug"; current: string };
+
+  /**
+   * Tags — `array`
+   *
+   * The tags of the news article
+   */
+  tags?: Array<SanityKeyed<string>>;
+
+  /**
+   * Cover — `image`
+   *
+   * The cover of the news article
+   */
+  cover?: {
+    _type: "image";
+    asset: SanityReference<SanityImageAsset>;
+    crop?: SanityImageCrop;
+    hotspot?: SanityImageHotspot;
+  };
+
+  /**
+   * Urgent — `boolean`
+   *
+   * Is this news article urgent?
+   */
+  urgent?: boolean;
+
+  /**
+   * Content — `markdown`
+   *
+   * The content of the news article
+   */
+  content?: Markdown;
+}
+
+export type Documents =
+  | Business
+  | Organisation
+  | Country
+  | VolunteeringProject
+  | Article;
+
+/**
+ * This interface is a stub. It was referenced in your sanity schema but
+ * the definition was not actually found. Future versions of
+ * sanity-codegen will let you type this explicity.
+ */
+type Markdown = any;

@@ -2,7 +2,7 @@ import { createTheme, CssBaseline, ThemeProvider, useMediaQuery } from "@suid/ma
 import { darkTheme, lightTheme, commonTheme } from "./lib/theme";
 import {Navigate, Route, useRoutes} from "@solidjs/router";
 import {routes} from "./pages/routes";
-import {createMemo, Suspense} from "solid-js";
+import {createMemo, Show, Suspense} from "solid-js";
 import {createPalette, Palette} from "@suid/material/styles/createPalette";
 import Header from "./components/Header";
 import {useAuth, useFirebaseApp} from "solid-firebase";
@@ -11,6 +11,7 @@ import {useA2HS} from "./hooks/useA2HS";
 import {scheduleIdle} from "@solid-primitives/scheduled";
 import {initializeAppCheck, ReCaptchaV3Provider} from "firebase/app-check";
 import WelcomeDialog from "./components/WelcomeDialog";
+import {BUSINESS_STANDALONE_MODE} from "./pages/Businesses/Business";
 
 
 const backgroundTrigger = scheduleIdle(() => {
@@ -40,7 +41,9 @@ export default function App() {
 			<CssBaseline enableColorScheme/>
 			<Suspense fallback={<Header noNav title="Se incarca..." />}>
 				<Routes />
-				<WelcomeDialog />
+				<Show when={!BUSINESS_STANDALONE_MODE}>
+					<WelcomeDialog />
+				</Show>
 			</Suspense>
 		</ThemeProvider>
 	)

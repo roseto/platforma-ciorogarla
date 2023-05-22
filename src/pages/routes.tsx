@@ -1,12 +1,15 @@
 import {lazy} from "solid-js";
 import { RouteDefinition, Navigate } from "@solidjs/router";
+import { HomeGetData } from "./Home";
 import { BusinessesGetData } from "./Businesses/Businesses";
-import { BusinessGetData } from "./Businesses/Business";
+import { BusinessGetData, BUSINESS_STANDALONE_MODE } from "./Businesses/Business";
 import { VolunteeringProjectsGetData } from "./Volunteering/Projects";
 import { VolunteeringProjectGetData } from "./Volunteering/Project";
-import { HomeGetData } from "./Home";
+import { ArticlesGetData } from "./News/Articles";
+import { ArticleGetData } from "./News/Article";
+import { ArchiveGetData } from "./News/Archive";
 
-export const routes: RouteDefinition[] = [
+let routes: RouteDefinition[] = [
 	{
 		path: "/",
 		component: lazy(() => import("./Home")),
@@ -56,7 +59,43 @@ export const routes: RouteDefinition[] = [
 		]
 	},
 	{
+		path: "/news",
+		children: [
+			{
+				path: "/",
+				component: lazy(() => import("./News/Articles")),
+				data: ArticlesGetData
+			},
+			{
+				path: "/:id",
+				component: lazy(() => import("./News/Article")),
+				data: ArticleGetData
+			},
+			{
+				path: "/archive",
+				component: lazy(() => import("./News/Archive")),
+				data: ArchiveGetData
+			}
+		]
+	},
+	{
 		path: "*",
 		component: () => <Navigate href="/" />
 	}
 ]
+
+if (BUSINESS_STANDALONE_MODE) {
+	routes = [
+		{
+			path: "/",
+			component: lazy(() => import("./Businesses/Business")),
+			data: BusinessGetData,
+		},
+		{
+			path: "*",
+			component: () => <Navigate href="/" />
+		}
+	];
+}
+
+export { routes };
