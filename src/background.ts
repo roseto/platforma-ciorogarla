@@ -3,12 +3,13 @@ import { getAnalytics, initializeAnalytics, logEvent } from "firebase/analytics"
 import { getPerformance } from "firebase/performance";
 import {firebaseConfig} from "./lib/firebaseConfig";
 import {useAnalyticsState} from "./lib/store";
+import {DEV} from "./lib/dev";
 
 const app = initializeApp(firebaseConfig);
 let analyticsInitialized = false;
 const analyticsState = useAnalyticsState();
 
-const ANALYTICS_ENABLED = import.meta.env.MODE === "production" && analyticsState.state;
+const ANALYTICS_ENABLED = !DEV && analyticsState.state;
 
 const analytics = ANALYTICS_ENABLED ? getAnalytics(app) : undefined;
 
@@ -39,8 +40,9 @@ if (ANALYTICS_ENABLED && analytics && !analyticsInitialized) {
 	initializeDataCollection();
 }
 
+if (DEV)
 // @ts-ignore
-self.FIREBASE_APPCHECK_DEBUG_TOKEN = import.meta.env.MODE === "development";
+	self.FIREBASE_APPCHECK_DEBUG_TOKEN = import.meta.FIREBASE_APPCHECK_DEBUG_TOKEN;
 
 useAnalyticsState.subscribe((value, prev) => {
 	if (value.state && !prev.state && !analyticsInitialized) {

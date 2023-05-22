@@ -2,19 +2,18 @@ import {Switch, List, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemT
 import Header from "../components/Header";
 import { version } from "../../package.json";
 import {useAnalyticsState} from "../lib/store";
-import {A} from "@solidjs/router";
-import {useAuth, useFirebaseApp} from "solid-firebase";
-import {getAuth, signOut} from "firebase/auth";
-import {Show} from "solid-js";
+import { DEV } from "../lib/dev";
 
 import InfoIcon from "@suid/icons-material/Info";
 import AnalyticsIcon from "@suid/icons-material/Analytics";
 import TermsIcon from "@suid/icons-material/Description";
 import PrivacyIcon from "@suid/icons-material/PrivacyTip";
+import {Show} from "solid-js";
+import {analyticsEnabled} from "../hooks/useAnalytics";
 
 
 export default function Settings() {
-	const anayltics = useAnalyticsState();
+	const analytics = useAnalyticsState();
 
 	return (
 		<>
@@ -25,14 +24,15 @@ export default function Settings() {
 			<Container disableGutters>
 				<List>
 					<ListItemButton
-						onClick={() => anayltics.set(!anayltics.state)}
+						onClick={() => analytics.set(!analytics.state)}
+						disabled={!analyticsEnabled}
 					>
 						<ListItemIcon>
 							<AnalyticsIcon/>
 						</ListItemIcon>
 						<ListItemText
 							primary="Analitica"
-							secondary={anayltics.state ? "Impartasiti informatie pentru analitica" : "Nu impartasiti informatii pentru analitica"}
+							secondary={analyticsEnabled && analytics.state ? "Impartasiti informatie pentru analitica" : "Nu impartasiti informatii pentru analitica"}
 							sx={{
 								mr: 8
 							}}
@@ -41,8 +41,9 @@ export default function Settings() {
 							<Switch
 								onClick={(e) => e.stopPropagation()}
 								edge="end"
-								checked={anayltics.state}
-								onChange={(_, checked) => anayltics.set(checked)}
+								disabled={!analyticsEnabled}
+								checked={analyticsEnabled && analytics.state}
+								onChange={(_, checked) => analyticsEnabled && analytics.set(checked)}
 							/>
 						</ListItemSecondaryAction>
 					</ListItemButton>
@@ -84,6 +85,17 @@ export default function Settings() {
 							secondary={version}
 						/>
 					</ListItem>
+					<Show when={DEV}>
+						<ListItem>
+							<ListItemIcon>
+								<InfoIcon/>
+							</ListItemIcon>
+							<ListItemText 
+								primary="Mod development"
+								secondary="Modul de development este activat"
+							/>
+						</ListItem>
+					</Show>
 				</List>
 			</Container>
 		</>

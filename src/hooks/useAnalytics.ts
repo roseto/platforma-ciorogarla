@@ -1,12 +1,13 @@
 import {getAnalytics} from "firebase/analytics";
 import {useFirebaseApp} from "solid-firebase";
 import {createMemo} from "solid-js";
+import {DEV} from "../lib/dev";
 import {useAnalyticsState} from "../lib/store";
 
 export const useAnalytics = () => {
 	const firebaseApp = useFirebaseApp();
 	const analyticsState = useAnalyticsState();
-	const analytics = import.meta.env.MODE === "production" ? getAnalytics(firebaseApp) : null;
+	const analytics = !DEV ? getAnalytics(firebaseApp) : null;
 	
 	const analyticsInstance = createMemo(() => {
 		if (analyticsState.state) {
@@ -18,3 +19,5 @@ export const useAnalytics = () => {
 
 	return analyticsInstance;
 }
+
+export const analyticsEnabled = !DEV;

@@ -1,4 +1,4 @@
-import {Button, Container, Dialog, Link, ListItem, ListItemSecondaryAction, ListItemText, Slide, Toolbar, Typography, Switch} from "@suid/material";
+import {Button, Container, Dialog, Link, ListItem, ListItemSecondaryAction, ListItemText, Slide, Toolbar, Typography, Switch, ListItemIcon} from "@suid/material";
 import {createSignal, JSXElement} from "solid-js";
 import {TransitionProps} from "@suid/material/transitions";
 import {useAnalyticsState, useFirstTime} from "../lib/store";
@@ -6,6 +6,7 @@ import {useAnalyticsState, useFirstTime} from "../lib/store";
 
 import TermsIcon from "@suid/icons-material/Description";
 import AnalyticsIcon from "@suid/icons-material/Analytics";
+import {analyticsEnabled} from "../hooks/useAnalytics";
 
 const Transition = function Transition(
 	props: TransitionProps & {
@@ -18,7 +19,7 @@ const Transition = function Transition(
 export default function WelcomeDialog() {
 	const firstTime = useFirstTime();
 	const setAnalyticsState = useAnalyticsState(state => state.set);
-	const [allowsAnalytics, setAllowsAnalytics] = createSignal(true);
+	const [allowsAnalytics, setAllowsAnalytics] = createSignal(analyticsEnabled);
 	const [confirmAllowed, setConfirmAllowed] = createSignal(true);
 
 	const handleConfirm = () => {
@@ -52,6 +53,9 @@ export default function WelcomeDialog() {
 					De asemenea trebuie sa fiti de acord cu <Link href="https://ciorogarlaunita.eu.org/privacy-policy" target="_blank">termenii si conditiile noastre</Link>.
 				</Typography>
 				<ListItem dense>
+					<ListItemIcon>
+						<TermsIcon />
+					</ListItemIcon>
 					<ListItemText
 						primary="Aprob termenii si conditiile"
 						secondary="Sunt de acord termenii si conditiile"
@@ -67,6 +71,9 @@ export default function WelcomeDialog() {
 					</ListItemSecondaryAction>
 				</ListItem>
 				<ListItem dense>
+					<ListItemIcon>
+						<AnalyticsIcon />
+					</ListItemIcon>
 					<ListItemText
 						primary="Permite analitica"
 						secondary="Sunt de acord cu folosirea datelor pentru analitica"
@@ -76,7 +83,8 @@ export default function WelcomeDialog() {
 						<Switch
 							onClick={(e) => e.stopPropagation()}
 							edge="end"
-							checked={allowsAnalytics()}
+							disabled={!analyticsEnabled}
+							checked={analyticsEnabled && allowsAnalytics()}
 							onChange={(_, checked) => setAllowsAnalytics(checked)}
 						/>
 					</ListItemSecondaryAction>
