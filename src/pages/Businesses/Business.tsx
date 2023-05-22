@@ -1,5 +1,5 @@
 import { RouteDataFuncArgs, useRouteData } from "@solidjs/router";
-import {Alert, Avatar, Box, Button, Card, CardContent, Chip, Container, IconButton, Link, Skeleton, Stack, SvgIcon, Typography, useTheme} from "@suid/material";
+import {Alert, Avatar, Box, Button, Card, CardContent, Chip, Container, Divider, IconButton, Link, Skeleton, Stack, SvgIcon, Typography, useTheme} from "@suid/material";
 import CardWithIcon from "../../components/CardWithIcon";
 import {createMemo, For, Show, createResource} from "solid-js";
 import Header from "../../components/Header";
@@ -18,6 +18,14 @@ import InstagramSvg from "../../resources/icons/instagram.svg?component-solid";
 import {getMapsURL} from "../../lib/maps";
 import MapsCard from "../../components/MapsCard";
 import ContactList from "../../components/ContactList";
+import CiorogarlaUnitaBadge from "../../components/CiorogarlaUnitaBadge";
+
+export const BUSINESS_STANDALONE_MODE = window.location.hostname.endsWith(".ciorogarla.eu.org");
+export const STANDALONE_SLUG = BUSINESS_STANDALONE_MODE ? window.location.hostname.split(".")[0] : "";
+// For testing
+// export const BUSINESS_STANDALONE_MODE = true;
+// export const STANDALONE_SLUG = "trattoria-iris";
+
 
 export default function BusinessPage() {
 	const data = useRouteData<typeof BusinessGetData>();
@@ -30,7 +38,7 @@ export default function BusinessPage() {
 		<>
 			<Header
 				title={data()?.name ?? "Afacere"}
-				back
+				back={!BUSINESS_STANDALONE_MODE}
 				noHeading
 				// @ts-ignore: Metadata is there but not specified
 				themeColor={data()?.cover?.asset?.metadata?.palette?.dominant.background}
@@ -113,16 +121,19 @@ export default function BusinessPage() {
 							Arata locatia
 						</Button>
 					</Show>
-					<Show when={data()?.contact?.website}>
+					<Show when={!BUSINESS_STANDALONE_MODE && data()?.contact?.website}>
 						<Button
 							variant="outlined"
 							color="secondary"
 							component="a"
+							disabled={data()?.contact?.website?.endsWith(".ciorogarla.eu.org")}
 							href={data()?.contact?.website}
 							target="_blank"
 							startIcon={<WebsiteIcon />}
 						>
-							Viziteaza site-ul
+							{ data()?.contact?.website?.endsWith(".ciorogarla.eu.org") 
+								? "Acesta este site-ul afacerii" 
+								: "Viziteaza site-ul" }
 						</Button>
 					</Show>
 					<Box
@@ -242,22 +253,28 @@ export default function BusinessPage() {
 						</CardWithIcon>
 					</Show>
 					<ContactList
-						website={data()?.contact?.website}
+						website={!BUSINESS_STANDALONE_MODE ? data()?.contact?.website : undefined}
 						facebook={data()?.contact?.facebook}
 						instagram={data()?.contact?.instagram}
 						email={data()?.contact?.email}
 						phone={data()?.contact?.phone}
 					/>
-					<Alert severity="info">
-						Facem tot posibilul să ținem detaliile despre această
-						afacere actualizate. Dacă observi că ceva nu este corect,
-						te rugăm să ne anunți la adresa de email{" "}
-						<Link href="mailto:afacere@ciorogarlaunita.eu.org">
-							<strong>
-								afacere@ciorogarlaunita.eu.org
-							</strong>
-						</Link>
-					</Alert>
+					<Show when={!BUSINESS_STANDALONE_MODE}>
+						<Alert severity="info">
+							Facem tot posibilul să ținem detaliile despre această
+							afacere actualizate. Dacă observi că ceva nu este corect,
+							te rugăm să ne anunți la adresa de email{" "}
+							<Link href="mailto:afacere@ciorogarlaunita.eu.org">
+								<strong>
+									afacere@ciorogarlaunita.eu.org
+								</strong>
+							</Link>
+						</Alert>
+					</Show>
+					<Show when={BUSINESS_STANDALONE_MODE}>
+						<Divider />
+						<CiorogarlaUnitaBadge/>
+					</Show>
 				</Stack>
 			</Container>
 		</>
@@ -272,7 +289,12 @@ const fetcher = async (id: string) => {
 }
 
 export function BusinessGetData({ params, navigate }: RouteDataFuncArgs) {
-	const [data] = createResource(() => params.id, fetcher);
+	let id = params.id
+	if (BUSINESS_STANDALONE_MODE) {
+		id = STANDALONE_SLUG;
+	}
+
+	const [data] = createResource(() => id, fetcher);
 	
 	createEffect(() => {
 		if (data() === null) {
