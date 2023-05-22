@@ -37,7 +37,8 @@ export default function Login() {
 
 		
 		signInWithEmailLink(auth, emailConfirm, window.location.href)
-			.catch(() => {
+			.catch((err) => {
+				console.log(err);
 				setErrorDialogOpen(true)
 		}).finally(() => {
 				setLoading(false)
@@ -59,7 +60,8 @@ export default function Login() {
 					});
 				}
 			});
-		}).catch(() => {
+		}).catch((err) => {
+			console.log(err);
 			setErrorDialogOpen(true);
 		}).finally(() => {
 			setLoading(false);
@@ -77,7 +79,8 @@ export default function Login() {
 			.then(() => {
 				setConfirmationDialogOpen(true);
 			})
-			.catch(() => {
+			.catch((err) => {
+				console.log(err);
 				setErrorDialogOpen(true)
 			})
 			.finally(() => {
