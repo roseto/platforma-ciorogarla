@@ -1,4 +1,4 @@
-import {Accessor, createEffect, createSignal} from "solid-js";
+import {Accessor, createEffect, createSignal, onMount, onCleanup} from "solid-js";
 
 export const createScrollTrigger = (threshold: number | Accessor<number>) => {
 	const thresholdValue = typeof threshold === "number" ? () => threshold : threshold;
@@ -8,10 +8,13 @@ export const createScrollTrigger = (threshold: number | Accessor<number>) => {
 		setTriggered(window.scrollY > thresholdValue());
 	}
 
-	createEffect(() => {
+	onMount(() => {
+		// Also on page change
+		handleScroll();
 		window.addEventListener("scroll", handleScroll);
-		return () => window.removeEventListener("scroll", handleScroll);
 	});
+
+	onCleanup(() => window.removeEventListener("scroll", handleScroll));
 
 	return triggered;
 }
