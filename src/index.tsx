@@ -12,7 +12,7 @@ import {firebaseConfig} from './lib/firebaseConfig';
 import {DEV} from './lib/dev';
 import {BUSINESS_STANDALONE_MODE} from './pages/Businesses/Business';
 
-if (!DEV || BUSINESS_STANDALONE_MODE)
+if (!DEV && !BUSINESS_STANDALONE_MODE)
 	registerSW({
 		immediate: true,
 	});
