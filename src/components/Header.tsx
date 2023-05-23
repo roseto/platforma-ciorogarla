@@ -3,7 +3,7 @@ import BackIcon from "@suid/icons-material/ArrowBack";
 import BackIosIcon from "@suid/icons-material/ArrowBackIosNew";
 import {createScrollTrigger} from "../hooks/useScrollTrigger";
 import {isIos} from "../lib/device";
-import {Meta, Title} from "@solidjs/meta";
+import {Meta, Title, Link} from "@solidjs/meta";
 import {OverridableComponent} from "@suid/material/OverridableComponent";
 import {SvgIconTypeMap} from "@suid/material/SvgIcon";
 import {For, Show} from "solid-js";
@@ -16,6 +16,7 @@ interface HeaderProps {
 	noHeading?: boolean;
 	themeColor?: string;
 	color?: string;
+	favicon?: string;
 	actions?: {
 		path?: string;
 		onClick?: () => void;
@@ -29,7 +30,8 @@ export default function Header(props: HeaderProps) {
 
 	return (
 		<>
-			<Title>{props.title} &middot; Ciorogârla Unită</Title>
+			<Title>{props.title}</Title>
+			<Link rel="shortcut icon" type="image/ico" href={props?.favicon || "/favicon.ico"} />
 			<Meta name="theme-color" content={props.themeColor ? triggered() ? theme.palette.background.default : props.themeColor : theme.palette.background.default} />
 			<Show when={!props.noNav}>
 				<AppBar
@@ -93,6 +95,7 @@ export default function Header(props: HeaderProps) {
 				</AppBar>
 				<Show when={!props.noHeading}>
 					<Paper
+						elevation={0}
 						sx={{
 							backgroundColor: "transparent",
 							paddingTop: "calc(env(safe-area-inset-top) + 56px)",

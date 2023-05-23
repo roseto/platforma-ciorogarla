@@ -38,7 +38,7 @@ export default function Install() {
 					<Show when={deviceVendor !== "Apple"}>
 						<Alert severity="info">
 							Recomandăm instalarea aplicației prin magazinele de aplicații.
-							Dacă asta nu este posibil, vă instalarea prin Chrome.
+							Dacă asta nu este posibil, vă recomandăm instalarea prin Chrome.
 						</Alert>
 					</Show>
 					<Typography color="textSecondary">

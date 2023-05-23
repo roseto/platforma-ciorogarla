@@ -1,4 +1,4 @@
-import {Alert, Avatar, Box, ButtonBase, CardActionArea, CardContent, Chip, Container, List, ListItemAvatar, ListItemButton, ListItemIcon, ListItemSecondaryAction, ListItemText, ListSubheader, Paper, Stack, Typography, useTheme} from "@suid/material";
+import {Alert, Avatar, Box, ButtonBase, Card, CardActionArea, CardContent, CardMedia, Chip, Container, List, ListItem, ListItemAvatar, ListItemButton, ListItemIcon, ListItemSecondaryAction, ListItemText, ListSubheader, Paper, Stack, Typography, useTheme} from "@suid/material";
 import SettingsIcon from "@suid/icons-material/Settings";
 import InstallIcon from "@suid/icons-material/InstallMobile";
 import CardWithIcon from "../components/CardWithIcon";
@@ -25,7 +25,7 @@ export default function Home() {
 				onClose={() => setSettingsDialogOpen(false)}
 			/>
 			<Header 
-				title="Acasa"
+				title="Ciorogârla Unită"
 				noHeading
 				themeColor={theme.palette.background.default}
 				actions={[
@@ -205,21 +205,38 @@ function NewsSection(props: { articles?: Article[] | null }) {
 					Stiri recente
 				</ListSubheader>
 				<For each={props.articles}>
-					{(article) => (
+					{(article, idx) => (
 						<A href={`/news/${article.slug?.current}`}>
-							<ListItemButton>
-								<Show when={article.cover}>
-									<ListItemAvatar>
-										<Avatar
-											src={urlFor(article.cover).width(48).height(48).url()}
+							<Card
+								elevation={0}
+								variant="outlined"
+								sx={{ 
+									backgroundColor: "transparent",
+									borderTopLeftRadius: idx() === 0 ? undefined : 0,
+									borderTopRightRadius: idx() === 0 ? undefined : 0,
+									borderBottomLeftRadius: idx() === props.articles?.length! - 1 ? undefined : 0,
+									borderBottomRightRadius: idx() === props.articles?.length! - 1 ? undefined : 0,
+									borderBottom: idx() === props.articles?.length! - 1 ? undefined : "none",
+								}}
+							>
+								<CardActionArea>
+									<Show when={article.cover}>
+										<CardMedia
+											image={urlFor(article.cover).width(1024).height(256).url()}
+											sx={{
+												height: 64,
+												width: "100%"
+											}}
 										/>
-									</ListItemAvatar>
-								</Show>
-								<ListItemText
-									primary={article.title}
-									secondary={new Date(article._createdAt || "").toLocaleDateString("ro")}
-								/>
-							</ListItemButton>
+									</Show>
+									<ListItem>
+										<ListItemText
+											primary={article.title}
+											secondary={new Date(article._createdAt || "").toLocaleDateString("ro")}
+										/>
+									</ListItem>
+								</CardActionArea>
+							</Card>
 						</A>
 					)}
 				</For>

@@ -1,6 +1,6 @@
 import { createTheme, CssBaseline, ThemeProvider, useMediaQuery } from "@suid/material";
 import { darkTheme, lightTheme, commonTheme } from "./lib/theme";
-import {Navigate, Route, useRoutes} from "@solidjs/router";
+import {useRoutes} from "@solidjs/router";
 import {routes} from "./pages/routes";
 import {createMemo, Show, Suspense} from "solid-js";
 import {createPalette, Palette} from "@suid/material/styles/createPalette";

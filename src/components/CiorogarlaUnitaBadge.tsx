@@ -21,6 +21,7 @@ export default function CiorogarlaUnitaBadge() {
 			</ListItemAvatar>
 			<ListItemText
 				primary="Ciorogarla Unită"
+				secondary="Facut cu ❤️ de către Ciorogârla Unită"
 			/>
 		</ListItemButton>
 	)

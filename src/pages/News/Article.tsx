@@ -98,7 +98,7 @@ export function ArticleGetData({ params, navigate }: RouteDataFuncArgs) {
 
 	createEffect(() => {
 		if (data() === null) {
-			navigate("/businesses", { replace: true })
+			navigate("/news", { replace: true })
 		}
 	})
 

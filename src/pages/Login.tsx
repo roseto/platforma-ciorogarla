@@ -1,6 +1,6 @@
 import {Button, Container, TextField, Stack, SvgIcon, Typography, Divider, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Link} from "@suid/material";
 import {useAuth, useFirebaseApp} from "solid-firebase";
-import { getAuth, GoogleAuthProvider, signInWithPopup, updateProfile, TwitterAuthProvider, GithubAuthProvider, sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink, setPersistence, browserLocalPersistence } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithPopup, updateProfile, TwitterAuthProvider, GithubAuthProvider, sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink, setPersistence, indexedDBLocalPersistence } from "firebase/auth";
 import Header from "../components/Header";
 import {useNavigate} from "@solidjs/router";
 import {createEffect, createSignal} from "solid-js";
@@ -20,7 +20,7 @@ export default function Login() {
 	const auth = getAuth(firebase);
 	const user = useAuth(auth);
 	const navigate = useNavigate();
-	setPersistence(auth, browserLocalPersistence);
+	setPersistence(auth, indexedDBLocalPersistence);
 
 	createEffect(() => {
 		if (!user.loading && user.data) {

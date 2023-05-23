@@ -22,11 +22,6 @@ export const commonTheme: Partial<ThemeInput> = {
 				maxWidth: "md"
 			}
 		},
-		MuiPaper: {
-			defaultProps: {
-				elevation: 0
-			}
-		},
 		MuiContainer: {
 			defaultProps: {
 				maxWidth: "md"
