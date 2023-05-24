@@ -74,7 +74,8 @@ export interface Business extends SanityDocument {
     | "autoParts"
     | "market"
     | "pizza"
-    | "hotel";
+    | "hotel"
+    | "cakeShop";
 
   /**
    * Slug — `slug`
@@ -216,93 +217,6 @@ export interface Business extends SanityDocument {
 }
 
 /**
- * Organisation
- *
- *
- */
-export interface Organisation extends SanityDocument {
-  _type: "organisation";
-
-  /**
-   * Name — `string`
-   *
-   * The name of the organisation
-   */
-  name?: string;
-
-  /**
-   * Logo — `image`
-   *
-   * The logo of the organisation
-   */
-  logo?: {
-    _type: "image";
-    asset: SanityReference<SanityImageAsset>;
-    crop?: SanityImageCrop;
-    hotspot?: SanityImageHotspot;
-  };
-
-  /**
-   * Contact — `object`
-   *
-   * The contact information
-   */
-  contact?: {
-    _type: "contact";
-    /**
-     * Phone — `string`
-     *
-     * The phone number
-     */
-    phone?: string;
-
-    /**
-     * Email — `string`
-     *
-     * The email address
-     */
-    email?: string;
-
-    /**
-     * Website — `url`
-     *
-     * The website
-     */
-    website?: string;
-
-    /**
-     * Facebook — `url`
-     *
-     * The Facebook page
-     */
-    facebook?: string;
-
-    /**
-     * Instagram — `url`
-     *
-     * The Instagram page
-     */
-    instagram?: string;
-  };
-}
-
-/**
- * Country
- *
- *
- */
-export interface Country extends SanityDocument {
-  _type: "country";
-
-  /**
-   * Name — `string`
-   *
-   * The name of the country
-   */
-  name?: string;
-}
-
-/**
  * Volunteering Project
  *
  *
@@ -350,7 +264,7 @@ export interface VolunteeringProject extends SanityDocument {
    *
    * Type of project
    */
-  type?: "erasmus" | "esc";
+  type?: "ye";
 
   /**
    * Application Form — `url`
@@ -514,12 +428,99 @@ export interface Article extends SanityDocument {
   content?: Markdown;
 }
 
+/**
+ * Country
+ *
+ *
+ */
+export interface Country extends SanityDocument {
+  _type: "country";
+
+  /**
+   * Name — `string`
+   *
+   * The name of the country
+   */
+  name?: string;
+}
+
+/**
+ * Organisation
+ *
+ *
+ */
+export interface Organisation extends SanityDocument {
+  _type: "organisation";
+
+  /**
+   * Name — `string`
+   *
+   * The name of the organisation
+   */
+  name?: string;
+
+  /**
+   * Logo — `image`
+   *
+   * The logo of the organisation
+   */
+  logo?: {
+    _type: "image";
+    asset: SanityReference<SanityImageAsset>;
+    crop?: SanityImageCrop;
+    hotspot?: SanityImageHotspot;
+  };
+
+  /**
+   * Contact — `object`
+   *
+   * The contact information
+   */
+  contact?: {
+    _type: "contact";
+    /**
+     * Phone — `string`
+     *
+     * The phone number
+     */
+    phone?: string;
+
+    /**
+     * Email — `string`
+     *
+     * The email address
+     */
+    email?: string;
+
+    /**
+     * Website — `url`
+     *
+     * The website
+     */
+    website?: string;
+
+    /**
+     * Facebook — `url`
+     *
+     * The Facebook page
+     */
+    facebook?: string;
+
+    /**
+     * Instagram — `url`
+     *
+     * The Instagram page
+     */
+    instagram?: string;
+  };
+}
+
 export type Documents =
   | Business
-  | Organisation
-  | Country
   | VolunteeringProject
-  | Article;
+  | Article
+  | Country
+  | Organisation;
 
 /**
  * This interface is a stub. It was referenced in your sanity schema but
