@@ -73,7 +73,8 @@ export interface Business extends SanityDocument {
     | "distributor"
     | "autoParts"
     | "market"
-    | "pizza";
+    | "pizza"
+    | "hotel";
 
   /**
    * Slug — `slug`
