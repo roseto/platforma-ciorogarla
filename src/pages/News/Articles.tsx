@@ -8,6 +8,7 @@ import {Article} from "../../types/SanitySchema";
 import ArchiveIcon from "@suid/icons-material/Archive";
 import PostAddIcon from "@suid/icons-material/PostAdd";
 import {UrgentArticleSection} from "../Home";
+import {NEWS_EMAIL} from "../../lib/links";
 
 export default function Articles() {
 	const [addDialog, setAddDialog] = createSignal(false);
@@ -89,7 +90,7 @@ export default function Articles() {
 				<DialogContent>
 					<Typography>
 						Pentru a adauga o stire, trimite un email cu titlul, continutul si tagurile stirii
-						pe email la <Link href="mailto:stire@ciorogarlaunita.eu.org" target="_blank"><strong>stire@ciorogarlaunita.eu.org</strong></Link>
+						pe email la <Link href={`mailto:${NEWS_EMAIL}`} target="_blank"><strong>{NEWS_EMAIL}</strong></Link>
 					</Typography>
 				</DialogContent>
 				<DialogActions>
