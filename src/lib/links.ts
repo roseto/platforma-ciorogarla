@@ -1,4 +1,6 @@
 export const SCHEDULE_431 = "https://431.ciorogarla.eu.org";
+export const TOWN_HALL = "https://primariaciorogarla.ro";
+export const FACEBOOK_GROUP = "https://www.facebook.com/groups/359899371193679";
 
 export const PROJECT_EMAIL = "proiect@ciorogarlaunita.eu.org";
 export const BUSINESS_EMAIL = "afacere@ciorogarlaunita.eu.org";
