@@ -1,6 +1,6 @@
 import {debounce} from "@solid-primitives/scheduled";
 import {A, RouteDataFuncArgs, useRouteData, useSearchParams} from "@solidjs/router";
-import {Alert, Avatar, Box, Button, Card, CardActionArea, CardContent, CardMedia, Chip, Container, Dialog, DialogActions, DialogContent, DialogTitle, Link, Paper, Stack, Typography} from "@suid/material";
+import {Alert, Avatar, Box, Button, Card, CardActionArea, CardContent, CardMedia, Chip, Container, Dialog, DialogActions, DialogContent, DialogTitle, Link, Stack, Typography} from "@suid/material";
 import {createResource, createSignal, For, Show} from "solid-js";
 import Header from "../../components/Header";
 import Searchbox from "../../components/Searchbox";
@@ -8,6 +8,7 @@ import {sanityClient, urlFor} from "../../lib/sanity";
 import {Country, Organisation, VolunteeringProject} from "../../types/SanitySchema";
 
 import AddProjectIcon from "@suid/icons-material/NoteAdd";
+import {PROJECT_EMAIL} from "../../lib/links";
 
 export default function Projects() {
 	const [searchParams, setSearchParams] = useSearchParams();
@@ -82,7 +83,7 @@ export default function Projects() {
 													e.stopPropagation();
 												}}
 												component="a"
-												href={(project.organisation as unknown as Organisation).link}
+												href={(project.organisation as unknown as Organisation).contact?.website}
 												target="_blank"
 												startIcon={
 													<Avatar
@@ -128,7 +129,7 @@ export default function Projects() {
 				<DialogContent>
 					<Typography>
 						Pentru adaugarea unui proiect de voluntariat, va rugam sa ne contactati
-						pe email la <Link href="mailto:proiect@ciorogarlaunita.eu.org" target="_blank"><strong>proiect@ciorogarlaunita.eu.org</strong></Link>
+						pe email la <Link href={`mailto:${PROJECT_EMAIL}`} target="_blank"><strong>{PROJECT_EMAIL}</strong></Link>
 					</Typography>
 				</DialogContent>
 				<DialogActions>
