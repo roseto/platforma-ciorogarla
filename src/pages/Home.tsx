@@ -12,6 +12,7 @@ import {Article, Business, VolunteeringProject} from "../types/SanitySchema";
 
 import ArrowForwardIcon from "@suid/icons-material/ArrowForward";
 import {sanityClient, urlFor} from "../lib/sanity";
+import HomeButtons from "../components/HomeButtons";
 
 export default function Home() {
 	const theme = useTheme();
@@ -77,6 +78,8 @@ export default function Home() {
 							</Paper>
 						</A>
 					</Show>
+
+					<HomeButtons/>
 
 					<UrgentArticleSection article={data.urgentArticle()} />
 					<NewsSection articles={data.articles()} />

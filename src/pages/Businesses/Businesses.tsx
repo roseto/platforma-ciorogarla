@@ -10,6 +10,7 @@ import { debounce } from "@solid-primitives/scheduled";
 
 
 import AddBusinessIcon from "@suid/icons-material/AddBusiness";
+import {BUSINESS_EMAIL} from "../../lib/links";
 
 export default function Businesses() {
 	const [searchParams, setSearchParams] = useSearchParams();
@@ -152,7 +153,7 @@ export default function Businesses() {
 					<DialogContent>
 						<Typography>
 							Pentru adaugarea unei afaceri, va rugam sa ne contactati
-							pe email la <Link href="mailto:afacere@ciorogarlaunita.eu.org" target="_blank"><strong>afacere@ciorogarlaunita.eu.org</strong></Link>
+							pe email la <Link href={`mailto:${BUSINESS_EMAIL}`} target="_blank"><strong>{BUSINESS_EMAIL}</strong></Link>
 						</Typography>
 					</DialogContent>
 					<DialogActions>

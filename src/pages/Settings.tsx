@@ -10,6 +10,7 @@ import TermsIcon from "@suid/icons-material/Description";
 import PrivacyIcon from "@suid/icons-material/PrivacyTip";
 import {Show} from "solid-js";
 import {analyticsEnabled} from "../hooks/useAnalytics";
+import {PRIVACY_POLICY, TERMS_AND_CONDITIONS} from "../lib/links";
 
 
 export default function Settings() {
@@ -54,7 +55,7 @@ export default function Settings() {
 
 					<ListItemButton
 						component="a"
-						href="https://ciorogarlaunita.eu.org/terms-and-conditions"
+						href={TERMS_AND_CONDITIONS}
 						target="_blank"
 					>
 						<ListItemIcon>
@@ -66,7 +67,7 @@ export default function Settings() {
 					</ListItemButton>
 					<ListItemButton
 						component="a"
-						href="https://ciorogarlaunita.eu.org/privacy-policy"
+						href={PRIVACY_POLICY}
 						target="_blank"
 					>
 						<ListItemIcon>
