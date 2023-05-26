@@ -1,6 +1,5 @@
 import {Button, Container, TextField, Stack, SvgIcon, Typography, Divider, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Link} from "@suid/material";
-import {useAuth, useFirebaseApp} from "solid-firebase";
-import { getAuth, GoogleAuthProvider, signInWithPopup, updateProfile, TwitterAuthProvider, GithubAuthProvider, sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink, setPersistence, indexedDBLocalPersistence } from "firebase/auth";
+import { useSupabaseAuth } from "solid-supabase";
 import Header from "../components/Header";
 import {useNavigate} from "@solidjs/router";
 import {createEffect, createSignal} from "solid-js";
@@ -10,83 +9,53 @@ import TwitterIcon from "../resources/icons/twitter.svg?component-solid";
 import GitHubIcon from "../resources/icons/github.svg?component-solid";
 import AppleIcon from "../resources/icons/apple.svg?component-solid";
 import ShieldIcon from "@suid/icons-material/Shield";
+import {useUser} from "../hooks/useUser";
 
 export default function Login() {
-	const firebase = useFirebaseApp();
 	const [loading, setLoading] = createSignal(false);
 	const [confirmationDialogOpen, setConfirmationDialogOpen] = createSignal(false);
 	const [errorDialogOpen, setErrorDialogOpen] = createSignal(false);
 	const [email, setEmail] = createSignal("");
-	const auth = getAuth(firebase);
-	const user = useAuth(auth);
+	const auth = useSupabaseAuth();
 	const navigate = useNavigate();
-	setPersistence(auth, indexedDBLocalPersistence);
+	const user = useUser();
 
 	createEffect(() => {
-		if (!user.loading && user.data) {
+		if (!user.loading && user()) {
 			navigate("/", { replace: true });
 		}
 	});
 
-	if (isSignInWithEmailLink(auth, window.location.href)) {
-		let emailConfirm = new URLSearchParams(window.location.search).get("email") || "";
-
-		if (!emailConfirm) {
-			emailConfirm = window.prompt("Please provide your email for confirmation") || "";
-		}
-
+	const login = (provider: "google") => {
+		setLoading(true);
 		
-		signInWithEmailLink(auth, emailConfirm, window.location.href)
-			.catch((err) => {
-				console.log(err);
-				setErrorDialogOpen(true)
-		}).finally(() => {
-				setLoading(false)
-		});
-	}
-
-	const login = (provider: GoogleAuthProvider) => {
-		setLoading(true);
-		signInWithPopup(auth, provider).then((res) => {
-			const providerId = res.providerId;
-
-			// Find provider id
-			// And update profile
-			res.user.providerData.forEach((profile) => {
-				if (profile.providerId === providerId) {
-				updateProfile(res.user, {
-						displayName: profile.displayName,
-						photoURL: profile.photoURL,
-					});
-				}
-			});
-		}).catch((err) => {
-			console.log(err);
-			setErrorDialogOpen(true);
-		}).finally(() => {
-			setLoading(false);
+		auth.signInWithOAuth({
+			provider,
+			options: {
+				redirectTo: window.location.host + "/login"
+			}
 		})
 	}
 
-	const loginWithEmail = (e: Event) => {
-		e.preventDefault();
-		setLoading(true);
+	// const loginWithEmail = (e: Event) => {
+	// 	e.preventDefault();
+	// 	setLoading(true);
 
-		sendSignInLinkToEmail(auth, email(), {
-			url: window.location.origin + "/login?email=" + email(),
-			handleCodeInApp: true,
-		})
-			.then(() => {
-				setConfirmationDialogOpen(true);
-			})
-			.catch((err) => {
-				console.log(err);
-				setErrorDialogOpen(true)
-			})
-			.finally(() => {
-				setLoading(false);
-			});
-	}
+	// 	sendSignInLinkToEmail(auth, email(), {
+	// 		url: window.location.origin + "/login?email=" + email(),
+	// 		handleCodeInApp: true,
+	// 	})
+	// 		.then(() => {
+	// 			setConfirmationDialogOpen(true);
+	// 		})
+	// 		.catch((err) => {
+	// 			console.log(err);
+	// 			setErrorDialogOpen(true)
+	// 		})
+	// 		.finally(() => {
+	// 			setLoading(false);
+	// 		});
+	// }
 
 	return (
 		<>
@@ -98,7 +67,7 @@ export default function Login() {
 				<Stack>
 					<Button
 						startIcon={<SvgIcon><GoogleIcon/></SvgIcon>}
-						onClick={() => login(new GoogleAuthProvider())}
+						onClick={() => login("google")}
 						disableElevation
 						disabled={loading()}
 					>
@@ -113,17 +82,17 @@ export default function Login() {
 					</Button>
 					<Button
 						startIcon={<SvgIcon><TwitterIcon/></SvgIcon>}
-						onClick={() => login(new TwitterAuthProvider())}
+						onClick={() => login("google")}
 						disableElevation
-						disabled={loading()}
+						disabled
 					>
 						Conectare cu Twitter
 					</Button>
 					<Button
 						startIcon={<SvgIcon><GitHubIcon/></SvgIcon>}
-						onClick={() => login(new GithubAuthProvider())}
+						onClick={() => login("google")}
 						disableElevation
-						disabled={loading()}
+						disabled
 					>
 						Conectare cu GitHub
 					</Button>
@@ -135,29 +104,26 @@ export default function Login() {
 					>
 						sau pe moda veche
 					</Typography>
-					<form onSubmit={loginWithEmail}>
+					<form>
 						<Stack>
 							<TextField
 								type="email"
 								label="Email"
 								variant="outlined"
 								name="email"
-								disabled={loading()}
+								disabled
 								value={email()}
 								onChange={(_, value) => setEmail(value)}
 							/>
 							<Button
 								variant="outlined"
 								type="submit"
-								disabled={loading()}
+								disabled
 							>
 								Conectare cu Email
 							</Button>
 						</Stack>
 					</form>
-					<Typography color="textSecondary" textAlign="center">
-						<ShieldIcon fontSize="inherit" /> Protejat de App Check
-					</Typography>
 				</Stack>
 			</Container>
 			<Dialog
