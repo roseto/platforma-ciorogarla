@@ -8,14 +8,16 @@ import Header from "./components/Header";
 import {useAuth, useFirebaseApp} from "solid-firebase";
 import {getAuth} from "firebase/auth";
 import {useA2HS} from "./hooks/useA2HS";
-import {scheduleIdle} from "@solid-primitives/scheduled";
 import {initializeAppCheck, ReCaptchaV3Provider} from "firebase/app-check";
 import WelcomeDialog from "./components/WelcomeDialog";
 import {BUSINESS_STANDALONE_MODE} from "./pages/Businesses/Business";
+import {useAnalyticsState} from "./lib/store";
+import { DEV } from "./lib/dev";
 
 
 export default function App() {
 	const app = useFirebaseApp();
+	const analyticsState = useAnalyticsState();
 	initializeAppCheck(app, {
 		provider: new ReCaptchaV3Provider(import.meta.env.VITE_RECAPTCHA_SITE_KEY)
 	});
@@ -37,6 +39,9 @@ export default function App() {
 					<WelcomeDialog />
 				</Show>
 			</Suspense>
+			<Show when={!DEV && analyticsState.state}>
+				<script async src="https://analytics.umami.is/script.js" data-website-id="c993361c-9857-4c29-844e-26eb58813a83"></script>
+			</Show>
 		</ThemeProvider>
 	)
 }
