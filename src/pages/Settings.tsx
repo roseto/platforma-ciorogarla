@@ -25,14 +25,14 @@ export default function Settings() {
 				<List>
 					<ListItemButton
 						onClick={() => analytics.set(!analytics.state)}
-						disabled={!DEV}
+						disabled={DEV}
 					>
 						<ListItemIcon>
 							<AnalyticsIcon/>
 						</ListItemIcon>
 						<ListItemText
 							primary="Analitica"
-							secondary={DEV && analytics.state ? "Impartasiti informatie pentru analitica" : "Nu impartasiti informatii pentru analitica"}
+							secondary={!DEV && analytics.state ? "Impartasiti informatie pentru analitica" : "Nu impartasiti informatii pentru analitica"}
 							sx={{
 								mr: 8
 							}}
@@ -41,9 +41,9 @@ export default function Settings() {
 							<Switch
 								onClick={(e) => e.stopPropagation()}
 								edge="end"
-								disabled={!DEV}
-								checked={DEV && analytics.state}
-								onChange={(_, checked) => DEV && analytics.set(checked)}
+								disabled={DEV}
+								checked={!DEV && analytics.state}
+								onChange={(_, checked) => !DEV && analytics.set(checked)}
 							/>
 						</ListItemSecondaryAction>
 					</ListItemButton>
