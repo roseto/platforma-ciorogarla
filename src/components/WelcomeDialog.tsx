@@ -1,12 +1,12 @@
 import {Button, Container, Dialog, Link, ListItem, ListItemSecondaryAction, ListItemText, Slide, Toolbar, Typography, Switch, ListItemIcon} from "@suid/material";
 import {createSignal, JSXElement} from "solid-js";
+import { DEV } from "../lib/dev";
 import {TransitionProps} from "@suid/material/transitions";
 import {useAnalyticsState, useFirstTime} from "../lib/store";
 
 
 import TermsIcon from "@suid/icons-material/Description";
 import AnalyticsIcon from "@suid/icons-material/Analytics";
-import {analyticsEnabled} from "../hooks/useAnalytics";
 
 const Transition = function Transition(
 	props: TransitionProps & {
@@ -19,7 +19,7 @@ const Transition = function Transition(
 export default function WelcomeDialog() {
 	const firstTime = useFirstTime();
 	const setAnalyticsState = useAnalyticsState(state => state.set);
-	const [allowsAnalytics, setAllowsAnalytics] = createSignal(analyticsEnabled);
+	const [allowsAnalytics, setAllowsAnalytics] = createSignal(!DEV);
 	const [confirmAllowed, setConfirmAllowed] = createSignal(true);
 
 	const handleConfirm = () => {
@@ -83,8 +83,8 @@ export default function WelcomeDialog() {
 						<Switch
 							onClick={(e) => e.stopPropagation()}
 							edge="end"
-							disabled={!analyticsEnabled}
-							checked={analyticsEnabled && allowsAnalytics()}
+							disabled={DEV}
+							checked={!DEV && allowsAnalytics()}
 							onChange={(_, checked) => setAllowsAnalytics(checked)}
 						/>
 					</ListItemSecondaryAction>
