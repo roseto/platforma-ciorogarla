@@ -22,7 +22,7 @@ export default function Home() {
 
 	return (
 		<>
-			<BackgroundGlow top={0}/>
+			<BackgroundGlow top={128}/>
 			<SettingsDialog
 				open={settingsDialogOpen()}
 				onClose={() => setSettingsDialogOpen(false)}
