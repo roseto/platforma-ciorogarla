@@ -6,11 +6,11 @@ import "@fontsource/montserrat";
 import "./global.css";
 
 import App from './App';
-import { SupabaseProvider } from 'solid-supabase';
 import { registerSW } from "virtual:pwa-register";
-import {supabaseClient} from './lib/supabase';
-import { DEV } from './lib/dev';
-import { BUSINESS_STANDALONE_MODE } from './pages/Businesses/Business';
+import {FirebaseProvider} from 'solid-firebase';
+import {firebaseConfig} from './lib/firebaseConfig';
+import {DEV} from './lib/dev';
+import {BUSINESS_STANDALONE_MODE} from './pages/Businesses/Business';
 
 if (!DEV && !BUSINESS_STANDALONE_MODE)
 	registerSW({
@@ -28,10 +28,10 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
 
 render(() => 
 	<MetaProvider>
-		<SupabaseProvider client={supabaseClient}>
+		<FirebaseProvider config={firebaseConfig}>
 			<Router>
 				<App />
 			</Router>
-		</SupabaseProvider>
+		</FirebaseProvider>
 	</MetaProvider>
 , root!);
