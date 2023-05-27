@@ -7,7 +7,7 @@ body {
 	-webkit-overflow-scrolling: touch;
 }
 
-body, #root {
+body {
 	overflow-x: hidden;
 }
 
