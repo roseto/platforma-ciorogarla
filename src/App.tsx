@@ -2,15 +2,18 @@ import { createTheme, CssBaseline, ThemeProvider, useMediaQuery } from "@suid/ma
 import { darkTheme, lightTheme, commonTheme } from "./lib/theme";
 import {useRoutes} from "@solidjs/router";
 import {routes} from "./pages/routes";
-import {createMemo, Show, Suspense} from "solid-js";
+import {createEffect, createMemo, Show, Suspense} from "solid-js";
 import {createPalette, Palette} from "@suid/material/styles/createPalette";
 import Header from "./components/Header";
 import {useA2HS} from "./hooks/useA2HS";
 import WelcomeDialog from "./components/WelcomeDialog";
 import {BUSINESS_STANDALONE_MODE} from "./pages/Businesses/Business";
+import {useAnalyticsState} from "./lib/store";
+import {setAnalytics} from "./lib/umami";
 
 
 export default function App() {
+	const analyticsState = useAnalyticsState();
 	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 	const Routes = useRoutes(routes);
 	const palette = createMemo(() => createPalette(prefersDarkMode() ? darkTheme.palette as Palette : lightTheme.palette as Palette));
@@ -18,6 +21,10 @@ export default function App() {
 	useA2HS();
 
 	const theme = createTheme({...commonTheme, palette});
+
+	createEffect(() => {
+		setAnalytics(analyticsState.state);
+	})
 
 	return (
 		<ThemeProvider theme={theme}>
