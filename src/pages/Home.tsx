@@ -13,7 +13,6 @@ import {Article, Business, VolunteeringProject} from "../types/SanitySchema";
 import ArrowForwardIcon from "@suid/icons-material/ArrowForward";
 import {sanityClient, urlFor} from "../lib/sanity";
 import HomeButtons from "../components/HomeButtons";
-import BackgroundGlow from "../components/BackgroundGlow";
 
 export default function Home() {
 	const theme = useTheme();
@@ -22,7 +21,6 @@ export default function Home() {
 
 	return (
 		<>
-			<BackgroundGlow top={0}/>
 			<SettingsDialog
 				open={settingsDialogOpen()}
 				onClose={() => setSettingsDialogOpen(false)}

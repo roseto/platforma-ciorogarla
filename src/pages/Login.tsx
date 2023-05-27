@@ -8,6 +8,7 @@ import GoogleIcon from "../resources/icons/google.svg?component-solid";
 import TwitterIcon from "../resources/icons/twitter.svg?component-solid";
 import GitHubIcon from "../resources/icons/github.svg?component-solid";
 import AppleIcon from "../resources/icons/apple.svg?component-solid";
+import ShieldIcon from "@suid/icons-material/Shield";
 import {useUser} from "../hooks/useUser";
 
 export default function Login() {
@@ -25,17 +26,14 @@ export default function Login() {
 		}
 	});
 
-	const login = (provider: "google" | "github" | "twitter") => {
+	const login = (provider: "google") => {
 		setLoading(true);
 		
 		auth.signInWithOAuth({
 			provider,
 			options: {
-				redirectTo: window.location.origin + "/login"
+				redirectTo: window.location.host + "/login"
 			}
-		}).catch((err) => {
-			console.log(err);
-				setErrorDialogOpen(true);
 		})
 	}
 
@@ -70,8 +68,8 @@ export default function Login() {
 					<Button
 						startIcon={<SvgIcon><GoogleIcon/></SvgIcon>}
 						onClick={() => login("google")}
-						disabled={loading()}
 						disableElevation
+						disabled={loading()}
 					>
 						Conectare cu Google
 					</Button>
@@ -84,17 +82,17 @@ export default function Login() {
 					</Button>
 					<Button
 						startIcon={<SvgIcon><TwitterIcon/></SvgIcon>}
-						onClick={() => login("twitter")}
-						disabled={loading()}
+						onClick={() => login("google")}
 						disableElevation
+						disabled
 					>
 						Conectare cu Twitter
 					</Button>
 					<Button
 						startIcon={<SvgIcon><GitHubIcon/></SvgIcon>}
-						onClick={() => login("github")}
-						disabled={loading()}
+						onClick={() => login("google")}
 						disableElevation
+						disabled
 					>
 						Conectare cu GitHub
 					</Button>

@@ -67,8 +67,7 @@ export default function BusinessPage() {
 		<>
 			<Header
 				title={data()?.name ?? "Afacere"}
-				noNav={BUSINESS_STANDALONE_MODE}
-				back
+				back={!BUSINESS_STANDALONE_MODE}
 				noHeading
 				favicon={BUSINESS_STANDALONE_MODE && data()?.logo ? urlFor(data()?.logo).width(64).height(64).url() : undefined}
 				// @ts-ignore: Metadata is there but not specified
