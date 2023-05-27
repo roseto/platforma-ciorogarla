@@ -8,12 +8,9 @@ import Header from "./components/Header";
 import {useA2HS} from "./hooks/useA2HS";
 import WelcomeDialog from "./components/WelcomeDialog";
 import {BUSINESS_STANDALONE_MODE} from "./pages/Businesses/Business";
-import {useAnalyticsState} from "./lib/store";
-import { DEV } from "./lib/dev";
 
 
 export default function App() {
-	const analyticsState = useAnalyticsState();
 	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 	const Routes = useRoutes(routes);
 	const palette = createMemo(() => createPalette(prefersDarkMode() ? darkTheme.palette as Palette : lightTheme.palette as Palette));
@@ -31,9 +28,6 @@ export default function App() {
 					<WelcomeDialog />
 				</Show>
 			</Suspense>
-			<Show when={!DEV && analyticsState.state}>
-				<script async src="https://umami.ciorogarlaunita.eu.org/script.js" data-website-id="40d9680c-e1f1-40f4-85fe-e54a9b82cc40"></script>
-			</Show>
 		</ThemeProvider>
 	)
 }
