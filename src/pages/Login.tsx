@@ -39,25 +39,27 @@ export default function Login() {
 		})
 	}
 
-	// const loginWithEmail = (e: Event) => {
-	// 	e.preventDefault();
-	// 	setLoading(true);
+	const loginWithEmail = (e: Event) => {
+		e.preventDefault();
+		setLoading(true);
 
-	// 	sendSignInLinkToEmail(auth, email(), {
-	// 		url: window.location.origin + "/login?email=" + email(),
-	// 		handleCodeInApp: true,
-	// 	})
-	// 		.then(() => {
-	// 			setConfirmationDialogOpen(true);
-	// 		})
-	// 		.catch((err) => {
-	// 			console.log(err);
-	// 			setErrorDialogOpen(true)
-	// 		})
-	// 		.finally(() => {
-	// 			setLoading(false);
-	// 		});
-	// }
+		auth.signInWithOtp({
+			email: email(),
+			options: {
+				emailRedirectTo: window.location.origin + "/login"
+			}
+		})
+			.then(() => {
+				setConfirmationDialogOpen(true);
+			})
+			.catch((err) => {
+				console.log(err);
+				setErrorDialogOpen(true)
+			})
+			.finally(() => {
+				setLoading(false);
+			});
+	}
 
 	return (
 		<>
@@ -106,21 +108,21 @@ export default function Login() {
 					>
 						sau pe moda veche
 					</Typography>
-					<form>
+					<form onSubmit={loginWithEmail}>
 						<Stack>
 							<TextField
 								type="email"
 								label="Email"
 								variant="outlined"
 								name="email"
-								disabled
+								disabled={loading()}
 								value={email()}
 								onChange={(_, value) => setEmail(value)}
 							/>
 							<Button
 								variant="outlined"
 								type="submit"
-								disabled
+								disabled={loading()}
 							>
 								Conectare cu Email
 							</Button>
@@ -139,10 +141,6 @@ export default function Login() {
 					<DialogContentText>
 						Am trimis un email de confirmare catre 
 						<strong>{email()}</strong>
-					</DialogContentText>
-					<DialogContentText>
-						Asigurati-va ca email-ul vine de la 
-						<strong>noreply@ciorogarlaunita.eu.org</strong>
 					</DialogContentText>
 				</DialogContent>
 				<DialogActions>
