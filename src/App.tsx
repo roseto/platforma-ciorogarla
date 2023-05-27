@@ -32,7 +32,7 @@ export default function App() {
 				</Show>
 			</Suspense>
 			<Show when={!DEV && analyticsState.state}>
-				<script async src="https://umami.ciorogarlaunita.eu.org/script.js" data-website-id="40d9680c-e1f1-40f4-85fe-e54a9b82cc40"></script>
+				<script async src="https://analytics.umami.is/script.js" data-website-id="c993361c-9857-4c29-844e-26eb58813a83"></script>
 			</Show>
 		</ThemeProvider>
 	)
