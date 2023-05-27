@@ -1,4 +1,4 @@
-import {Switch, List, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText, ListItemButton, Divider, Container } from "@suid/material";
+import {Switch, List, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText, ListItemButton, ListItemAvatar, Avatar, Divider, Container, Paper, Button} from "@suid/material";
 import Header from "../components/Header";
 import { version } from "../../package.json";
 import {useAnalyticsState} from "../lib/store";
@@ -9,6 +9,7 @@ import AnalyticsIcon from "@suid/icons-material/Analytics";
 import TermsIcon from "@suid/icons-material/Description";
 import PrivacyIcon from "@suid/icons-material/PrivacyTip";
 import {Show} from "solid-js";
+import {analyticsEnabled} from "../hooks/useAnalytics";
 import {PRIVACY_POLICY, TERMS_AND_CONDITIONS} from "../lib/links";
 
 
@@ -25,14 +26,14 @@ export default function Settings() {
 				<List>
 					<ListItemButton
 						onClick={() => analytics.set(!analytics.state)}
-						disabled={!DEV}
+						disabled={!analyticsEnabled}
 					>
 						<ListItemIcon>
 							<AnalyticsIcon/>
 						</ListItemIcon>
 						<ListItemText
 							primary="Analitica"
-							secondary={DEV && analytics.state ? "Impartasiti informatie pentru analitica" : "Nu impartasiti informatii pentru analitica"}
+							secondary={analyticsEnabled && analytics.state ? "Impartasiti informatie pentru analitica" : "Nu impartasiti informatii pentru analitica"}
 							sx={{
 								mr: 8
 							}}
@@ -41,9 +42,9 @@ export default function Settings() {
 							<Switch
 								onClick={(e) => e.stopPropagation()}
 								edge="end"
-								disabled={!DEV}
-								checked={DEV && analytics.state}
-								onChange={(_, checked) => DEV && analytics.set(checked)}
+								disabled={!analyticsEnabled}
+								checked={analyticsEnabled && analytics.state}
+								onChange={(_, checked) => analyticsEnabled && analytics.set(checked)}
 							/>
 						</ListItemSecondaryAction>
 					</ListItemButton>
