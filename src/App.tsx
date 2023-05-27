@@ -14,6 +14,14 @@ import WelcomeDialog from "./components/WelcomeDialog";
 import {BUSINESS_STANDALONE_MODE} from "./pages/Businesses/Business";
 
 
+const backgroundTrigger = scheduleIdle(() => {
+	import("./background");
+}, 1000);
+
+window.onload = () => {
+	backgroundTrigger();
+}
+
 export default function App() {
 	const app = useFirebaseApp();
 	initializeAppCheck(app, {
