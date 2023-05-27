@@ -1,7 +1,8 @@
 import {Avatar, Button, Dialog, DialogContent, List, ListItemAvatar, ListItemButton, ListItemIcon, ListItemText, Paper, Menu, MenuItem} from "@suid/material";
-import {createResource, createSignal, Show} from "solid-js";
+import {getAuth, signOut} from "firebase/auth";
+import {useAuth, useFirebaseApp} from "solid-firebase";
+import {createSignal, Show} from "solid-js";
 import {A} from "@solidjs/router";
-import { useSupabaseAuth } from "solid-supabase";
 
 
 import AccountIcon from "@suid/icons-material/AccountCircle";
@@ -9,7 +10,6 @@ import LogoutIcon from "@suid/icons-material/Logout";
 import SettingsIcon from "@suid/icons-material/Settings";
 import TermsIcon from "@suid/icons-material/Description";
 import PrivacyIcon from "@suid/icons-material/PrivacyTip";
-import {useUser} from "../hooks/useUser";
 
 interface SettingsDialogProps {
 	open: boolean;
@@ -17,10 +17,11 @@ interface SettingsDialogProps {
 }
 
 export default function SettingsDialog(props: SettingsDialogProps) {
-	const auth = useSupabaseAuth();
+	const firebaseApp = useFirebaseApp();
 	const [accountMenuAnchor, setAccountMenuAnchor] = createSignal<HTMLElement | null>(null)
 	const open = () => Boolean(accountMenuAnchor());
-	const user = useUser();
+	const auth = getAuth(firebaseApp);
+	const user = useAuth(auth);
 
 	return (
 		<Dialog
@@ -38,13 +39,13 @@ export default function SettingsDialog(props: SettingsDialogProps) {
 				<Paper>
 					<ListItemButton
 						sx={{ width: "100%" }}
-						component={user() ? "button" : A}
-						href={user() ? "" : "/login"}
-						onClick={user() ? ((e: Event) => {
+						component={user.data ? "button" : A}
+						href={user.data ? "" : "/login"}
+						onClick={user.data ? ((e: Event) => {
 							setAccountMenuAnchor(e.currentTarget as HTMLElement);
 						}) : undefined}
 					>
-						<Show when={user()} fallback={(
+						<Show when={user.data} fallback={(
 							<>
 								<ListItemIcon>
 									<AccountIcon/>
@@ -57,12 +58,12 @@ export default function SettingsDialog(props: SettingsDialogProps) {
 						)}>
 							<ListItemAvatar>
 								<Avatar
-									src={user()?.user_metadata.avatar_url}
+									src={user.data?.photoURL || ""}
 								/>
 							</ListItemAvatar>
 							<ListItemText
-								primary={user()?.user_metadata?.full_name || "Fara Nume"}
-								secondary={user()?.email}
+								primary={user.data?.displayName || "Fara nume de utilizator"}
+								secondary={user.data?.email}
 							/>
 						</Show>
 					</ListItemButton>
@@ -79,7 +80,7 @@ export default function SettingsDialog(props: SettingsDialogProps) {
 					>
 						<MenuItem
 							onClick={() => {
-								auth.signOut();
+								signOut(auth);
 								props.onClose();
 							}}
 						>
