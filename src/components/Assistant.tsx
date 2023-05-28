@@ -61,7 +61,7 @@ export default function Assistant() {
 				</Fab>
 			</Box>
 			<Drawer
-				open={!drawerOpen()}
+				open={drawerOpen()}
 				onClose={() => setDrawerOpen(false)}
 				anchor="bottom"
 				PaperProps={{
