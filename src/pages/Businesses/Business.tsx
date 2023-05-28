@@ -22,6 +22,7 @@ import MapsCard from "../../components/MapsCard";
 import ContactList from "../../components/ContactList";
 import CiorogarlaUnitaBadge from "../../components/CiorogarlaUnitaBadge";
 import {commonTheme} from "../../lib/theme";
+import Assistant from "../../components/Assistant";
 
 export const BUSINESS_STANDALONE_MODE = window.location.hostname.endsWith(".ciorogarla.eu.org");
 export const STANDALONE_SLUG = BUSINESS_STANDALONE_MODE ? window.location.hostname.split(".")[0] : "";
@@ -65,6 +66,9 @@ export default function BusinessPage() {
  
 	return (
 		<>
+			<Show when={!BUSINESS_STANDALONE_MODE}>
+				<Assistant/>
+			</Show>
 			<Header
 				title={data()?.name ?? "Afacere"}
 				noNav={BUSINESS_STANDALONE_MODE}

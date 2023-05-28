@@ -3,7 +3,6 @@ import CalendarIcon from "@suid/icons-material/CalendarMonth";
 import NewsIcon from "@suid/icons-material/Newspaper";
 import ForumIcon from "@suid/icons-material/Forum";
 import VolunteerIcon from "@suid/icons-material/People";
-import AIIcon from "@suid/icons-material/Chat";
 
 export const modules = [
 	{
@@ -23,12 +22,6 @@ export const modules = [
 		description: "Noutăți din Ciorogârla",
 		icon: NewsIcon,
 		path: "/news",
-	},
-	{
-		name: "ChatGPT Plugin",
-		description: "Plugin prin care poti conversa cu ChatGPT pentru a afla mai multe informatii",
-		icon: AIIcon,
-		disabled: true
 	},
 	{
 		name: "Calendar de evenimente",

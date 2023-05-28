@@ -14,6 +14,7 @@ import FormIcon from "@suid/icons-material/Assignment";
 import LinkIcon from "@suid/icons-material/Link";
 import ContactList from "../../components/ContactList";
 import EmailIcon from "@suid/icons-material/Email";
+import Assistant from "../../components/Assistant";
 
 export default function Project() {
 	const data = useRouteData<typeof VolunteeringProjectGetData>();
@@ -22,6 +23,7 @@ export default function Project() {
 
 	return (
 		<>
+			<Assistant />
 			<Header
 				title={data()?.name ?? "Proiect"}
 				back

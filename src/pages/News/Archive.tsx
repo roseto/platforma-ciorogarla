@@ -1,6 +1,7 @@
 import {A, useRouteData} from "@solidjs/router"
 import {Alert, Container, List, ListItem, ListItemButton, ListItemText} from "@suid/material";
 import {createResource, For, Show} from "solid-js"
+import Assistant from "../../components/Assistant";
 import Header from "../../components/Header"
 import {sanityClient} from "../../lib/sanity"
 import {Article} from "../../types/SanitySchema";
@@ -11,6 +12,7 @@ export default function Archive() {
 
 	return (
 		<>
+			<Assistant />
 			<Header
 				title="Arhiva"
 				back

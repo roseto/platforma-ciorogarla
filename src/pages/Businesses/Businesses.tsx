@@ -11,6 +11,7 @@ import { debounce } from "@solid-primitives/scheduled";
 
 import AddBusinessIcon from "@suid/icons-material/AddBusiness";
 import {BUSINESS_EMAIL} from "../../lib/links";
+import {Assistant} from "@suid/icons-material";
 
 export default function Businesses() {
 	const [searchParams, setSearchParams] = useSearchParams();
@@ -37,6 +38,7 @@ export default function Businesses() {
 
 	return (
 		<>
+			<Assistant />
 			<Header 
 				title="Afaceri locale"
 				back

@@ -9,6 +9,7 @@ import {Country, Organisation, VolunteeringProject} from "../../types/SanitySche
 
 import AddProjectIcon from "@suid/icons-material/NoteAdd";
 import {PROJECT_EMAIL} from "../../lib/links";
+import Assistant from "../../components/Assistant";
 
 export default function Projects() {
 	const [searchParams, setSearchParams] = useSearchParams();
@@ -23,6 +24,7 @@ export default function Projects() {
 
 	return (
 		<>
+			<Assistant />
 			<Header 
 				title="Voluntariat"
 				back

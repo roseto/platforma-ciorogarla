@@ -14,6 +14,7 @@ import ArrowForwardIcon from "@suid/icons-material/ArrowForward";
 import {sanityClient, urlFor} from "../lib/sanity";
 import HomeButtons from "../components/HomeButtons";
 import BackgroundGlow from "../components/BackgroundGlow";
+import Assistant from "../components/Assistant";
 
 export default function Home() {
 	const theme = useTheme();
@@ -22,6 +23,7 @@ export default function Home() {
 
 	return (
 		<>
+			<Assistant />
 			<BackgroundGlow top={128}/>
 			<SettingsDialog
 				open={settingsDialogOpen()}

@@ -7,6 +7,7 @@ import {Article} from "../../types/SanitySchema";
 import {Box, Chip, Container, Divider, Link, Stack, Typography, useTheme} from "@suid/material";
 
 import ErrorIcon from "@suid/icons-material/Error";
+import Assistant from "../../components/Assistant";
 
 export default function ArticlePage() {
 	const data = useRouteData<typeof ArticleGetData>();
@@ -15,6 +16,7 @@ export default function ArticlePage() {
 
 	return (
 		<>
+			<Assistant />
 			<Header
 				title={data()?.title ?? "Articol"}
 				//@ts-ignore: Metadata is there but not specified

@@ -9,6 +9,7 @@ import ArchiveIcon from "@suid/icons-material/Archive";
 import PostAddIcon from "@suid/icons-material/PostAdd";
 import {UrgentArticleSection} from "../Home";
 import {NEWS_EMAIL} from "../../lib/links";
+import Assistant from "../../components/Assistant";
 
 export default function Articles() {
 	const [addDialog, setAddDialog] = createSignal(false);
@@ -16,6 +17,7 @@ export default function Articles() {
 
 	return (
 		<>
+			<Assistant />
 			<Header 
 				title="Stiri"
 				back
