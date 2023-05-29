@@ -1,4 +1,4 @@
-import {Business} from "../src/types/SanitySchema";
+import {Business, Organisation, VolunteeringProject} from "../src/types/SanitySchema";
 
 export const cleanString = (str: string) => {
 	// Remove indents
@@ -32,6 +32,23 @@ export const businessContentGenerator = (business: Business) => {
 		Email: ${business.contact?.email || "none"},
 		Instagram: ${business.contact?.instagram || "none"},
 		Facebook: ${business.contact?.facebook || "none"},
+	`
+
+	return cleanString(string);
+}
+
+export const projectContentGenerator = (project: VolunteeringProject) => {
+	const string = `
+		${project.name} este un proiect de voluntariat localizat in ${project.location?.address}.
+
+		Link la pagina proiectului: "/volunteeringProject/${project.slug?.current!}",
+	
+		Descriere: ${project.description},
+		Se desfasoara in: ${project.country || "none"},
+		Link la infopack: ${project.infopack || "none"},
+		Tari participante: ${project.participatingCountries || "none"},
+		Organizatia: ${(project.organisation as unknown as Organisation).name || "none"},
+		Mai multe informatii link: ${project.infoLink || "none"},
 	`
 
 	return cleanString(string);
