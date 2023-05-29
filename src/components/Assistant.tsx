@@ -79,8 +79,8 @@ export default function Assistant() {
 				<Stack
 					ref={messagesRef}
 					displayRaw="grid"
-					overflow="scroll"
 					sx={{
+						overflowY: "scroll",
 						"& *": {
 							overflowAnchor: "none",
 						}
