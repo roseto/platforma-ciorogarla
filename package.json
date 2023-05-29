@@ -30,7 +30,7 @@
 		"@solidjs/meta": "^0.28.4",
 		"@solidjs/router": "^0.8.2",
 		"@suid/icons-material": "^0.5.11",
-		"@suid/material": "^0.11.1",
+		"@suid/material": "^0.12.3",
 		"@supabase/supabase-js": "^2.23.0",
 		"solid-js": "^1.7.5",
 		"solid-markdown": "^1.2.2",
