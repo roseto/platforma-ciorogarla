@@ -18,7 +18,7 @@
 		"solid-devtools": "^0.26.0",
 		"typescript": "^5.0.4",
 		"vite": "^4.3.4",
-		"vite-plugin-pwa": "^0.14.7",
+		"vite-plugin-pwa": "^0.15.1",
 		"vite-plugin-solid": "^2.5.0",
 		"vite-plugin-solid-svg": "^0.6.1"
 	},
