@@ -7,14 +7,13 @@ body {
 	margin: 0;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 	-webkit-overflow-scrolling: touch;
 }
 
 body {
 	overflow-x: hidden;
 }
-
 
 @media (hover: none) {
 	* {
@@ -27,7 +26,9 @@ body {
 		user-select: none;
 	}
 
-	input, input::after, input::before {
+	input,
+	input::after,
+	input::before {
 		-webkit-touch-callout: initial;
 		-webkit-user-select: initial;
 		-khtml-user-select: initial;
@@ -52,7 +53,7 @@ body::after {
 	left: 0;
 	width: 100%;
 	height: env(safe-area-inset-top);
-	background: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 100%);
+	background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 100%);
 	z-index: 9999;
 }
 
