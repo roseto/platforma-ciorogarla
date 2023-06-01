@@ -36,6 +36,9 @@
 	"dependencies": {
 		"@sanity/client": "^6.1.2",
 		"@sanity/image-url": "^1.0.2",
+		"@supabase/auth-helpers-sveltekit": "^0.10.0",
+		"@supabase/auth-ui-svelte": "^0.2.2",
+		"@supabase/supabase-js": "^2.24.0",
 		"daisyui": "^3.0.0",
 		"svelte-feather-icons": "^4.0.1"
 	}
