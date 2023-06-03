@@ -3,10 +3,11 @@ import { redirect } from "@sveltejs/kit";
 import type { Business } from "$lib/types/SanitySchema";
 import type { PageLoad } from "./$types";
 
-
 export const load = (async ({ params, url }) => {
 	const slug = params.slug;
-	const business = await sanity.fetch<Business>(`*[_type == "business" && slug.current == $slug][0] {
+	const business = await sanity
+		.fetch<Business>(
+			`*[_type == "business" && slug.current == $slug][0] {
 		...,
 		cover {
 			..., 
@@ -16,7 +17,9 @@ export const load = (async ({ params, url }) => {
 			..., 
 			asset -> {..., metadata}
 		}
-		}`, { slug })
+		}`,
+			{ slug },
+		)
 		.catch(() => null);
 
 	if (!business) {
@@ -25,6 +28,6 @@ export const load = (async ({ params, url }) => {
 
 	return {
 		business,
-		isStandalone: url.origin.endsWith(".ciorogarla.eu.org")
+		isStandalone: url.origin.endsWith(".ciorogarla.eu.org"),
 	};
-}) satisfies PageLoad
+}) satisfies PageLoad;

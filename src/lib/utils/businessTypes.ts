@@ -10,5 +10,5 @@ export const businessTypes = new Map([
 	["autoParts", { name: "Parti", icon: "build" }],
 	["distributor", { name: "Distribuitor", icon: "local_shipping" }],
 	["hotel", { name: "Hotel", icon: "hotel" }],
-	["cakeShop", { name: "Cofetarie", icon: "cake" }]
+	["cakeShop", { name: "Cofetarie", icon: "cake" }],
 ]);

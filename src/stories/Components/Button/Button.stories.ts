@@ -4,14 +4,14 @@ import ButtonView from "./ButtonView.svelte";
 
 const meta: Meta = {
 	component: Button,
-	title: "Button",
+	title: "Components/Button",
 	argTypes: {
 		color: {
 			options: ["primary", "secondary", "accent", "neutral"],
 			control: { type: "radio" },
 		},
-	}
-}
+	},
+};
 
 export default meta;
 
@@ -22,8 +22,8 @@ export const Primary: StoryObj = {
 	}),
 	args: {
 		color: "primary",
-	}
-}
+	},
+};
 
 export const Secondary: StoryObj = {
 	render: ({ ...args }) => ({
@@ -32,18 +32,18 @@ export const Secondary: StoryObj = {
 	}),
 	args: {
 		color: "secondary",
-	}
-}
+	},
+};
 
 export const Accent: StoryObj = {
 	render: ({ ...args }) => ({
 		Component: ButtonView,
 		props: args,
 	}),
-	args: {	
+	args: {
 		color: "accent",
-	}
-}
+	},
+};
 
 export const Neutral: StoryObj = {
 	render: ({ ...args }) => ({
@@ -52,8 +52,8 @@ export const Neutral: StoryObj = {
 	}),
 	args: {
 		color: "neutral",
-	}
-}
+	},
+};
 
 export const Outline: StoryObj = {
 	render: ({ ...args }) => ({
@@ -62,8 +62,8 @@ export const Outline: StoryObj = {
 	}),
 	args: {
 		outline: true,
-	}
-}
+	},
+};
 
 export const WithIcon: StoryObj = {
 	render: ({ ...args }) => ({
@@ -72,8 +72,8 @@ export const WithIcon: StoryObj = {
 	}),
 	args: {
 		icon: "info",
-	}
-}
+	},
+};
 
 export const FullWidth: StoryObj = {
 	render: ({ ...args }) => ({
@@ -82,5 +82,5 @@ export const FullWidth: StoryObj = {
 	}),
 	args: {
 		fullWidth: true,
-	}
-}
+	},
+};

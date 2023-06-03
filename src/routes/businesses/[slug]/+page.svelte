@@ -84,11 +84,11 @@
 		<div class="flex flex-row gap-2">
 			{#if business.pricesLink}
 				<a href={business.pricesLink} target="_blank" rel="noopener noreferrer">
-					<Badge class="badge-lg" color="primary" icon="attach_money">Vezi lista de preturi</Badge>
+					<Badge large color="primary" icon="attach_money">Vezi lista de preturi</Badge>
 				</a>
 			{/if}
 			{#if business.prices}
-				<Badge class="badge-lg" outline color="secondary">
+				<Badge large outline color="secondary">
 					Preturi: {business.prices}
 				</Badge>
 			{/if}

@@ -3,8 +3,8 @@ import Toggle from "$lib/components/Toggle.svelte";
 
 const meta: Meta = {
 	component: Toggle,
-	title: "Toggle",
-}
+	title: "Components/Toggle",
+};
 
 export default meta;
 
@@ -13,4 +13,4 @@ export const Regular: StoryObj = {
 		Component: Toggle,
 		props: args,
 	}),
-}
+};

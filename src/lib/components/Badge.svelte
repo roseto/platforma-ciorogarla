@@ -6,6 +6,7 @@
 	export let outline = false;
 	export let icon: string = "";
 	export let button = false;
+	export let large = false;
 </script>
 
 <svelte:element
@@ -18,6 +19,7 @@
 	class:badge-secondary={color === "secondary"}
 	class:badge-accent={color === "accent"}
 	class:badge-outline={outline}
+	class:badge-lg={large}
 	on:click
 >
 	{#if icon}

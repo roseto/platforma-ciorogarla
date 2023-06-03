@@ -6,6 +6,6 @@ export const load = (async ({ locals, cookies }) => {
 
 	return {
 		session,
-		visited
+		visited,
 	};
 }) satisfies LayoutServerLoad;

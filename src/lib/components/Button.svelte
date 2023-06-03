@@ -18,6 +18,7 @@
 	class:btn-outline={outline}
 	class:btn-ghost={ghost}
 	class:w-full={fullWidth}
+	on:click
 	{...$$restProps}
 >
 	{#if icon}

@@ -6,7 +6,7 @@ export const sanity = createClient({
 	dataset: env.PUBLIC_SANITY_DATASET,
 	projectId: env.PUBLIC_SANITY_PROJECT_ID,
 	apiVersion: "2021-03-25",
-	useCdn: true
+	useCdn: true,
 });
 
 const builder = imageUrlBuilder(sanity);

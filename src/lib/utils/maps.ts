@@ -3,7 +3,7 @@ import { PUBLIC_MAPS_API_KEY } from "$env/static/public";
 export const getMapsEmbedURL = (
 	mode: "place" | "streetview",
 	address: string,
-	location?: string
+	location?: string,
 ) => {
 	const apiKey = PUBLIC_MAPS_API_KEY;
 	const baseURL = new URL(`https://www.google.com/maps/embed/v1/${mode}`);

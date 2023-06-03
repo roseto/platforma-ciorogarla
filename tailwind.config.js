@@ -7,9 +7,9 @@ export default {
 	theme: {
 		extend: {
 			borderRadius: {
-				DEFAULT: "16px"
-			}
-		}
+				DEFAULT: "16px",
+			},
+		},
 	},
 
 	daisyui: {
@@ -27,8 +27,8 @@ export default {
 					"neutral-content": "#0c1f14",
 					"neutral-accent": "#bee9f7",
 					"neutral-accent-content": "#001f27",
-					"base-100": "#fbfdf8"
-				}
+					"base-100": "#fbfdf8",
+				},
 			},
 			{
 				dark: {
@@ -42,9 +42,9 @@ export default {
 					"neutral-content": "#d1e8d5",
 					"neutral-accent": "#214c58",
 					"neutral-accent-content": "#bee9f7",
-					"base-100": "#191c1a"
-				}
-			}
-		]
-	}
+					"base-100": "#191c1a",
+				},
+			},
+		],
+	},
 };

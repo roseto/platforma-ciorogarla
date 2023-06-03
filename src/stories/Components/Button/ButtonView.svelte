@@ -2,8 +2,4 @@
 	import Button from "$lib/components/Button.svelte";
 </script>
 
-<Button 
-	{...$$props}
->
-	Button
-</Button>
+<Button {...$$props}>Button</Button>

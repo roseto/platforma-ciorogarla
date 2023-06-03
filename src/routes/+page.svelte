@@ -14,10 +14,10 @@
 
 	export let data: PageData;
 
-	$: user = data.session?.user
+	$: user = data.session?.user;
 </script>
 
-<UserModal />
+<UserModal user={user} />
 
 <Header
 	title="Ciorogârla Unită"
@@ -27,7 +27,7 @@
 			onClick: () => getModal("user_modal")?.showModal(),
 			icon: !user ? "settings" : undefined,
 			img: user?.user_metadata?.avatar_url || undefined,
-		}
+		},
 	]}
 />
 

@@ -4,8 +4,8 @@ import AlertView from "./AlertView.svelte";
 
 const meta: Meta = {
 	component: Alert,
-	title: "Alert",
-}
+	title: "Components/Alert",
+};
 
 export default meta;
 
@@ -15,9 +15,21 @@ export const Regular: StoryObj = {
 		props: args,
 	}),
 	args: {
-		icon: "info"
-	}
-}
+		icon: "info",
+	},
+};
+
+export const AsButton: StoryObj = {
+	render: ({ ...args }) => ({
+		Component: AlertView,
+		props: args,
+	}),
+	args: {
+		outline: true,
+		button: true,
+		icon: "info",
+	},
+};
 
 export const Outline: StoryObj = {
 	render: ({ ...args }) => ({
@@ -27,5 +39,5 @@ export const Outline: StoryObj = {
 	args: {
 		icon: "warning",
 		outline: true,
-	}
-}
+	},
+};

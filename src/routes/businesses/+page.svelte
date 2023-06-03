@@ -15,7 +15,7 @@
 	$: ({ businesses } = data);
 
 	const filter = queryParam("filter", ssp.string(), {
-		pushHistory: false
+		pushHistory: false,
 	});
 
 	let scrollContainer: HTMLDivElement;
@@ -38,19 +38,15 @@
 
 <Container>
 	<Stack>
-		<div
-			class="flex flex-row overflow-scroll gap-2"
-			bind:this={scrollContainer}
-		>
+		<div class="flex flex-row overflow-scroll gap-2" bind:this={scrollContainer}>
 			{#each businessTypesSorted as [key, value] (key)}
-				<div
-					animate:flip={{ duration: 200 }}
-				>
+				<div animate:flip={{ duration: 200 }}>
 					<Badge
+						button
 						icon={value.icon}
 						outline={!$filter?.split(",").includes(key)}
 						color="secondary"
-						class="badge-lg"
+						large
 						on:click={() => {
 							const filters = $filter?.split(",") ?? [];
 

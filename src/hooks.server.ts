@@ -6,12 +6,12 @@ export const handle: Handle = async ({ event, resolve }) => {
 	event.locals.supabase = createSupabaseServerClient({
 		supabaseKey: PUBLIC_SUPABASE_ANON_KEY,
 		supabaseUrl: PUBLIC_SUPABASE_URL,
-		event
+		event,
 	});
 
 	event.locals.getSession = async () => {
 		const {
-			data: { session }
+			data: { session },
 		} = await event.locals.supabase.auth.getSession();
 		return session;
 	};
@@ -19,6 +19,6 @@ export const handle: Handle = async ({ event, resolve }) => {
 	return resolve(event, {
 		filterSerializedResponseHeaders(name) {
 			return name === "content-range";
-		}
+		},
 	});
 };

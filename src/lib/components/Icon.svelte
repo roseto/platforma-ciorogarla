@@ -4,10 +4,6 @@
 	export let color: string = "currentColor";
 </script>
 
-<span
-	class="material-symbols-rounded {$$props.class || ''}"
-	style:font-size="{size}px"
-	style:color={color}
->
+<span class="material-symbols-rounded {$$props.class || ''}" style:font-size="{size}px" style:color>
 	{name}
 </span>

@@ -2,13 +2,18 @@ import type { Meta, StoryObj } from "@storybook/svelte";
 import Badge from "$lib/components/Badge.svelte";
 import BadgeView from "./BadgeView.svelte";
 
-
 const meta: Meta = {
 	component: Badge,
-	title: 'Badge',
-}
+	title: "Components/Badge",
+	argTypes: {
+		color: {
+			options: ["primary", "secondary", "accent", "neutral"],
+			control: { type: "radio" },
+		},
+	},
+};
 
-export default meta
+export default meta;
 
 export const Primary: StoryObj = {
 	render: ({ ...args }) => ({
@@ -17,8 +22,8 @@ export const Primary: StoryObj = {
 	}),
 	args: {
 		color: "primary",
-	}
-}
+	},
+};
 
 export const Secondary: StoryObj = {
 	render: ({ ...args }) => ({
@@ -27,18 +32,18 @@ export const Secondary: StoryObj = {
 	}),
 	args: {
 		color: "secondary",
-	}
-}
+	},
+};
 
 export const Accent: StoryObj = {
 	render: ({ ...args }) => ({
 		Component: BadgeView,
 		props: args,
 	}),
-	args: {	
+	args: {
 		color: "accent",
-	}
-}
+	},
+};
 
 export const Neutral: StoryObj = {
 	render: ({ ...args }) => ({
@@ -47,8 +52,8 @@ export const Neutral: StoryObj = {
 	}),
 	args: {
 		color: "neutral",
-	}
-}
+	},
+};
 
 export const Outline: StoryObj = {
 	render: ({ ...args }) => ({
@@ -57,8 +62,28 @@ export const Outline: StoryObj = {
 	}),
 	args: {
 		outline: true,
-	}
-}
+	},
+};
+
+export const AsButton: StoryObj = {
+	render: ({ ...args }) => ({
+		Component: BadgeView,
+		props: args,
+	}),
+	args: {
+		button: true,
+	},
+};
+
+export const Large: StoryObj = {
+	render: ({ ...args }) => ({
+		Component: BadgeView,
+		props: args,
+	}),
+	args: {
+		large: true,
+	},
+};
 
 export const WithIcon: StoryObj = {
 	render: ({ ...args }) => ({
@@ -67,5 +92,5 @@ export const WithIcon: StoryObj = {
 	}),
 	args: {
 		icon: "info",
-	}
-}
+	},
+};

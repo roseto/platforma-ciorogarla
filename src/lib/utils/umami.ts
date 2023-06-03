@@ -1,7 +1,9 @@
 import { browser } from "$app/environment";
 import { writable } from "svelte/store";
 
-const storedUmamiEnabled = browser ? globalThis.localStorage.getItem("umami.disable") !== "true" : false;
+const storedUmamiEnabled = browser
+	? globalThis.localStorage.getItem("umami.disable") !== "true"
+	: false;
 export const umamiEnabled = writable(storedUmamiEnabled);
 
 if (browser)

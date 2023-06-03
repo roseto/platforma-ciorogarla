@@ -6,13 +6,9 @@
 	import Toggle from "$lib/components/Toggle.svelte";
 	import { umamiEnabled } from "$lib/utils/umami";
 	import { version } from "$app/environment";
-
 </script>
 
-<Header
-	title="Setari"
-	back
-/>
+<Header title="Setari" back />
 
 <Container>
 	<Stack>
@@ -20,34 +16,20 @@
 			primary="Analitica"
 			secondary={$umamiEnabled ? "Dezactiveaza analitica anonima" : "Activeaza analitica anonima"}
 			button
-			on:click={() => $umamiEnabled = !$umamiEnabled}
+			on:click={() => ($umamiEnabled = !$umamiEnabled)}
 		>
-			<Toggle 
-				bind:checked={$umamiEnabled}
-			/>
+			<Toggle bind:checked={$umamiEnabled} />
 		</ListItem>
 
 		<div class="divider" />
-		
+
 		<a href="https://ciorogarlaunita.eu.org/terms-and-conditions" target="_blank">
-			<ListItem
-				button
-				icon="description"
-				primary="Termeni și condiții"
-			/>
+			<ListItem button icon="description" primary="Termeni și condiții" />
 		</a>
 		<a href="https://ciorogarlaunita.eu.org/privacy-policy" target="_blank">
-			<ListItem
-				button
-				icon="policy"
-				primary="Politica de confidențialitate"
-			/>
+			<ListItem button icon="policy" primary="Politica de confidențialitate" />
 		</a>
 
-		<ListItem
-			icon="info"
-			primary="Versiune"
-			secondary={version}
-		/>
+		<ListItem icon="info" primary="Versiune" secondary={version} />
 	</Stack>
 </Container>
