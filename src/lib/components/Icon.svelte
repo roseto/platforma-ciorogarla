@@ -6,7 +6,7 @@
 
 <span
 	class="material-symbols-rounded {$$props.class || ''}"
-	style:font-size={size}
+	style:font-size="{size}px"
 	style:color={color}
 >
 	{name}
