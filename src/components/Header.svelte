@@ -1,19 +1,20 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { ArrowLeftIcon } from 'svelte-feather-icons';
-	import Container from './Container.svelte';
+	import { onMount } from "svelte";
+	import Container from "./Container.svelte";
+	import Icon from "./Icon.svelte";
 
 	export let title: string;
 	export let back: boolean = false;
 	export let noNav: boolean = false;
 	export let noHeading: boolean = false;
-	export let themeColor: string = '';
-	export let color: string = '';
-	export let favicon: string = '';
+	export let themeColor: string = "";
+	export let color: string = "";
+	export let favicon: string = "";
 	export let actions: {
 		href?: string;
 		onClick?: () => void;
-		icon: any;
+		icon?: string;
+		img?: string;
 	}[] = [];
 
 	let headerRef: HTMLHeadingElement | undefined;
@@ -25,12 +26,16 @@
 	};
 
 	onMount(() => {
-		globalThis.addEventListener('scroll', handleScroll);
+		globalThis.addEventListener("scroll", handleScroll);
 
 		return () => {
-			globalThis.removeEventListener('scroll', handleScroll);
+			globalThis.removeEventListener("scroll", handleScroll);
 		};
 	});
+
+	const handleBack = () => {
+		history.back();
+	};
 </script>
 
 <svelte:head>
@@ -38,10 +43,10 @@
 	<meta
 		name="theme-color"
 		media="(prefers-color-scheme: light)"
-		content={themeColor || '#fbfdf8'}
+		content={themeColor || "#fbfdf8"}
 	/>
-	<meta name="theme-color" media="(prefers-color-scheme: dark)" content={themeColor || '#191c1a'} />
-	<link rel="icon" href={favicon} />
+	<meta name="theme-color" media="(prefers-color-scheme: dark)" content={themeColor || "#191c1a"} />
+	<link rel="icon" type="image/png" href={favicon} />
 </svelte:head>
 
 {#if !noNav}
@@ -52,8 +57,12 @@
 	>
 		{#if back}
 			<div class="flex-none">
-				<button class="btn btn-ghost btn-circle text-neutral-content" style="color: {color}">
-					<ArrowLeftIcon />
+				<button
+					on:click={handleBack}
+					class="btn btn-ghost btn-circle text-neutral-content"
+					style="color: {color}"
+				>
+					<Icon name="arrow_back" {color} />
 				</button>
 			</div>
 		{/if}
@@ -70,13 +79,17 @@
 		<div class="flex-none">
 			{#each actions as action}
 				<svelte:element
-					this={action.href ? 'a' : 'button'}
+					this={action.href ? "a" : "button"}
 					href={action.href}
 					on:click={action.onClick}
 					class="btn btn-ghost btn-circle text-neutral-content"
 					style="color: {color}"
 				>
-					<svelte:component this={action.icon} />
+					{#if action.icon}
+						<Icon name={action.icon} {color} />
+					{:else if action.img}
+						<img src={action.img} alt="" class="rounded-full" />
+					{/if}
 				</svelte:element>
 			{/each}
 		</div>
