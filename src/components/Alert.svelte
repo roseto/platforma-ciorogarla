@@ -1,10 +1,12 @@
 <script lang="ts">
-	export let icon: any;
+	import Icon from "./Icon.svelte";
+
+	export let icon: string = "";
 	export let button: boolean = false;
 	export let outline: boolean = false;
 </script>
 
-<div 
+<div
 	class="alert"
 	class:btn-animation={button}
 	class:btn-ghost={button}
@@ -14,9 +16,10 @@
 >
 	<div class="flex items-center gap-4 text-left">
 		{#if icon}
-			<svelte:component this={icon} class="w-8 h-8 text-info" />
+			<Icon name={icon} class="!text-accent" />
 		{/if}
-		<slot />
+		<p>
+			<slot />
+		</p>
 	</div>
 </div>
-

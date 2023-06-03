@@ -1,16 +1,18 @@
 <script lang="ts">
-	import Header from '../components/Header.svelte';
-	import Container from '../components/Container.svelte';
-	import { InfoIcon, SettingsIcon, ClockIcon, UsersIcon, ArrowRightIcon } from 'svelte-feather-icons';
-	import Stack from '../components/Stack.svelte';
-	import Alert from '../components/Alert.svelte';
-	import type { PageData } from './$types';
-	import { urlFor } from '$lib/sanity';
-	import ListItem from '../components/ListItem.svelte';
-	import Button from '../components/Button.svelte';
-	import BackgroundGlow from '../components/BackgroundGlow.svelte';
+	import Header from "../components/Header.svelte";
+	import Container from "../components/Container.svelte";
+	import Stack from "../components/Stack.svelte";
+	import Alert from "../components/Alert.svelte";
+	import type { PageData } from "./$types";
+	import { urlFor } from "$lib/sanity";
+	import ListItem from "../components/ListItem.svelte";
+	import Button from "../components/Button.svelte";
+	import Icon from "../components/Icon.svelte";
+	import BackgroundGlow from "../components/BackgroundGlow.svelte";
 
 	export let data: PageData;
+
+	$: user = data.session?.user
 </script>
 
 <Header
@@ -18,14 +20,13 @@
 	noHeading
 	actions={[
 		{
-			href: '/settings',
-			icon: SettingsIcon
+			icon: !user ? "settings" : undefined,
+			img: user?.user_metadata?.avatar_url || undefined,
 		}
 	]}
 />
 
 <BackgroundGlow />
-
 
 <Container>
 	<Stack>
@@ -34,28 +35,25 @@
 			<h1 class="text-xl">Ciorogârla Unită</h1>
 		</div>
 
-
 		<a href="/install">
-			<Alert
-				icon={InfoIcon}
-				outline
-				button
-			>
+			<Alert icon="info" outline button>
 				Pare ca nu ai instalat aplicația. Apasa aici pentru a o instala.
 			</Alert>
 		</a>
 
 		<div class="grid grid-cols-2 gap-4">
 			<button class="btn btn-ghost flex-col text-primary">
-				<ClockIcon />
+				<Icon name="schedule" />
 				Orar 431
 			</button>
 
 			<button class="btn btn-ghost flex-col text-primary">
-				<UsersIcon />
+				<Icon name="group" />
 				Facebook
 			</button>
 		</div>
+
+		<br />
 
 		<Stack>
 			<h2 class="text-sm opacity-50">Ultimele știri</h2>
@@ -64,21 +62,20 @@
 					<ListItem
 						button
 						primary={article.title}
-						secondary={"#" + article.tags?.join(' #')}
+						secondary={"#" + article.tags?.join(" #")}
 						img={urlFor(article.cover).width(64).height(64).url()}
 					/>
 				</a>
 			{/each}
-			<Button color="secondary" outline>
+			<Button color="secondary" outline fullWidth>
 				Toate știrile
-				<ArrowRightIcon />
+				<Icon name="arrow_forward" />
 			</Button>
 		</Stack>
 
+		<br />
 		<Stack>
-			<h2 class="text-sm opacity-50">
-				Afaceri noi adăugate
-			</h2>
+			<h2 class="text-sm opacity-50">Afaceri noi adăugate</h2>
 			{#each data.businesses as business}
 				<a href={`/businesses/${business.slug?.current}`}>
 					<ListItem
@@ -89,16 +86,17 @@
 					/>
 				</a>
 			{/each}
-			<Button color="secondary" outline>
-				Toate afacerile
-				<ArrowRightIcon />
-			</Button>
+			<a href="/businesses">
+				<Button color="secondary" outline fullWidth>
+					Toate afacerile
+					<Icon name="arrow_forward" />
+				</Button>
+			</a>
 		</Stack>
 
+		<br />
 		<Stack>
-			<h2 class="text-sm opacity-50">
-				Proiecte noi
-			</h2>
+			<h2 class="text-sm opacity-50">Proiecte noi</h2>
 			{#each data.projects as project}
 				<a href={`/volunteering/${project.slug?.current}`}>
 					<ListItem
@@ -111,7 +109,7 @@
 			{/each}
 			<Button color="secondary" outline>
 				Toate proiectele
-				<ArrowRightIcon />
+				<Icon name="arrow_forward" />
 			</Button>
 		</Stack>
 	</Stack>

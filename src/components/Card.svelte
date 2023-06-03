@@ -1,21 +1,21 @@
 <script lang="ts">
-	import type { ColorVariants } from '../lib/theme';
+	import type { ColorVariants } from "../lib/theme";
 
-	export let bgColor: ColorVariants = 'neutral';
-	export let img: string = '';
-	export let title: string = '';
+	export let bgColor: ColorVariants = "neutral";
+	export let img: string = "";
+	export let title: string = "";
 </script>
 
 <div
 	class="card shadow {$$props.class || ''}"
-	class:bg-primary={bgColor === 'primary'}
-	class:text-primary-content={bgColor === 'primary'}
-	class:bg-secondary={bgColor === 'secondary'}
-	class:text-secondary-content={bgColor === 'secondary'}
-	class:bg-accent={bgColor === 'accent'}
-	class:text-accent-content={bgColor === 'accent'}
-	class:bg-neutral={bgColor === 'neutral'}
-	class:text-neutral-content={bgColor === 'neutral'}
+	class:bg-primary={bgColor === "primary"}
+	class:text-primary-content={bgColor === "primary"}
+	class:bg-secondary={bgColor === "secondary"}
+	class:text-secondary-content={bgColor === "secondary"}
+	class:bg-accent={bgColor === "accent"}
+	class:text-accent-content={bgColor === "accent"}
+	class:bg-neutral={bgColor === "neutral"}
+	class:text-neutral-content={bgColor === "neutral"}
 	{...$$restProps}
 >
 	{#if img}

@@ -15,7 +15,7 @@ import type {
 	SanityImageDimensions,
 	SanityImagePalette,
 	SanityImagePaletteSwatch
-} from 'sanity-codegen';
+} from "sanity-codegen";
 
 export type {
 	SanityReference,
@@ -42,7 +42,7 @@ export type {
  *
  */
 export interface Business extends SanityDocument {
-	_type: 'business';
+	_type: "business";
 
 	/**
 	 * Name — `string`
@@ -64,25 +64,25 @@ export interface Business extends SanityDocument {
 	 * The type of business
 	 */
 	type?:
-		| 'restaurant'
-		| 'cafe'
-		| 'pub'
-		| 'barbershop'
-		| 'itp'
-		| 'showroom'
-		| 'distributor'
-		| 'autoParts'
-		| 'market'
-		| 'pizza'
-		| 'hotel'
-		| 'cakeShop';
+		| "restaurant"
+		| "cafe"
+		| "pub"
+		| "barbershop"
+		| "itp"
+		| "showroom"
+		| "distributor"
+		| "autoParts"
+		| "market"
+		| "pizza"
+		| "hotel"
+		| "cakeShop";
 
 	/**
 	 * Slug — `slug`
 	 *
 	 * The slug of the business
 	 */
-	slug?: { _type: 'slug'; current: string };
+	slug?: { _type: "slug"; current: string };
 
 	/**
 	 * Logo — `image`
@@ -90,7 +90,7 @@ export interface Business extends SanityDocument {
 	 * The logo of the business
 	 */
 	logo?: {
-		_type: 'image';
+		_type: "image";
 		asset: SanityReference<SanityImageAsset>;
 		crop?: SanityImageCrop;
 		hotspot?: SanityImageHotspot;
@@ -102,7 +102,7 @@ export interface Business extends SanityDocument {
 	 * The cover image of the business
 	 */
 	cover?: {
-		_type: 'image';
+		_type: "image";
 		asset: SanityReference<SanityImageAsset>;
 		crop?: SanityImageCrop;
 		hotspot?: SanityImageHotspot;
@@ -115,7 +115,7 @@ export interface Business extends SanityDocument {
 	 */
 	photos?: Array<
 		SanityKeyed<{
-			_type: 'photo';
+			_type: "photo";
 			asset: SanityReference<SanityImageAsset>;
 			crop?: SanityImageCrop;
 			hotspot?: SanityImageHotspot;
@@ -127,7 +127,7 @@ export interface Business extends SanityDocument {
 	 *
 	 * The price range of the business
 	 */
-	prices?: '$' | '$$' | '$$$' | '$$$$';
+	prices?: "$" | "$$" | "$$$" | "$$$$";
 
 	/**
 	 * Prices link — `url`
@@ -149,7 +149,7 @@ export interface Business extends SanityDocument {
 	 * The location
 	 */
 	location?: {
-		_type: 'location';
+		_type: "location";
 		/**
 		 * Address — `string`
 		 *
@@ -178,7 +178,7 @@ export interface Business extends SanityDocument {
 	 * The contact information
 	 */
 	contact?: {
-		_type: 'contact';
+		_type: "contact";
 		/**
 		 * Phone — `string`
 		 *
@@ -222,7 +222,7 @@ export interface Business extends SanityDocument {
  *
  */
 export interface VolunteeringProject extends SanityDocument {
-	_type: 'volunteeringProject';
+	_type: "volunteeringProject";
 
 	/**
 	 * Name — `string`
@@ -243,7 +243,7 @@ export interface VolunteeringProject extends SanityDocument {
 	 *
 	 * The slug of the project
 	 */
-	slug?: { _type: 'slug'; current: string };
+	slug?: { _type: "slug"; current: string };
 
 	/**
 	 * Deadline — `date`
@@ -264,7 +264,7 @@ export interface VolunteeringProject extends SanityDocument {
 	 *
 	 * Type of project
 	 */
-	type?: 'ye';
+	type?: "ye";
 
 	/**
 	 * Application Form — `url`
@@ -286,7 +286,7 @@ export interface VolunteeringProject extends SanityDocument {
 	 * An image for the project
 	 */
 	image?: {
-		_type: 'image';
+		_type: "image";
 		asset: SanityReference<SanityImageAsset>;
 		crop?: SanityImageCrop;
 		hotspot?: SanityImageHotspot;
@@ -298,7 +298,7 @@ export interface VolunteeringProject extends SanityDocument {
 	 * The location
 	 */
 	location?: {
-		_type: 'location';
+		_type: "location";
 		/**
 		 * Address — `string`
 		 *
@@ -326,7 +326,7 @@ export interface VolunteeringProject extends SanityDocument {
 	 *
 	 * The infopack of the project
 	 */
-	infopack?: { _type: 'file'; asset: SanityReference<any> };
+	infopack?: { _type: "file"; asset: SanityReference<any> };
 
 	/**
 	 * Info Link — `url`
@@ -355,7 +355,7 @@ export interface VolunteeringProject extends SanityDocument {
 	 * The period of the project
 	 */
 	period?: {
-		_type: 'period';
+		_type: "period";
 		/**
 		 * From Date — `date`
 		 *
@@ -378,7 +378,7 @@ export interface VolunteeringProject extends SanityDocument {
  *
  */
 export interface Article extends SanityDocument {
-	_type: 'article';
+	_type: "article";
 
 	/**
 	 * Title — `string`
@@ -392,7 +392,7 @@ export interface Article extends SanityDocument {
 	 *
 	 * The slug of the news article
 	 */
-	slug?: { _type: 'slug'; current: string };
+	slug?: { _type: "slug"; current: string };
 
 	/**
 	 * Tags — `array`
@@ -407,7 +407,7 @@ export interface Article extends SanityDocument {
 	 * The cover of the news article
 	 */
 	cover?: {
-		_type: 'image';
+		_type: "image";
 		asset: SanityReference<SanityImageAsset>;
 		crop?: SanityImageCrop;
 		hotspot?: SanityImageHotspot;
@@ -434,7 +434,7 @@ export interface Article extends SanityDocument {
  *
  */
 export interface Country extends SanityDocument {
-	_type: 'country';
+	_type: "country";
 
 	/**
 	 * Name — `string`
@@ -450,7 +450,7 @@ export interface Country extends SanityDocument {
  *
  */
 export interface Organisation extends SanityDocument {
-	_type: 'organisation';
+	_type: "organisation";
 
 	/**
 	 * Name — `string`
@@ -465,7 +465,7 @@ export interface Organisation extends SanityDocument {
 	 * The logo of the organisation
 	 */
 	logo?: {
-		_type: 'image';
+		_type: "image";
 		asset: SanityReference<SanityImageAsset>;
 		crop?: SanityImageCrop;
 		hotspot?: SanityImageHotspot;
@@ -477,7 +477,7 @@ export interface Organisation extends SanityDocument {
 	 * The contact information
 	 */
 	contact?: {
-		_type: 'contact';
+		_type: "contact";
 		/**
 		 * Phone — `string`
 		 *

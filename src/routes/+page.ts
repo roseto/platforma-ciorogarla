@@ -1,14 +1,27 @@
-import { sanity } from '$lib/sanity';
-import type { Article, Business, VolunteeringProject } from '../types/SanitySchema';
-import type { PageLoad } from './$types';
+import { sanity } from "$lib/sanity";
+import type { Article, Business, VolunteeringProject } from "../types/SanitySchema";
+import type { PageLoad } from "./$types";
 
 export const load = (async () => {
-	const urgentArticlePromise = sanity.fetch<Article>(`*[_type == "article" && isUrgent] | order(_createdAt desc)[0]`);
-	const articlesPromise = sanity.fetch<Article[]>(`*[_type == "article"] | order(_createdAt desc)[0...3]`);
-	const businessesPromise = sanity.fetch<Business[]>(`*[_type == "business"] | order(_createdAt desc)[0...3]`);
-	const projectsPromise = sanity.fetch<VolunteeringProject[]>(`*[_type == "volunteeringProject"] | order(_createdAt desc)[0...3]`);
+	const urgentArticlePromise = sanity.fetch<Article>(
+		`*[_type == "article" && isUrgent] | order(_createdAt desc)[0]`
+	);
+	const articlesPromise = sanity.fetch<Article[]>(
+		`*[_type == "article"] | order(_createdAt desc)[0...3]`
+	);
+	const businessesPromise = sanity.fetch<Business[]>(
+		`*[_type == "business"] | order(_createdAt desc)[0...3]`
+	);
+	const projectsPromise = sanity.fetch<VolunteeringProject[]>(
+		`*[_type == "volunteeringProject"] | order(_createdAt desc)[0...3]`
+	);
 
-	const [urgentArticle, articles, businesses, projects] = await Promise.all([urgentArticlePromise, articlesPromise, businessesPromise, projectsPromise]);
+	const [urgentArticle, articles, businesses, projects] = await Promise.all([
+		urgentArticlePromise,
+		articlesPromise,
+		businessesPromise,
+		projectsPromise
+	]);
 
 	return {
 		urgentArticle,
