@@ -1,5 +1,5 @@
-import { sanity } from "$lib/sanity";
-import type { Article, Business, VolunteeringProject } from "../types/SanitySchema";
+import { sanity } from "$lib/utils/sanity";
+import type { Article, Business, VolunteeringProject } from "$lib/types/SanitySchema";
 import type { PageLoad } from "./$types";
 
 export const load = (async () => {

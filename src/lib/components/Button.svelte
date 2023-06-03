@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ColorVariants } from "../lib/theme";
+	import type { ColorVariants } from "$lib/utils/theme";
 	import Icon from "./Icon.svelte";
 
 	export let ghost: boolean = false;
@@ -20,6 +20,8 @@
 	class:w-full={fullWidth}
 	{...$$restProps}
 >
-	<Icon name={icon} />
+	{#if icon}
+		<Icon name={icon} />
+	{/if}
 	<slot />
 </button>

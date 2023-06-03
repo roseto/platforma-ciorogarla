@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { getMapsEmbedURL } from "$lib/maps";
-	import { getModal } from "$lib/modal";
+	import { getMapsEmbedURL } from "$lib/utils/maps";
+	import { getModal } from "$lib/utils/modal";
 	import Icon from "./Icon.svelte";
 	import ListItem from "./ListItem.svelte";
 

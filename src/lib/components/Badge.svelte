@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ColorVariants } from "$lib/theme";
+	import type { ColorVariants } from "$lib/utils/theme";
 	import Icon from "./Icon.svelte";
 
 	export let color: ColorVariants = "neutral";

@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { businessTypes } from "$lib/businessTypes";
-	import { urlFor } from "$lib/sanity";
+	import { businessTypes } from "$lib/utils/businessTypes";
+	import { urlFor } from "$lib/utils/sanity";
 	import { flip } from "svelte/animate";
-	import Badge from "../../components/Badge.svelte";
-	import Container from "../../components/Container.svelte";
-	import Header from "../../components/Header.svelte";
-	import Stack from "../../components/Stack.svelte";
-	import ListItem from "../../components/ListItem.svelte";
+	import Badge from "$lib/components/Badge.svelte";
+	import Container from "$lib/components/Container.svelte";
+	import Header from "$lib/components/Header.svelte";
+	import Stack from "$lib/components/Stack.svelte";
+	import ListItem from "$lib/components/ListItem.svelte";
 	import type { PageData } from "./$types";
 	import { queryParam, ssp } from "sveltekit-search-params";
 

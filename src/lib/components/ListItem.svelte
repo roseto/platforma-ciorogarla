@@ -25,8 +25,10 @@
 	{:else if img}
 		<img src={img} alt={primary} width="40" height="40" class="w-10 h-10 rounded-lg" />
 	{/if}
-	<div class="flex flex-col">
+	<div class="flex-1 flex flex-col">
 		<p>{primary}</p>
 		<p class="opacity-50 text-sm line-clamp-2">{secondary}</p>
 	</div>
+
+	<slot/>
 </svelte:element>
