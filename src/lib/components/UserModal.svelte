@@ -7,7 +7,7 @@
 </script>
 
 <dialog class="modal" id="user_modal">
-	<div class="modal-box flex flex-col space-y-2">
+	<div class="modal-box flex flex-col space-y-2 text-base-content">
 		<div class="p-2 bg-neutral text-neutral-content rounded">
 			{#if !user}
 				<ListItem
