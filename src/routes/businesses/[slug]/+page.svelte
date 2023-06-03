@@ -1,19 +1,19 @@
 <script lang="ts">
-	import { businessTypes } from "$lib/businessTypes";
-	import { urlFor } from "$lib/sanity";
-	import Badge from "../../../components/Badge.svelte";
-	import Container from "../../../components/Container.svelte";
-	import Stack from "../../../components/Stack.svelte";
-	import Header from "../../../components/Header.svelte";
+	import { businessTypes } from "$lib/utils/businessTypes";
+	import { urlFor } from "$lib/utils/sanity";
+	import Badge from "$lib/components/Badge.svelte";
+	import Container from "$lib/components/Container.svelte";
+	import Stack from "$lib/components/Stack.svelte";
+	import Header from "$lib/components/Header.svelte";
 	import type { PageData } from "./$types";
-	import Button from "../../../components/Button.svelte";
-	import { getMapsURL } from "$lib/maps";
-	import Facebook from "../../../resources/icons/facebook.svelte";
-	import Instagram from "../../../resources/icons/instagram.svelte";
-	import Card from "../../../components/Card.svelte";
-	import MapsEmbed from "../../../components/MapsEmbed.svelte";
-	import Alert from "../../../components/Alert.svelte";
-	import ContactList from "../../../components/ContactList.svelte";
+	import Button from "$lib/components/Button.svelte";
+	import { getMapsURL } from "$lib/utils/maps";
+	import Facebook from "$lib/resources/icons/facebook.svelte";
+	import Instagram from "$lib/resources/icons/instagram.svelte";
+	import Card from "$lib/components/Card.svelte";
+	import MapsEmbed from "$lib/components/MapsEmbed.svelte";
+	import Alert from "$lib/components/Alert.svelte";
+	import ContactList from "$lib/components/ContactList.svelte";
 
 	export let data: PageData;
 

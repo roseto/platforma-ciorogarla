@@ -11,6 +11,7 @@ declare global {
 			getSession: () => Promise<Session | null>;
 		}
 		interface PageData {
+			visited?: boolean;
 			supabase?: SupabaseClient;
 			session?: Session;
 		}

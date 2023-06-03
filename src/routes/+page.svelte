@@ -1,25 +1,30 @@
 <script lang="ts">
-	import Header from "../components/Header.svelte";
-	import Container from "../components/Container.svelte";
-	import Stack from "../components/Stack.svelte";
-	import Alert from "../components/Alert.svelte";
+	import Header from "$lib/components/Header.svelte";
+	import Container from "$lib/components/Container.svelte";
+	import Stack from "$lib/components/Stack.svelte";
+	import Alert from "$lib/components/Alert.svelte";
 	import type { PageData } from "./$types";
-	import { urlFor } from "$lib/sanity";
-	import ListItem from "../components/ListItem.svelte";
-	import Button from "../components/Button.svelte";
-	import Icon from "../components/Icon.svelte";
-	import BackgroundGlow from "../components/BackgroundGlow.svelte";
+	import { urlFor } from "$lib/utils/sanity";
+	import ListItem from "$lib/components/ListItem.svelte";
+	import Button from "$lib/components/Button.svelte";
+	import Icon from "$lib/components/Icon.svelte";
+	import BackgroundGlow from "$lib/components/BackgroundGlow.svelte";
+	import UserModal from "$lib/components/UserModal.svelte";
+	import { getModal } from "$lib/utils/modal";
 
 	export let data: PageData;
 
 	$: user = data.session?.user
 </script>
 
+<UserModal />
+
 <Header
 	title="Ciorogârla Unită"
 	noHeading
 	actions={[
 		{
+			onClick: () => getModal("user_modal")?.showModal(),
 			icon: !user ? "settings" : undefined,
 			img: user?.user_metadata?.avatar_url || undefined,
 		}

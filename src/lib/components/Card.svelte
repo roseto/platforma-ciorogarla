@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ColorVariants } from "../lib/theme";
+	import type { ColorVariants } from "$lib/utils/theme";
 
 	export let bgColor: ColorVariants = "neutral";
 	export let img: string = "";

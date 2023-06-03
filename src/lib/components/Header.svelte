@@ -60,16 +60,16 @@
 				<button
 					on:click={handleBack}
 					class="btn btn-ghost btn-circle text-neutral-content"
-					style="color: {color}"
+					style:color={!scrollTrigger ? color : undefined}
 				>
-					<Icon name="arrow_back" {color} />
+					<Icon name="arrow_back" />
 				</button>
 			</div>
 		{/if}
 		<div class="flex-1">
 			<span
 				class="text-xl transition text-neutral-content"
-				style="color: {color}"
+				style:color={!scrollTrigger ? color : undefined}
 				class:ml-4={!back}
 				class:opacity-0={!scrollTrigger}
 			>
@@ -83,7 +83,7 @@
 					href={action.href}
 					on:click={action.onClick}
 					class="btn btn-ghost btn-circle text-neutral-content"
-					style="color: {color}"
+					style:color={!scrollTrigger ? color : undefined}
 				>
 					{#if action.icon}
 						<Icon name={action.icon} {color} />

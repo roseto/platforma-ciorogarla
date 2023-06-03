@@ -27,3 +27,7 @@
 	animation: none;
 	transform: scale(var(--btn-focus-scale, 0.95));
 }
+
+.divider {
+	margin: 0;
+}

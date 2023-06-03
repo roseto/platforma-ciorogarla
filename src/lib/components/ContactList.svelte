@@ -1,7 +1,7 @@
 <script lang="ts">
 	import ListItem from "./ListItem.svelte";
-	import FacebookIcon from "../resources/icons/facebook.svelte";
-	import InstagramIcon from "../resources/icons/instagram.svelte";
+	import FacebookIcon from "$lib/resources/icons/facebook.svelte";
+	import InstagramIcon from "$lib/resources/icons/instagram.svelte";
 
 	export let facebook: string = "";
 	export let instagram: string = "";

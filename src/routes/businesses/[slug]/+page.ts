@@ -1,6 +1,6 @@
-import { sanity } from "$lib/sanity";
+import { sanity } from "$lib/utils/sanity";
 import { redirect } from "@sveltejs/kit";
-import type { Business } from "../../../types/SanitySchema";
+import type { Business } from "$lib/types/SanitySchema";
 import type { PageLoad } from "./$types";
 
 
