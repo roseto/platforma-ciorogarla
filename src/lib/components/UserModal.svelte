@@ -1,13 +1,15 @@
 <script lang="ts">
 	import type { User } from "@supabase/supabase-js";
 	import ListItem from "./ListItem.svelte";
+	import Dialog from "./Dialog.svelte";
+	import Stack from "./Stack.svelte";
 
 	export let user: User | undefined;
 	export let signOut: () => void;
 </script>
 
-<dialog class="modal {$$props.class || ''}" id="user_modal">
-	<div class="modal-box flex flex-col space-y-2 text-base-content">
+<Dialog class="modal {$$props.class || ''}" id="user_modal">
+	<Stack>
 		<div class="p-2 bg-neutral text-neutral-content rounded join join-vertical">
 			{#if !user}
 				<a href="/login">
@@ -42,8 +44,5 @@
 			<ListItem button icon="policy" primary="Politica de confidențialitate" />
 		</a>
 		<p class="text-center opacity-50 text-sm">Ciorogârla Unită</p>
-	</div>
-	<form method="dialog" class="modal-backdrop">
-		<button>close</button>
-	</form>
-</dialog>
+	</Stack>
+</Dialog>

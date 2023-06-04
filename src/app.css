@@ -11,6 +11,10 @@ body {
 }
 
 @media (hover: none) {
+	*:focus, *:focus-visible {
+		outline: none!important;
+	}
+		
 	* {
 		box-sizing: border-box;
 		-webkit-touch-callout: none;

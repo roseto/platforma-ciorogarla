@@ -7,6 +7,10 @@
 	import TwitterIcon from "$lib/resources/icons/twitter.svelte";
 	import GitHubIcon from "$lib/resources/icons/github.svelte";
 	import type { PageData } from "./$types";
+	import TextField from "$lib/components/TextField.svelte";
+	import { openModal } from "$lib/utils/modal";
+	import Dialog from "$lib/components/Dialog.svelte";
+	import Icon from "$lib/components/Icon.svelte";
 
 	export let data: PageData;
 
@@ -21,6 +25,17 @@
 				redirectTo: window.location.origin + "/login",
 			},
 		})
+	};
+
+	const handleEmailLogin = () => {
+		supabase.auth.signInWithOtp({
+			email,
+			options: {
+				emailRedirectTo: window.location.origin + "/login",
+			}
+		}).then(() => {
+			openModal("email_confirm_modal");
+		});
 	}
 </script>
 
@@ -34,21 +49,21 @@
 <Container>
 	<Stack>
 		<Button on:click={() => handleOAuthLogin("google")}>
-			<div class="w-4 h-4 fill-neutral-content">
+			<div class="w-4 h-4 fill-primary-content">
 				<GoogleIcon />
 			</div>
 			Conectare cu Google
 		</Button>
 
 		<Button>
-			<div class="w-4 h-4 fill-neutral-content">
+			<div class="w-4 h-4 fill-primary-content">
 				<TwitterIcon />
 			</div>
 			Conectare cu Twitter
 		</Button>
 
 		<Button>
-			<div class="w-4 h-4 fill-neutral-content">
+			<div class="w-4 h-4 fill-primary-content">
 				<GitHubIcon />
 			</div>
 			Conectare cu GitHub
@@ -58,8 +73,13 @@
 			sau
 		</div>
 
-		<form class="flex flex-col space-y-2">
-			<input type="email" class="input input-bordered w-full" bind:value={email} placeholder="Adresa de email" />
+		<form class="flex flex-col space-y-2" on:submit={handleEmailLogin}>
+			<TextField
+				type="email"
+				placeholder="Adresa de email"
+				bind:value={email}
+				fullWidth
+			/>
 
 			<Button
 				color="neutral"
@@ -69,16 +89,18 @@
 				Conectare
 			</Button>
 		</form>
+		<p
+			class="text-center text-sm"
+		>
+			Powered by <a class="link" target="_blank" rel="noopener noreferrer" href="https://supabase.io">Supabase <Icon name="bolt" size={12} /></a>
+		</p>
 	</Stack>
 </Container>
 
-<dialog id="email_confirm_modal" class="modal">
-	<div class="modal-box">
-		<p class="text-lg font-bold">Verificare email</p>
-		<p class="text-sm">Un email de verificare a fost trimis la adresa <span id="email_confirm_modal_email"></span>.</p>
-		<p class="text-sm">Verifică-ți email-ul și apasă pe link-ul din email pentru a-ți confirma adresa de email.</p>
-		<div class="modal-action">
-			<button class="btn btn-primary" onclick="document.getElementById('email_confirm_modal').close()">Închide</button>
-		</div>
-	</div>
-</dialog>
+<Dialog id="email_confirm_modal" class="modal">
+	<p class="text-lg font-bold">Verificare email</p>
+	<p class="text-sm">Un email de verificare a fost trimis la adresa <span class="font-bold">{email}</span>.</p>
+	<p class="text-sm">Verifică-ți email-ul și apasă pe link-ul din email pentru a-ți confirma adresa de email.</p>
+
+	<Button slot="actions" class="btn btn-primary">Închide</Button>
+</Dialog>
