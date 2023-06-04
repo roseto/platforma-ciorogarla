@@ -65,9 +65,9 @@
 
 		<div class="flex flex-row gap-2 justify-center items-center">
 			{#if business.contact?.facebook}
-				<a href={business.contact.facebook} class="w-8 h-8 btn btn-ghost btn-circle fill-current">
+				<div class="w-8 h-8 btn btn-ghost btn-circle fill-current">
 					<Facebook />
-				</a>
+				</div>
 			{/if}
 
 			{#if business.contact?.instagram}
@@ -95,7 +95,7 @@
 		</div>
 
 		{#if business.photos}
-			<div class="carousel">
+			<div class="carousel rounded">
 				{#each business.photos as photo}
 					<img
 						src={urlFor(photo).maxHeight(512).maxWidth(1024).url() || ""}
