@@ -65,13 +65,13 @@
 
 		<div class="flex flex-row gap-2 justify-center items-center">
 			{#if business.contact?.facebook}
-				<div class="w-8 h-8 btn btn-ghost btn-circle fill-current">
+				<a href={business.contact.instagram} class="btn btn-ghost btn-sm btn-circle fill-current">
 					<Facebook />
-				</div>
+				</a>
 			{/if}
 
 			{#if business.contact?.instagram}
-				<a href={business.contact.instagram} class="w-8 h-8 btn btn-ghost btn-circle fill-current">
+				<a href={business.contact.instagram} class="btn btn-ghost btn-sm btn-circle fill-current">
 					<Instagram />
 				</a>
 			{/if}
