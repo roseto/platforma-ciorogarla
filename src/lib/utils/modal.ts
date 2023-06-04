@@ -10,4 +10,4 @@ export const openModal = (id: string) => {
 	if (modal) {
 		modal.showModal();
 	}
-}
+};

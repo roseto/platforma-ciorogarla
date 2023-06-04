@@ -14,7 +14,7 @@
 
 	export let data: PageData;
 
-	$: ({supabase} = data);
+	$: ({ supabase } = data);
 
 	let email = "";
 
@@ -24,27 +24,24 @@
 			options: {
 				redirectTo: window.location.origin + "/login",
 			},
-		})
+		});
 	};
 
 	const handleEmailLogin = () => {
-		supabase.auth.signInWithOtp({
-			email,
-			options: {
-				emailRedirectTo: window.location.origin + "/login",
-			}
-		}).then(() => {
-			openModal("email_confirm_modal");
-		});
-	}
+		supabase.auth
+			.signInWithOtp({
+				email,
+				options: {
+					emailRedirectTo: window.location.origin + "/login",
+				},
+			})
+			.then(() => {
+				openModal("email_confirm_modal");
+			});
+	};
 </script>
 
-
-
-<Header
-	title="Conectare"
-	back
-/>
+<Header title="Conectare" back />
 
 <Container>
 	<Stack>
@@ -69,38 +66,32 @@
 			Conectare cu GitHub
 		</Button>
 
-		<div class="divider py-8">
-			sau
-		</div>
+		<div class="divider py-8">sau</div>
 
 		<form class="flex flex-col space-y-2" on:submit={handleEmailLogin}>
-			<TextField
-				type="email"
-				placeholder="Adresa de email"
-				bind:value={email}
-				fullWidth
-			/>
+			<TextField type="email" placeholder="Adresa de email" bind:value={email} fullWidth />
 
-			<Button
-				color="neutral"
-				type="submit"
-				fullWidth
-			>
-				Conectare
-			</Button>
+			<Button color="neutral" type="submit" fullWidth>Conectare</Button>
 		</form>
-		<p
-			class="text-center text-sm"
-		>
-			Powered by <a class="link" target="_blank" rel="noopener noreferrer" href="https://supabase.io">Supabase <Icon name="bolt" size={12} /></a>
+		<p class="text-center text-sm">
+			Powered by <a
+				class="link"
+				target="_blank"
+				rel="noopener noreferrer"
+				href="https://supabase.io">Supabase <Icon name="bolt" size={12} /></a
+			>
 		</p>
 	</Stack>
 </Container>
 
 <Dialog id="email_confirm_modal" class="modal">
 	<p class="text-lg font-bold">Verificare email</p>
-	<p class="text-sm">Un email de verificare a fost trimis la adresa <span class="font-bold">{email}</span>.</p>
-	<p class="text-sm">Verifică-ți email-ul și apasă pe link-ul din email pentru a-ți confirma adresa de email.</p>
+	<p class="text-sm">
+		Un email de verificare a fost trimis la adresa <span class="font-bold">{email}</span>.
+	</p>
+	<p class="text-sm">
+		Verifică-ți email-ul și apasă pe link-ul din email pentru a-ți confirma adresa de email.
+	</p>
 
 	<Button slot="actions" class="btn btn-primary">Închide</Button>
 </Dialog>

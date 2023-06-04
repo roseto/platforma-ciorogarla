@@ -17,10 +17,7 @@
 	$: ({ session, supabase } = data);
 </script>
 
-<UserModal 
-	user={session?.user}
-	signOut={supabase.auth.signOut}
-/>
+<UserModal user={session?.user} signOut={supabase.auth.signOut} />
 
 <Header
 	title="Ciorogârla Unită"

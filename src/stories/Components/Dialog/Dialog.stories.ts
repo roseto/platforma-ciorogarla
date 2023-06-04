@@ -20,7 +20,6 @@ export const Regular: StoryObj = {
 	},
 };
 
-
 export const WithActions: StoryObj = {
 	render: ({ ...args }) => ({
 		Component: DialogViewActions,

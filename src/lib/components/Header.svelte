@@ -43,9 +43,13 @@
 	<meta
 		name="theme-color"
 		media="(prefers-color-scheme: light)"
-		content={themeColor || "#fbfdf8"}
+		content={scrollTrigger ? "#374b3d" : themeColor || "#fbfdf8"}
 	/>
-	<meta name="theme-color" media="(prefers-color-scheme: dark)" content={themeColor || "#191c1a"} />
+	<meta 
+		name="theme-color" 
+		media="(prefers-color-scheme: dark)" 
+		content={scrollTrigger ? "#d1e8d5" : themeColor || "#191c1a"} 
+	/>
 	<link rel="icon" type="image/png" href={favicon} />
 </svelte:head>
 

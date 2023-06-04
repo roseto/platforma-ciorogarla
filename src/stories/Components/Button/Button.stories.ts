@@ -71,7 +71,7 @@ export const Disabled: StoryObj = {
 		props: args,
 	}),
 	args: {
-		disabled: true
+		disabled: true,
 	},
 };
 

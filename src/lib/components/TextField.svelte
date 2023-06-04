@@ -10,7 +10,7 @@
 
 	const typeAction = (node: HTMLInputElement) => {
 		node.type = type;
-	}
+	};
 </script>
 
 <input
@@ -20,7 +20,7 @@
 	class:w-full={fullWidth}
 	on:focus={() => (focus = true)}
 	on:blur={() => (focus = false)}
-	bind:value={value}
+	bind:value
 	{disabled}
 	{placeholder}
 	{...$$restProps}

@@ -35,7 +35,7 @@
 					secondary={session?.user.email}
 					class="join-item"
 				/>
-				<ListItem 
+				<ListItem
 					icon="logout"
 					primary="Deconectare"
 					button
