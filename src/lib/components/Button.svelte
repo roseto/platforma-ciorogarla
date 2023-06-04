@@ -7,6 +7,7 @@
 	export let outline: boolean = false;
 	export let fullWidth: boolean = false;
 	export let icon: string = "";
+	export let disabled: boolean = false;
 </script>
 
 <button
@@ -19,6 +20,7 @@
 	class:btn-ghost={ghost}
 	class:w-full={fullWidth}
 	on:click
+	{disabled}
 	{...$$restProps}
 >
 	{#if icon}

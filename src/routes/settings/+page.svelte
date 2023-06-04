@@ -6,12 +6,43 @@
 	import Toggle from "$lib/components/Toggle.svelte";
 	import { umamiEnabled } from "$lib/utils/umami";
 	import { version } from "$app/environment";
+	import type { PageData } from "./$types";
+
+	export let data: PageData;
+
+	$: ({ session, supabase } = data);
 </script>
 
 <Header title="Setari" back />
 
 <Container>
 	<Stack>
+		<div class="join join-vertical p-2 bg-neutral text-neutral-content">
+			{#if !session?.user}
+				<a href="/login">
+					<ListItem
+						button
+						icon="login"
+						primary="Autentificare"
+						secondary="Autentifică-te pentru a avea acces la funcționalități suplimentare."
+						class="join-item"
+					/>
+				</a>
+			{:else}
+				<ListItem
+					img={session?.user.user_metadata?.avatar_url}
+					primary={session?.user.user_metadata?.full_name}
+					secondary={session?.user.email}
+					class="join-item"
+				/>
+				<ListItem 
+					icon="logout"
+					primary="Deconectare"
+					button
+					on:click={() => supabase.auth.signOut()}
+				/>
+			{/if}
+		</div>
 		<ListItem
 			primary="Analitica"
 			secondary={$umamiEnabled ? "Dezactiveaza analitica anonima" : "Activeaza analitica anonima"}

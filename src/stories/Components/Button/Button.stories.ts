@@ -65,6 +65,16 @@ export const Outline: StoryObj = {
 	},
 };
 
+export const Disabled: StoryObj = {
+	render: ({ ...args }) => ({
+		Component: ButtonView,
+		props: args,
+	}),
+	args: {
+		disabled: true
+	},
+};
+
 export const WithIcon: StoryObj = {
 	render: ({ ...args }) => ({
 		Component: ButtonView,

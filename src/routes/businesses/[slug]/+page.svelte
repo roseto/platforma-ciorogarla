@@ -95,12 +95,12 @@
 		</div>
 
 		{#if business.photos}
-			<div class="flex flex-row gap-2 overflow-scroll">
+			<div class="carousel">
 				{#each business.photos as photo}
 					<img
 						src={urlFor(photo).maxHeight(512).maxWidth(1024).url() || ""}
 						alt={business.name || "Afacere"}
-						class="rounded max-h-96"
+						class="carousel-item max-h-96"
 					/>
 				{/each}
 			</div>

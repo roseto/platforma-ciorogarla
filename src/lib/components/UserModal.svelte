@@ -2,8 +2,8 @@
 	import type { User } from "@supabase/supabase-js";
 	import ListItem from "./ListItem.svelte";
 
-	export let user: User | null;
-	export let logout: () => void;
+	export let user: User | undefined;
+	export let signOut: () => void;
 </script>
 
 <dialog class="modal {$$props.class || ''}" id="user_modal">
@@ -24,7 +24,7 @@
 					img={user.user_metadata?.avatar_url}
 					primary={user.user_metadata?.full_name}
 					secondary={user.email}
-					on:click={logout}
+					on:click={() => signOut()}
 				/>
 			{/if}
 

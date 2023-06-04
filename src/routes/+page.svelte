@@ -14,10 +14,13 @@
 
 	export let data: PageData;
 
-	$: user = data.session?.user;
+	$: ({ session, supabase } = data);
 </script>
 
-<UserModal user={user} />
+<UserModal 
+	user={session?.user}
+	signOut={supabase.auth.signOut}
+/>
 
 <Header
 	title="Ciorogârla Unită"
@@ -25,8 +28,8 @@
 	actions={[
 		{
 			onClick: () => getModal("user_modal")?.showModal(),
-			icon: !user ? "settings" : undefined,
-			img: user?.user_metadata?.avatar_url || undefined,
+			icon: !session?.user ? "settings" : undefined,
+			img: session?.user?.user_metadata?.avatar_url || undefined,
 		},
 	]}
 />
