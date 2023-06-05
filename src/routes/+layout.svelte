@@ -23,4 +23,6 @@
 	});
 </script>
 
-<slot />
+<main class="mb-4">
+	<slot />
+</main>

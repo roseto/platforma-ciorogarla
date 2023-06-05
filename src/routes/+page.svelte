@@ -72,10 +72,12 @@
 					/>
 				</a>
 			{/each}
-			<Button color="secondary" outline fullWidth>
-				Toate știrile
-				<Icon name="arrow_forward" />
-			</Button>
+			<a href="/news">
+				<Button color="secondary" outline fullWidth>
+					Toate știrile
+					<Icon name="arrow_forward" />
+				</Button>
+			</a>
 		</Stack>
 
 		<br />

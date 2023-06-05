@@ -3,6 +3,7 @@
 	import ListItem from "./ListItem.svelte";
 	import Dialog from "./Dialog.svelte";
 	import Stack from "./Stack.svelte";
+	import Card from "./Card.svelte";
 
 	export let user: User | undefined;
 	export let signOut: () => void;
@@ -10,7 +11,7 @@
 
 <Dialog class="modal {$$props.class || ''}" id="user_modal">
 	<Stack>
-		<div class="p-2 bg-neutral text-neutral-content rounded join join-vertical">
+		<Card class="join join-vertical">
 			{#if !user}
 				<a href="/login">
 					<ListItem
@@ -35,7 +36,7 @@
 			<a href="/settings">
 				<ListItem button icon="settings" primary="Setări" class="join-item" />
 			</a>
-		</div>
+		</Card>
 
 		<a href="https://ciorogarlaunita.eu.org/terms-and-conditions" target="_blank">
 			<ListItem button icon="description" primary="Termeni și condiții" />

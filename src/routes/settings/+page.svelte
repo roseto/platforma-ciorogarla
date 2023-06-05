@@ -7,6 +7,7 @@
 	import { umamiEnabled } from "$lib/utils/umami";
 	import { version } from "$app/environment";
 	import type { PageData } from "./$types";
+	import Card from "$lib/components/Card.svelte";
 
 	export let data: PageData;
 
@@ -17,7 +18,7 @@
 
 <Container>
 	<Stack>
-		<div class="join join-vertical p-2 bg-neutral text-neutral-content">
+		<Card class="join join-vertical">
 			{#if !session?.user}
 				<a href="/login">
 					<ListItem
@@ -42,7 +43,7 @@
 					on:click={() => supabase.auth.signOut()}
 				/>
 			{/if}
-		</div>
+		</Card>
 		<ListItem
 			primary="Analitica"
 			secondary={$umamiEnabled ? "Dezactiveaza analitica anonima" : "Activeaza analitica anonima"}

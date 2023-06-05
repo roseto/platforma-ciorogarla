@@ -43,12 +43,12 @@
 	<meta
 		name="theme-color"
 		media="(prefers-color-scheme: light)"
-		content={scrollTrigger ? "#d1e8d5" : themeColor || "#fbfdf8"}
+		content={themeColor ? scrollTrigger ? "#fbfdf8" : themeColor : "#fbfdf8"}
 	/>
 	<meta 
 		name="theme-color" 
 		media="(prefers-color-scheme: dark)" 
-		content={scrollTrigger ? "#374b3d" : themeColor || "#191c1a"} 
+		content={themeColor ? scrollTrigger ? "#191c1a" : themeColor : "#191c1a"} 
 	/>
 	<link rel="icon" type="image/png" href={favicon} />
 </svelte:head>
@@ -56,8 +56,8 @@
 {#if !noNav}
 	<nav
 		class="navbar top-0 left-0 right-0 fixed z-50 transition gap-1"
-		class:bg-neutral={scrollTrigger}
-		class:shadow={scrollTrigger}
+		class:bg-base-100={scrollTrigger}
+		class:shadow-lg={scrollTrigger}
 	>
 		{#if back}
 			<div class="flex-none">

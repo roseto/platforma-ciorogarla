@@ -7,6 +7,7 @@
 </script>
 
 <div
+	{...$$restProps}
 	class="card shadow {$$props.class || ''}"
 	class:bg-primary={bgColor === "primary"}
 	class:text-primary-content={bgColor === "primary"}
@@ -16,14 +17,15 @@
 	class:text-accent-content={bgColor === "accent"}
 	class:bg-neutral={bgColor === "neutral"}
 	class:text-neutral-content={bgColor === "neutral"}
-	{...$$restProps}
 >
 	{#if img}
 		<figure>
 			<img class="object-cover h-32 w-full" src={img} alt={title} />
 		</figure>
 	{/if}
-	<div class="card-body">
+	<div
+		class="card-body p-4"
+	>
 		{#if title}
 			<h2 class="card-title">{title}</h2>
 		{/if}

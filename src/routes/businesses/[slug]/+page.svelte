@@ -14,6 +14,7 @@
 	import MapsEmbed from "$lib/components/MapsEmbed.svelte";
 	import Alert from "$lib/components/Alert.svelte";
 	import ContactList from "$lib/components/ContactList.svelte";
+	import { notypecheck } from "$lib/utils/typecheck";
 
 	export let data: PageData;
 
@@ -29,8 +30,8 @@
 	favicon={isStandalone && business.logo
 		? urlFor(business.logo).width(64).height(64).url()
 		: undefined}
-	themeColor={business?.cover?.asset?.metadata?.palette?.dominant.background}
-	color={business?.cover?.asset?.metadata?.palette?.dominant.foreground}
+	themeColor={notypecheck(business?.cover)?.asset?.metadata?.palette?.dominant.background}
+	color={notypecheck(business?.cover)?.asset?.metadata?.palette?.dominant.foreground}
 />
 
 <img
