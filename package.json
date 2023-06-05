@@ -15,7 +15,7 @@
 		"json5": "^2.2.3",
 		"loader-utils": "^3.2.1",
 		"sanity-codegen": "^0.9.8",
-		"solid-devtools": "^0.26.0",
+		"solid-devtools": "^0.27.1",
 		"typescript": "^5.0.4",
 		"vite": "^4.3.4",
 		"vite-plugin-pwa": "^0.14.7",
