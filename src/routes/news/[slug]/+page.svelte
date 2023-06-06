@@ -41,7 +41,7 @@
 		
 		<div class="divider"/>
 
-		<div class="prose">
+		<div class="prose max-w-none">
 			<SvelteMarkdown
 				source={data.article.content}
 			/>

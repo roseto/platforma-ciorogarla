@@ -11,6 +11,7 @@
 	import { openModal } from "$lib/utils/modal";
 	import Dialog from "$lib/components/Dialog.svelte";
 	import Icon from "$lib/components/Icon.svelte";
+	import { setToast } from "$lib/utils/toast";
 
 	export let data: PageData;
 
@@ -24,6 +25,13 @@
 			options: {
 				redirectTo: window.location.origin + "/login",
 			},
+		}).catch((error) => {
+			console.error(error);
+
+			setToast({
+				type: "error",
+				content: "A	apărut o eroare. Vă rugăm să încercați din nou.",
+			});
 		});
 	};
 
@@ -34,6 +42,14 @@
 				options: {
 					emailRedirectTo: window.location.origin + "/login",
 				},
+			})
+			.catch((error) => {
+				console.error(error);
+
+				setToast({
+					type: "error",
+					content: "A	apărut o eroare. Vă rugăm să încercați din nou.",
+				});
 			})
 			.then(() => {
 				openModal("email_confirm_modal");
@@ -52,14 +68,14 @@
 			Conectare cu Google
 		</Button>
 
-		<Button>
+		<Button on:click={() => handleOAuthLogin("twitter")}>
 			<div class="w-4 h-4 fill-primary-content">
 				<TwitterIcon />
 			</div>
 			Conectare cu Twitter
 		</Button>
 
-		<Button>
+		<Button on:click={() => handleOAuthLogin("github")}>
 			<div class="w-4 h-4 fill-primary-content">
 				<GitHubIcon />
 			</div>

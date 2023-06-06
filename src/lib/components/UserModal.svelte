@@ -4,6 +4,7 @@
 	import Dialog from "./Dialog.svelte";
 	import Stack from "./Stack.svelte";
 	import Card from "./Card.svelte";
+	import { version } from "$app/environment";
 
 	export let user: User | undefined;
 	export let signOut: () => void;
@@ -44,6 +45,6 @@
 		<a href="https://ciorogarlaunita.eu.org/privacy-policy" target="_blank">
 			<ListItem button icon="policy" primary="Politica de confidențialitate" />
 		</a>
-		<p class="text-center opacity-50 text-sm">Ciorogârla Unită</p>
+		<p class="text-center opacity-50 text-sm">Ciorogârla Unită {version}</p>
 	</Stack>
 </Dialog>

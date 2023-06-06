@@ -114,10 +114,12 @@
 					/>
 				</a>
 			{/each}
-			<Button color="secondary" outline>
-				Toate proiectele
-				<Icon name="arrow_forward" />
-			</Button>
+			<a href="/volunteering">
+				<Button color="secondary" outline fullWidth>
+					Toate proiectele
+					<Icon name="arrow_forward" />
+				</Button>
+			</a>
 		</Stack>
 	</Stack>
 </Container>

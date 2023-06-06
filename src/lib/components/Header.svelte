@@ -72,7 +72,7 @@
 		{/if}
 		<div class="flex-1">
 			<span
-				class="text-xl transition text-neutral-content"
+				class="text-xl transition text-neutral-content line-clamp-1"
 				style:color={!scrollTrigger ? color : undefined}
 				class:ml-4={!back}
 				class:opacity-0={!scrollTrigger}
