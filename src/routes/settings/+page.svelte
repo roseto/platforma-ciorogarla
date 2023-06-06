@@ -41,6 +41,7 @@
 					icon="logout"
 					primary="Deconectare"
 					button
+					class="join-item"
 					on:click={() => supabase.auth.signOut()}
 				/>
 			{/if}
