@@ -14,7 +14,7 @@
 	class:border={outline}
 	class:border-neutral={outline}
 >
-	<div class="flex items-center gap-4 text-left">
+	<div class="flex justify-center gap-4 text-left">
 		{#if icon}
 			<Icon name={icon} class="!text-accent" />
 		{/if}
