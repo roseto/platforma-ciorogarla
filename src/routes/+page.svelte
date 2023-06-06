@@ -47,15 +47,15 @@
 		</a>
 
 		<div class="grid grid-cols-2 gap-4">
-			<button class="btn btn-ghost flex-col text-primary">
+			<a href="https://431.ciorogarla.eu.org" target="_blank" class="btn btn-ghost flex-col text-primary">
 				<Icon name="schedule" />
 				Orar 431
-			</button>
+			</a>
 
-			<button class="btn btn-ghost flex-col text-primary">
+			<a href="https://facebook.com/groups/ciorogarla" target="_blank" class="btn btn-ghost flex-col text-primary">
 				<Icon name="group" />
 				Facebook
-			</button>
+			</a>
 		</div>
 
 		<br />

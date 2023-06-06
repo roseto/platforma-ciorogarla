@@ -44,6 +44,19 @@ export const WithImage: StoryObj = {
 	}),
 };
 
+export const WithImageClass: StoryObj = {
+	render: ({ ...args }) => ({
+		Component: ListItem,
+		props: {
+			...args,
+			img: "https://via.placeholder.com/64",
+			primary: "Primary text",
+			secondary: "Secondary text",
+			imgClass: "mask mask-hexagon"
+		},
+	}),
+};
+
 export const WithIcon: StoryObj = {
 	render: ({ ...args }) => ({
 		Component: ListItem,

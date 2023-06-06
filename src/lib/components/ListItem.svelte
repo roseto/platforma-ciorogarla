@@ -6,6 +6,7 @@
 	export let icon: string = "";
 	export let iconElement: any = null;
 	export let img: string = "";
+	export let imgClass: string = "";
 	export let button: boolean = false;
 </script>
 
@@ -23,7 +24,7 @@
 			<svelte:component this={iconElement} />
 		</div>
 	{:else if img}
-		<img src={img} alt={primary} width="40" height="40" class="w-10 h-10 rounded-lg" />
+		<img src={img} alt={primary} width="40" height="40" class="w-10 h-10 rounded-lg {imgClass}" />
 	{/if}
 	<div class="flex-1 flex flex-col">
 		<p>{primary}</p>

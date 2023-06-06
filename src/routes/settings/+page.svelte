@@ -35,6 +35,7 @@
 					primary={session?.user.user_metadata?.full_name}
 					secondary={session?.user.email}
 					class="join-item"
+					imgClass="mask mask-hexagon"
 				/>
 				<ListItem
 					icon="logout"
