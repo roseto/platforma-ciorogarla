@@ -59,6 +59,7 @@
 		"@supabase/auth-helpers-sveltekit": "^0.10.1",
 		"@supabase/supabase-js": "^2.24.0",
 		"daisyui": "^3.0.0",
+		"material-symbols": "^0.5.5",
 		"ua-parser-js": "^1.0.35"
 	}
 }

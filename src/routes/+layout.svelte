@@ -1,4 +1,5 @@
 <script lang="ts">
+	import "material-symbols/rounded.css";
 	import "../app.css";
 	import { invalidate } from "$app/navigation";
 	import { onMount } from "svelte";
