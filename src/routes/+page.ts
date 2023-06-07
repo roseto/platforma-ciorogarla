@@ -13,7 +13,7 @@ export const load = (async () => {
 		`*[_type == "business"] | order(_createdAt desc)[0...3]`,
 	);
 	const projectsPromise = sanity.fetch<VolunteeringProject[]>(
-		`*[_type == "volunteeringProject"] | order(_createdAt desc)[0...3]`,
+		`*[_type == "volunteeringProject" && dateTime(period.fromDate + 'T00:00:00Z') > dateTime(now())] | order(_createdAt desc)[0...3]`,
 	);
 
 	const [urgentArticle, articles, businesses, projects] = await Promise.all([

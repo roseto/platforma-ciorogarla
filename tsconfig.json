@@ -6,6 +6,9 @@
 				"name": "typescript-svelte-plugin"
 			}
 		],
+		"types": [
+			"vite-plugin-pwa/client"
+		],
 		"allowJs": true,
 		"checkJs": true,
 		"esModuleInterop": true,

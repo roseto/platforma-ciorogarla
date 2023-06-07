@@ -1,9 +1,9 @@
 <script lang="ts">
-	import Badge from "$lib/components/Badge.svelte";
+	import Alert from "$lib/components/Alert.svelte";
+import Badge from "$lib/components/Badge.svelte";
 	import Card from "$lib/components/Card.svelte";
 	import Container from "$lib/components/Container.svelte";
 	import Header from "$lib/components/Header.svelte";
-	import ListItem from "$lib/components/ListItem.svelte";
 	import Stack from "$lib/components/Stack.svelte";
 	import { urlFor } from "$lib/utils/sanity";
 	import { notypecheck } from "$lib/utils/typecheck";
@@ -30,6 +30,11 @@
 
 <Container>
 	<Stack>
+		{#if data.projects.length < 1}
+			<Alert icon="info">
+				Inca nu avem proiecte disponibile. Verifica mai tarziu.
+			</Alert>
+		{/if}
 		{#each data.projects as project}
 			<a href="/volunteering/{project.slug?.current}">
 				<Card

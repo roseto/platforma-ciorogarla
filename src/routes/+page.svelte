@@ -101,25 +101,27 @@
 			</a>
 		</Stack>
 
-		<br />
-		<Stack>
-			<h2 class="text-sm opacity-50">Proiecte noi</h2>
-			{#each data.projects as project}
-				<a href={`/volunteering/${project.slug?.current}`}>
-					<ListItem
-						button
-						primary={project.name}
-						secondary={project.description}
-						img={urlFor(project.image).width(64).height(64).url()}
-					/>
+		{#if data.projects.length > 0}
+			<br />
+			<Stack>
+				<h2 class="text-sm opacity-50">Proiecte noi</h2>
+				{#each data.projects as project}
+					<a href={`/volunteering/${project.slug?.current}`}>
+						<ListItem
+							button
+							primary={project.name}
+							secondary={project.description}
+							img={urlFor(project.image).width(64).height(64).url()}
+						/>
+					</a>
+				{/each}
+				<a href="/volunteering">
+					<Button color="secondary" outline fullWidth>
+						Toate proiectele
+						<Icon name="arrow_forward" />
+					</Button>
 				</a>
-			{/each}
-			<a href="/volunteering">
-				<Button color="secondary" outline fullWidth>
-					Toate proiectele
-					<Icon name="arrow_forward" />
-				</Button>
-			</a>
-		</Stack>
+			</Stack>
+		{/if}
 	</Stack>
 </Container>

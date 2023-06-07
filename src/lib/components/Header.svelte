@@ -50,7 +50,9 @@
 		media="(prefers-color-scheme: dark)" 
 		content={themeColor ? scrollTrigger ? "#191c1a" : themeColor : "#191c1a"} 
 	/>
-	<link rel="icon" type="image/png" href={favicon} />
+	{#if favicon}
+		<link rel="icon" type="image/png" href={favicon} />
+	{/if}
 </svelte:head>
 
 {#if !noNav}
