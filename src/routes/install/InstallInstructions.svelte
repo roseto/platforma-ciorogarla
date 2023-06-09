@@ -19,7 +19,7 @@
 		</ol>
 	{:else if browserName !== "Mobile Safari" && deviceVendor === "Apple"}
 		<ol>
-			<li>Deschide <a href="https://ciorogarlaunita.web.app">ciorogarlaunita.web.app</a> in Safari.</li>
+			<li>Deschide <a href="https://ciorogarla.eu.org">ciorogarla.eu.org</a> in Safari.</li>
 			<li>Apasa pe butonul <Icon name="ios_share" class="m-0"/> din partea de jos a ecranului.</li>
 			<li>Alege "Adauga pe ecranul principal".</li>
 			<li>Apasa pe butonul "Adauga".</li>

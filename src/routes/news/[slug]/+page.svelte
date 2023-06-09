@@ -35,7 +35,7 @@
 		<p class="text-sm opacity-50">{new Date(data.article._createdAt).toLocaleDateString("ro")}</p>
 		<div class="flex flex-row gap-1">
 			{#each data.article.tags || [] as tag}
-				<Badge color="secondary" outline>{tag}</Badge>
+				<Badge color="secondary" outline>#{tag}</Badge>
 			{/each}
 		</div>
 		

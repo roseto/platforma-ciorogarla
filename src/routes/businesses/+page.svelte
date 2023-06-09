@@ -38,7 +38,7 @@
 
 <Container>
 	<Stack>
-		<div class="flex flex-row overflow-scroll gap-2" bind:this={scrollContainer}>
+		<div class="flex flex-row overflow-x-scroll gap-2" bind:this={scrollContainer}>
 			{#each businessTypesSorted as [key, value] (key)}
 				<div animate:flip={{ duration: 200 }}>
 					<Badge

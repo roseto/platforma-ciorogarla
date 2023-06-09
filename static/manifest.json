@@ -1,9 +1,9 @@
 {
-	"name": "Ciorogârla Unită",
-	"short_name": "Ciorogârla Unită",
+	"name": "Ciorogârla",
+	"short_name": "Ciorogârla",
 	"description": "Hai să ne modernizăm!",
-	"author": "Ciorogârla Unită",
-	"id": "eu.org.ciorogarlaunita.app",
+	"author": "Profitery",
+	"id": "eu.org.ciorogarla",
 	"theme_color": "#053b21",
 	"background_color": "#053b21",
 	"icons": [
@@ -47,12 +47,12 @@
 	"related_applications": [
 		{
 			"platform": "play",
-			"url": "https://play.google.com/store/apps/details?id=eu.org.ciorogarlaunita.app",
-			"id": "eu.org.ciorogarlaunita.app"
+			"url": "https://play.google.com/store/apps/details?id=eu.org.ciorogarla",
+			"id": "eu.org.ciorogarla"
 		},
 		{
 			"platform": "webapp",
-			"url": "https://app.ciorogarlaunita.eu.org"
+			"url": "https://ciorogarla.eu.org"
 		}
 	],
 	"screenshots": [

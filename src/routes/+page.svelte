@@ -20,8 +20,7 @@
 <UserModal user={session?.user} signOut={supabase.auth.signOut} />
 
 <Header
-	title="Ciorogârla Unită"
-	noHeading
+	title="Ciorogârla"
 	actions={[
 		{
 			onClick: () => getModal("user_modal")?.showModal(),
@@ -35,13 +34,8 @@
 
 <Container>
 	<Stack>
-		<div class="flex items-center gap-2 mt-4 mb-2">
-			<img class="w-8 h-8 rounded-full" src="/android-chrome-192x192.png" alt="Ciorogârla Unită" />
-			<h1 class="text-xl">Ciorogârla Unită</h1>
-		</div>
-
 		<a href="/install">
-			<Alert icon="info" outline button>
+			<Alert icon="download" outline button>
 				Pare ca nu ai instalat aplicația. Apasa aici pentru a o instala.
 			</Alert>
 		</a>

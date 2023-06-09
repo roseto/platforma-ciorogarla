@@ -5,7 +5,6 @@
 	import Stack from "$lib/components/Stack.svelte";
 	import Toggle from "$lib/components/Toggle.svelte";
 	import { umamiEnabled } from "$lib/utils/umami";
-	import { version } from "$app/environment";
 	import type { PageData } from "./$types";
 	import Card from "$lib/components/Card.svelte";
 
@@ -57,13 +56,11 @@
 
 		<div class="divider" />
 
-		<a href="https://ciorogarlaunita.eu.org/terms-and-conditions" target="_blank">
+		<a href="/terms-and-conditions">
 			<ListItem button icon="description" primary="Termeni și condiții" />
 		</a>
-		<a href="https://ciorogarlaunita.eu.org/privacy-policy" target="_blank">
+		<a href="/privacy-policy">
 			<ListItem button icon="policy" primary="Politica de confidențialitate" />
 		</a>
-
-		<ListItem icon="info" primary="Versiune" secondary={version} />
 	</Stack>
 </Container>

@@ -1,0 +1,11 @@
+[{
+	"relation": ["delegate_permission/common.handle_all_urls"],
+	"target" : { 
+		"namespace": "android_app", 
+		"package_name": "org.eu.ciorogarla",
+		"sha256_cert_fingerprints": [
+			"E4:8C:2F:A3:B0:56:49:80:D8:4C:C6:10:29:22:47:70:8F:D8:49:CD:23:76:7E:46:93:01:D4:96:9C:22:20:56",
+			"83:A7:7A:E4:6F:38:D3:85:27:3F:C7:28:6A:38:F5:AA:50:10:E7:1D:09:42:8F:1F:CE:E2:1D:07:5C:D6:14:41"
+		]
+	}
+}]

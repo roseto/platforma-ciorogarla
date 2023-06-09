@@ -6,9 +6,7 @@
 	import { installPromptEvent } from "$lib/utils/a2hs";
 	import type { LayoutData } from "./$types";
 	import Toast from "$lib/components/Toast.svelte";
-	import { page } from "$app/stores";
-	// @ts-ignore
-	import { pwaInfo } from "virtual:pwa-info"; 
+	import Footer from "$lib/components/Footer.svelte";
 
 	export let data: LayoutData;
 
@@ -27,32 +25,19 @@
 			installPromptEvent.set(e as any);
 		});
 
-		if ('serviceWorker' in navigator && !$page.url.origin.includes("app.ciorogarlaunita.eu.org")) {
-			const { registerSW } = await import('virtual:pwa-register')
-			registerSW({
-				immediate: true,
-				onRegistered(r) {
-					console.log(`SW Registered: ${r}`)
-				},
-				onRegisterError(error) {
-					console.log('SW registration error', error)
-				}
-			})
-		}
-
 		return () => {
 			subscription?.unsubscribe();
 		};
 	});
-
-	/* $: webManifestLink = pwaInfo ? pwaInfo.webManifest.linkTag : '' */ 
 </script>
 
 <svelte:head>
 	<link rel="manifest" href="/manifest.json" />
 </svelte:head>
 
-<main class="mb-4">
+<main class="mb-2 flex-1">
 	<slot />
 	<Toast />
 </main>
+
+<Footer />
