@@ -33,8 +33,8 @@
 	{:else if !mobile && browserName === "Chrome"}
 		<ol>
 			<li>Apasa pe butonul <Icon name="more_vert" class="m-0"/> din partea de sus a ecranului.</li>
-			<li>Alege "Adauga pe ecranul principal".</li>
-			<li>Apasa pe butonul "Adauga".</li>
+			<li>Alege "Instaleaza Platforma Ciorogârla".</li>
+			<li>Apasa pe butonul "Instaleaza".</li>
 		</ol>
 	{:else}
 		<p>Ne pare rau, dar nu avem instructiuni pentru dispozitivul tau.</p>

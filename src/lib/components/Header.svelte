@@ -104,7 +104,7 @@
 
 {#if !noHeading}
 	<Container>
-		<h1 bind:this={headerRef} class="text-7xl mb-2 pt-16">
+		<h1 bind:this={headerRef} class="text-6xl sm:text-7xl mb-2 pt-16">
 			{title}
 		</h1>
 	</Container>

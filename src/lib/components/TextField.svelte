@@ -15,11 +15,11 @@
 
 <input
 	use:typeAction
-	class="input input-bordered transition-all"
+	class="input input-bordered transition-all focus:input-primary"
 	class:input-primary={focus}
 	class:w-full={fullWidth}
-	on:focus={() => (focus = true)}
-	on:blur={() => (focus = false)}
+	on:focus
+	on:blur
 	bind:value
 	{disabled}
 	{placeholder}

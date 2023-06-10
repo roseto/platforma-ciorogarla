@@ -59,6 +59,7 @@
 		"@supabase/supabase-js": "^2.24.0",
 		"daisyui": "^3.0.0",
 		"material-symbols": "^0.5.5",
+		"svelte-debouncer": "^0.0.5",
 		"ua-parser-js": "^1.0.35"
 	}
 }

@@ -11,6 +11,7 @@
 	import BackgroundGlow from "$lib/components/BackgroundGlow.svelte";
 	import UserModal from "$lib/components/UserModal.svelte";
 	import { getModal } from "$lib/utils/modal";
+	import TextField from "$lib/components/TextField.svelte";
 
 	export let data: PageData;
 
@@ -34,23 +35,40 @@
 
 <Container>
 	<Stack>
+		<TextField 
+			placeholder="Caută orice..."
+		/>
+		<Button
+			icon="search"
+		>
+			Cauta
+		</Button>
+
+		<div class="grid grid-cols-2 gap-4">
+			<a
+				href="https://431.ciorogarla.eu.org"
+				target="_blank"
+				class="btn btn-ghost flex-col text-primary"
+			>
+				<Icon name="schedule" />
+				Orar 431
+			</a>
+
+			<a
+				href="https://facebook.com/groups/ciorogarla"
+				target="_blank"
+				class="btn btn-ghost flex-col text-primary"
+			>
+				<Icon name="group" />
+				Facebook
+			</a>
+		</div>
+
 		<a href="/install">
 			<Alert icon="download" outline button>
 				Pare ca nu ai instalat aplicația. Apasa aici pentru a o instala.
 			</Alert>
 		</a>
-
-		<div class="grid grid-cols-2 gap-4">
-			<a href="https://431.ciorogarla.eu.org" target="_blank" class="btn btn-ghost flex-col text-primary">
-				<Icon name="schedule" />
-				Orar 431
-			</a>
-
-			<a href="https://facebook.com/groups/ciorogarla" target="_blank" class="btn btn-ghost flex-col text-primary">
-				<Icon name="group" />
-				Facebook
-			</a>
-		</div>
 
 		<br />
 
