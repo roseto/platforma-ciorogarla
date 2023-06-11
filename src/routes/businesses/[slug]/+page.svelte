@@ -24,7 +24,7 @@
 </script>
 
 <svelte:head>
-	<link rel="manifest" href=""/>
+	<link rel="manifest" href="" />
 </svelte:head>
 
 <Header

@@ -22,7 +22,10 @@
 />
 
 <img
-	src={urlFor(data.article.cover).width(windowWidth * 2).height(256).url()}
+	src={urlFor(data.article.cover)
+		.width(windowWidth * 2)
+		.height(256)
+		.url()}
 	alt={data.article.title}
 	width={windowWidth}
 	height={128}
@@ -38,13 +41,11 @@
 				<Badge color="secondary" outline>#{tag}</Badge>
 			{/each}
 		</div>
-		
-		<div class="divider"/>
+
+		<div class="divider" />
 
 		<div class="prose max-w-none">
-			<SvelteMarkdown
-				source={data.article.content}
-			/>
+			<SvelteMarkdown source={data.article.content} />
 		</div>
 	</Stack>
 </Container>

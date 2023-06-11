@@ -20,19 +20,21 @@
 	let email = "";
 
 	const handleOAuthLogin = (provider: "google" | "github" | "twitter") => {
-		supabase.auth.signInWithOAuth({
-			provider,
-			options: {
-				redirectTo: window.location.origin + "/login",
-			},
-		}).catch((error) => {
-			console.error(error);
+		supabase.auth
+			.signInWithOAuth({
+				provider,
+				options: {
+					redirectTo: window.location.origin + "/login",
+				},
+			})
+			.catch((error) => {
+				console.error(error);
 
-			setToast({
-				type: "error",
-				content: "A	apărut o eroare. Vă rugăm să încercați din nou.",
+				setToast({
+					type: "error",
+					content: "A	apărut o eroare. Vă rugăm să încercați din nou.",
+				});
 			});
-		});
 	};
 
 	const handleEmailLogin = () => {

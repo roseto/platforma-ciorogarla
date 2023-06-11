@@ -23,6 +23,6 @@ export const load = (async ({ params }) => {
 	}
 
 	return {
-		article
+		article,
 	};
 }) satisfies PageLoad;

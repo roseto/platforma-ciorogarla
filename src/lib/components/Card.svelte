@@ -23,9 +23,7 @@
 			<img class="object-cover h-32 w-full" src={img} alt={title} />
 		</figure>
 	{/if}
-	<div
-		class="card-body p-4"
-	>
+	<div class="card-body p-4">
 		{#if title}
 			<h2 class="card-title">{title}</h2>
 		{/if}

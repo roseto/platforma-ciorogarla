@@ -18,7 +18,7 @@ const config = {
 		}),
 		env: {
 			publicPrefix: "PUBLIC_",
-		}
+		},
 	},
 };
 

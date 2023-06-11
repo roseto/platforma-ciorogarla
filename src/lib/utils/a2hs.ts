@@ -7,4 +7,4 @@ interface BeforeInstallPromptEvent extends Event {
 	}>;
 }
 
-export const installPromptEvent = writable<BeforeInstallPromptEvent | null>(null)
+export const installPromptEvent = writable<BeforeInstallPromptEvent | null>(null);

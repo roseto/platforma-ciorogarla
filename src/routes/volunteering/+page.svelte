@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Alert from "$lib/components/Alert.svelte";
-import Badge from "$lib/components/Badge.svelte";
+	import Badge from "$lib/components/Badge.svelte";
 	import Card from "$lib/components/Card.svelte";
 	import Container from "$lib/components/Container.svelte";
 	import Header from "$lib/components/Header.svelte";
@@ -19,28 +19,19 @@ import Badge from "$lib/components/Badge.svelte";
 		const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
 		return diffDays;
-	}
+	};
 </script>
 
-
-<Header
-	back
-	title="Proiecte"
-/>
+<Header back title="Proiecte" />
 
 <Container>
 	<Stack>
 		{#if data.projects.length < 1}
-			<Alert icon="info">
-				Inca nu avem proiecte disponibile. Verifica mai tarziu.
-			</Alert>
+			<Alert icon="info">Inca nu avem proiecte disponibile. Verifica mai tarziu.</Alert>
 		{/if}
 		{#each data.projects as project}
 			<a href="/volunteering/{project.slug?.current}">
-				<Card
-					title={project.name}
-					img={urlFor(project.image).url()}
-				>
+				<Card title={project.name} img={urlFor(project.image).url()}>
 					<p class="opacity-50">{project.topic}</p>
 					<div class="flex flex-row gap-1">
 						<Badge color="accent" outline>

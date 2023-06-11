@@ -10,11 +10,7 @@
 	export let data: PageData;
 </script>
 
-
-<Header
-	back
-	title="Stiri"
-/>
+<Header back title="Stiri" />
 
 <Container>
 	<Stack>
@@ -31,12 +27,7 @@
 			{/each}
 		</Card>
 		<a href="/news/archive">
-			<ListItem
-				button
-				icon="archive"
-				primary="Arhiva"
-				secondary="Toate articolele"
-			/>
+			<ListItem button icon="archive" primary="Arhiva" secondary="Toate articolele" />
 		</a>
 	</Stack>
 </Container>

@@ -28,7 +28,10 @@
 />
 
 <img
-	src={urlFor(data.project.image).width(windowWidth * 2).height(256).url()}
+	src={urlFor(data.project.image)
+		.width(windowWidth * 2)
+		.height(256)
+		.url()}
 	alt={data.project.name}
 	width={windowWidth}
 	height={128}
@@ -42,9 +45,7 @@
 
 		<p class="">{data.project.description}</p>
 
-		<Button icon="email">
-			Contact
-		</Button>
+		<Button icon="email">Contact</Button>
 
 		<div class="flex flex-row gap-1">
 			<Badge color="secondary">
@@ -55,7 +56,11 @@
 			</Badge>
 		</div>
 
-		<a href={notypecheck(data.project.organisation).contact.website} target="_blank" rel="noopener noreferrer">
+		<a
+			href={notypecheck(data.project.organisation).contact.website}
+			target="_blank"
+			rel="noopener noreferrer"
+		>
 			<Card>
 				Facut posibil cu {notypecheck(data.project.organisation).name}
 			</Card>
@@ -113,8 +118,8 @@
 		/>
 
 		<Alert icon="info">
-			Nu putem urmări disponibilitatea locurilor libere pentru acest proiect, 
-			așa că te rugăm să contactezi organizatorul pentru a afla mai multe detalii.
+			Nu putem urmări disponibilitatea locurilor libere pentru acest proiect, așa că te rugăm să
+			contactezi organizatorul pentru a afla mai multe detalii.
 		</Alert>
 	</Stack>
 </Container>

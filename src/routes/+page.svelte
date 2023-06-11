@@ -38,15 +38,8 @@
 <Container>
 	<Stack>
 		<form action="/search">
-			<TextField
-				name="q"
-				placeholder="Caută orice..."
-				fullWidth
-				icon="search"
-				autocomplete="off"
-			/>
+			<TextField name="q" placeholder="Caută orice..." fullWidth icon="search" autocomplete="off" />
 		</form>
-		
 
 		<div class="grid grid-cols-2 gap-4">
 			<a

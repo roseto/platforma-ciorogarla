@@ -19,7 +19,7 @@
 		if (isInstalled()) {
 			goto("/");
 		}
-	})
+	});
 
 	const parser = new UAParser();
 	const deviceVendor = parser.getDevice().vendor;
@@ -29,41 +29,28 @@
 	const mobile = parser.getDevice().type === "mobile";
 </script>
 
-
-<Header
-	title="Instalare"
-	back
-/>
+<Header title="Instalare" back />
 
 <Container>
 	<Stack>
 		{#if browser}
 			<Alert icon="info" outline>
 				Am detectat ca folosesti un
-				{deviceVendor ? " " + deviceVendor : ""} {deviceModel ? deviceModel : "dispozitiv" + (mobile ? " mobil" : "")}
+				{deviceVendor ? " " + deviceVendor : ""}
+				{deviceModel ? deviceModel : "dispozitiv" + (mobile ? " mobil" : "")}
 				{browserName ? " cu " + browserName : ""}
 			</Alert>
 		{/if}
 
 		{#if $installPromptEvent}
-			<Button
-				icon="download"
-				on:click={() => $installPromptEvent?.prompt()}
-				fullWidth
-				>
+			<Button icon="download" on:click={() => $installPromptEvent?.prompt()} fullWidth>
 				Instalare
 			</Button>
 
 			<div class="divider">sau</div>
 		{/if}
 
-		<InstallInstructions
-			deviceVendor={deviceVendor}
-			deviceModel={deviceModel}
-			deviceOs={deviceOs}
-			browserName={browserName}
-			mobile={mobile}
-		/>
+		<InstallInstructions {deviceVendor} {deviceModel} {deviceOs} {browserName} {mobile} />
 
 		<a href="https://play.google.com/store/apps/details?id=org.eu.ciorogarlaunita.app">
 			<Button fullWidth outline>

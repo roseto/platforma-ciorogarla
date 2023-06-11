@@ -15,23 +15,21 @@
 		error: "error",
 		warning: "warning",
 		info: "info",
-	}
+	};
 </script>
 
-<div 
+<div
 	class="toast toast-bottom toast-center opacity-0 transition-opacity"
 	class:opacity-100={$toast.open}
 >
-	<div 
+	<div
 		class="alert"
 		class:alert-success={$toast.type === "success"}
 		class:alert-error={$toast.type === "error"}
 		class:alert-warning={$toast.type === "warning"}
 		class:alert-info={$toast.type === "info"}
 	>
-		<Icon
-			name={icon[$toast.type]}
-		/>
+		<Icon name={icon[$toast.type]} />
 		{$toast.content}
 	</div>
 </div>

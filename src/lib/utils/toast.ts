@@ -1,5 +1,4 @@
-import { writable }	from 'svelte/store';
-
+import { writable } from "svelte/store";
 
 interface Toast {
 	content: string;

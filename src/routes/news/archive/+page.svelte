@@ -9,11 +9,7 @@
 	export let data: PageData;
 </script>
 
-
-<Header
-	back
-	title="Arhiva"
-/>
+<Header back title="Arhiva" />
 
 <Container>
 	<Stack>
@@ -23,7 +19,9 @@
 					button
 					primary={article.title}
 					img={urlFor(article.cover).width(64).height(64).url()}
-					secondary="#{article.tags?.join(' #')} &middot; {new Date(article._createdAt).toLocaleDateString('ro')}"
+					secondary="#{article.tags?.join(' #')} &middot; {new Date(
+						article._createdAt,
+					).toLocaleDateString('ro')}"
 				/>
 			</a>
 		{/each}

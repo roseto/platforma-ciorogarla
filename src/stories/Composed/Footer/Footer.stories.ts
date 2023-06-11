@@ -3,7 +3,7 @@ import Footer from "$lib/components/Footer.svelte";
 
 const meta: Meta = {
 	component: Footer,
-	title: "Composed/Footer"
+	title: "Composed/Footer",
 };
 
 export default meta;

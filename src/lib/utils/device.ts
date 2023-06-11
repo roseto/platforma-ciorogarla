@@ -7,11 +7,11 @@ export const isIos = () => {
 
 	const parser = new UAParser();
 
-	return parser.getDevice().vendor === "Apple"
+	return parser.getDevice().vendor === "Apple";
 };
 
 export const isInstalled = () => {
 	if (!browser) return false;
 
-	return globalThis.matchMedia("(display-mode: standalone)").matches
+	return globalThis.matchMedia("(display-mode: standalone)").matches;
 };

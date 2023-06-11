@@ -18,10 +18,7 @@
 
 <div class="relative w-full">
 	{#if icon}
-		<Icon 
-			name={icon}
-			class="absolute top-1/2 left-3 transform -translate-y-1/2 opacity-50"
-		/>
+		<Icon name={icon} class="absolute top-1/2 left-3 transform -translate-y-1/2 opacity-50" />
 	{/if}
 	<input
 		use:typeAction

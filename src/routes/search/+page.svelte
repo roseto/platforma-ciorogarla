@@ -8,29 +8,20 @@
 
 	const query = queryParam("q", ssp.string(""), {
 		debounceHistory: 1000,
-		pushHistory: false
-	})
+		pushHistory: false,
+	});
 
-	const searchDebouncer = new Debouncer(() => $query = searchString, 500);
+	const searchDebouncer = new Debouncer(() => ($query = searchString), 500);
 
 	let searchString: string = $query || "";
 
 	$: searchDebouncer.debounce(searchString);
 </script>
 
-<Header
-	title={`"${$query}"`}
-	noHeading
-	back
-/>
+<Header title={`"${$query}"`} noHeading back />
 
 <Container class="mt-16">
 	<Stack>
-		<TextField
-			bind:value={searchString}
-			fullWidth
-			icon="search"
-			autocomplete="off"
-		/>
+		<TextField bind:value={searchString} fullWidth icon="search" autocomplete="off" />
 	</Stack>
 </Container>

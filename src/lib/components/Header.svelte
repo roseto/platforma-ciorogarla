@@ -43,12 +43,12 @@
 	<meta
 		name="theme-color"
 		media="(prefers-color-scheme: light)"
-		content={themeColor ? scrollTrigger ? "#fbfdf8" : themeColor : "#fbfdf8"}
+		content={themeColor ? (scrollTrigger ? "#fbfdf8" : themeColor) : "#fbfdf8"}
 	/>
-	<meta 
-		name="theme-color" 
-		media="(prefers-color-scheme: dark)" 
-		content={themeColor ? scrollTrigger ? "#191c1a" : themeColor : "#191c1a"} 
+	<meta
+		name="theme-color"
+		media="(prefers-color-scheme: dark)"
+		content={themeColor ? (scrollTrigger ? "#191c1a" : themeColor) : "#191c1a"}
 	/>
 	{#if favicon}
 		<link rel="icon" type="image/png" href={favicon} />

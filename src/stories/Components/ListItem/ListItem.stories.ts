@@ -52,7 +52,7 @@ export const WithImageClass: StoryObj = {
 			img: "https://via.placeholder.com/64",
 			primary: "Primary text",
 			secondary: "Secondary text",
-			imgClass: "mask mask-hexagon"
+			imgClass: "mask mask-hexagon",
 		},
 	}),
 };
