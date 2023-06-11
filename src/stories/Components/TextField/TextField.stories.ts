@@ -28,3 +28,15 @@ export const FullWidth: StoryObj = {
 		},
 	}),
 };
+
+export const WithIcon: StoryObj = {
+	render: ({ ...args }) => ({
+		Component: TextField,
+		props: {
+			...args,
+			placeholder: "Placeholder",
+			fullWidth: true,
+			icon: "search",
+		},
+	}),
+};

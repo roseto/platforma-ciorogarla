@@ -12,6 +12,8 @@
 	import UserModal from "$lib/components/UserModal.svelte";
 	import { getModal } from "$lib/utils/modal";
 	import TextField from "$lib/components/TextField.svelte";
+	import { goto } from "$app/navigation";
+	import { notypecheck } from "$lib/utils/typecheck";
 
 	export let data: PageData;
 
@@ -35,14 +37,16 @@
 
 <Container>
 	<Stack>
-		<TextField 
-			placeholder="Caută orice..."
-		/>
-		<Button
-			icon="search"
-		>
-			Cauta
-		</Button>
+		<form action="/search">
+			<TextField
+				name="q"
+				placeholder="Caută orice..."
+				fullWidth
+				icon="search"
+				autocomplete="off"
+			/>
+		</form>
+		
 
 		<div class="grid grid-cols-2 gap-4">
 			<a

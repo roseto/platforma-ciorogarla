@@ -13,7 +13,7 @@
 
 	const searchDebouncer = new Debouncer(() => $query = searchString, 500);
 
-	let searchString: string = "";
+	let searchString: string = $query || "";
 
 	$: searchDebouncer.debounce(searchString);
 </script>
@@ -21,14 +21,16 @@
 <Header
 	title={`"${$query}"`}
 	noHeading
+	back
 />
 
-<Container class="mt-4">
+<Container class="mt-16">
 	<Stack>
 		<TextField
 			bind:value={searchString}
 			fullWidth
-			autofocus
+			icon="search"
+			autocomplete="off"
 		/>
 	</Stack>
 </Container>

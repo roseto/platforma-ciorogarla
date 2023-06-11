@@ -7,6 +7,7 @@
 	import type { LayoutData } from "./$types";
 	import Toast from "$lib/components/Toast.svelte";
 	import Footer from "$lib/components/Footer.svelte";
+	import { ProgressBar } from "@prgm/sveltekit-progress-bar";
 
 	export let data: LayoutData;
 
@@ -34,6 +35,8 @@
 <svelte:head>
 	<link rel="manifest" href="/manifest.json" />
 </svelte:head>
+
+<ProgressBar class="text-primary" />
 
 <main class="mb-2 flex-1">
 	<slot />
