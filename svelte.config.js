@@ -13,9 +13,7 @@ const config = {
 		serviceWorker: {
 			register: false,
 		},
-		adapter: adapter({
-			edge: true,
-		}),
+		adapter: adapter(),
 		env: {
 			publicPrefix: "PUBLIC_",
 		},
