@@ -11,13 +11,18 @@ dotenv.config();
 const sanityClient = createSanityClient({
 	projectId: process.env.PUBLIC_SANITY_PROJECT_ID as string,
 	dataset: process.env.PUBLIC_SANITY_DATASET as string,
-	apiVersion: process.env.PUBLIC_SANITY_API_VERSION as string,
+	apiVersion: "2021-03-25",
 	useCdn: false,
 });
 
 const supabaseClient = createSupabaseClient(
-	process.env.VITE_SUPABASE_URL as string,
+	process.env.PUBLIC_SUPABASE_URL as string,
 	process.env.SUPABASE_SERVICE_KEY as string,
+	{
+		auth: {
+			persistSession: false
+		}
+	}
 );
 
 const openaiConfiguration = new Configuration({
@@ -50,7 +55,7 @@ const promises = businesses.map(async (business) => {
 				content,
 				checksum,
 				created_at,
-				embeddings: embeddings[0].embedding,
+				embedding: embeddings[0].embedding,
 			},
 		]);
 
@@ -73,7 +78,7 @@ const promises = businesses.map(async (business) => {
 					content,
 					checksum,
 					created_at,
-					embeddings: embeddings.data[0].embedding,
+					embedding: embeddings.data[0].embedding,
 				})
 				.eq("id", id);
 

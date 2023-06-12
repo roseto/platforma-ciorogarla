@@ -23,7 +23,7 @@
 	<input
 		use:typeAction
 		class="input input-bordered transition-all focus:input-primary"
-		class:pl-10={icon}
+		class:pl-12={icon}
 		class:input-primary={focus}
 		class:w-full={fullWidth}
 		on:focus

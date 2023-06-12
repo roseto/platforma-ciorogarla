@@ -1,5 +1,5 @@
 {
-	"name": "platformaciorogarla",
+	"name": "platforma-ciorogarla",
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
@@ -10,7 +10,8 @@
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
 		"format": "prettier --plugin-search-dir . --write .",
 		"storybook": "storybook dev -p 6006",
-		"build-storybook": "storybook build"
+		"build-storybook": "storybook build",
+		"generate-embeddings": "tsx ./scripts/generateEmbeddings.ts"
 	},
 	"devDependencies": {
 		"@storybook/addon-essentials": "^7.0.20",
@@ -46,6 +47,7 @@
 		"sveltekit-search-params": "^1.0.12",
 		"tailwindcss": "^3.3.2",
 		"tslib": "^2.4.1",
+		"tsx": "^3.12.7",
 		"typescript": "^5.0.0",
 		"typescript-svelte-plugin": "^0.3.26",
 		"vite": "^4.3.0"
@@ -61,6 +63,8 @@
 		"daisyui": "^3.0.0",
 		"material-symbols": "^0.5.5",
 		"openai": "^3.2.1",
+		"sse.js": "^0.6.1",
+		"streamed-chatgpt-api": "^1.0.7",
 		"svelte-debouncer": "^0.0.5",
 		"ua-parser-js": "^1.0.35"
 	}

@@ -21,7 +21,7 @@ export const businessContentGenerator = (business: Business) => {
 	const string = `
 		${business.name} este o afacere ${business.type} localizata in ${business.location?.address}.
 
-		Link la pagina afacerii: "/businesses/${business.slug?.current}",
+		Link la pagina afacerii: "https://ciorogarla.eu.org/businesses/${business.slug?.current}",
 	
 		Descriere: ${business.description},
 		Link la preturi: ${business.pricesLink || "none"},
