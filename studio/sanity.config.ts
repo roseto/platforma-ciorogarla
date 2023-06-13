@@ -5,7 +5,7 @@ import { deskTool } from "sanity/desk"
 import { visionTool } from "@sanity/vision"
 import { unsplashImageAsset } from "sanity-plugin-asset-source-unsplash";
 import { markdownSchema } from "sanity-plugin-markdown";
-import { schemaTypes } from "./studio/schemas"
+import { schemaTypes } from "./schemas"
 import { dashboardTool, projectInfoWidget, projectUsersWidget } from "@sanity/dashboard";
 import { documentListWidget } from "sanity-plugin-dashboard-widget-document-list";
 import { catsWidget } from "sanity-plugin-dashboard-widget-cats";
