@@ -31,7 +31,7 @@
 <dialog class="modal" id="street_view_modal">
 	<div class="bg-neutral w-screen h-screen">
 		<form method="dialog" class="h-16 flex justify-end items-center">
-			<button class="btn btn-ghost btn rounded-full text-neutral-content">
+			<button class="btn btn-ghost rounded-full text-neutral-content">
 				<Icon name="close" size={32} />
 			</button>
 		</form>
