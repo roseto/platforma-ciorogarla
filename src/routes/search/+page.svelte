@@ -9,6 +9,7 @@
 	import { urlFor } from "$lib/utils/sanity";
 	import Icon from "$lib/components/Icon.svelte";
 	import type { PageData } from "./$types";
+	import Button from "$lib/components/Button.svelte";
 
 	export let data: PageData;
 </script>
@@ -26,6 +27,7 @@
 				value={data?.query}
 				placeholder="Caută orice..."
 			/>
+			<Button class="mt-2" type="submit" icon="search" fullWidth>Caută</Button>
 		</form>
 
 		{#if data?.documents}

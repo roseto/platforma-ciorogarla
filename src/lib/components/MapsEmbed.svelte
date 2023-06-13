@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { getMapsEmbedURL } from "$lib/utils/maps";
 	import { getModal } from "$lib/utils/modal";
+	import Card from "./Card.svelte";
 	import Icon from "./Icon.svelte";
 	import ListItem from "./ListItem.svelte";
 
@@ -9,7 +10,7 @@
 	export let streetViewLocation: string = "";
 </script>
 
-<div class="bg-neutral text-neutral-content p-2 rounded">
+<Card>
 	<ListItem icon="location_on" secondary={address} />
 	<div class="divider my-0" />
 	<ListItem
@@ -25,7 +26,7 @@
 		title="Google Maps Embed"
 		class="w-full h-64 rounded-xl bg-base-100 dark:invert-[.90] dark:hue-rotate-180"
 	/>
-</div>
+</Card>
 
 <dialog class="modal" id="street_view_modal">
 	<div class="bg-neutral w-screen h-screen">

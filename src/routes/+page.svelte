@@ -45,6 +45,7 @@
 				icon="auto_awesome"
 				autocomplete="off"
 			/>
+			<Button class="mt-2" type="submit" icon="search" fullWidth>Caută</Button>
 		</form>
 
 		<div class="grid grid-cols-2 gap-4">

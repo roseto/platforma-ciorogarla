@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from "svelte";
 	import Container from "./Container.svelte";
+	import { isIos } from "$lib/utils/device";
 	import Icon from "./Icon.svelte";
 
 	export let title: string;
@@ -57,8 +58,11 @@
 
 {#if !noNav}
 	<nav
-		class="navbar top-0 left-0 right-0 fixed z-50 transition gap-1"
-		class:bg-base-100={scrollTrigger}
+		class="navbar top-0 left-0 right-0 fixed z-50 transition gap-1 {scrollTrigger &&
+			isIos() &&
+			'bg-base-100/95'}"
+		class:bg-base-100={scrollTrigger && !isIos()}
+		class:backdrop-blur-xl={scrollTrigger && isIos()}
 		class:shadow-lg={scrollTrigger}
 	>
 		{#if back}

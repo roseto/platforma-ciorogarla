@@ -11,6 +11,7 @@
 </script>
 
 <button
+	{...$$restProps}
 	class="btn rounded-full {$$props.class || ''}"
 	class:btn-primary={color === "primary"}
 	class:btn-secondary={color === "secondary"}
@@ -21,7 +22,6 @@
 	class:w-full={fullWidth}
 	on:click
 	{disabled}
-	{...$$restProps}
 >
 	{#if icon}
 		<Icon name={icon} />
