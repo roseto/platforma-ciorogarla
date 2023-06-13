@@ -1,10 +1,10 @@
 import * as dotenv from "dotenv";
 import crypto from "crypto";
 import { createClient as createSupabaseClient } from "@supabase/supabase-js";
-import { createClient as createSanityClient } from "@sanity/client";
+import { SanityDocument, createClient as createSanityClient } from "@sanity/client";
 import { Configuration, OpenAIApi } from "openai";
-import { businessContentGenerator } from "./contentGenerator";
-import { Business } from "../src/lib/types/SanitySchema";
+import { businessContentGenerator, projectContentGenerator } from "./contentGenerator";
+import { Business, VolunteeringProject } from "../src/lib/types/SanitySchema";
 
 dotenv.config();
 
@@ -31,66 +31,72 @@ const openaiConfiguration = new Configuration({
 
 const openaiClient = new OpenAIApi(openaiConfiguration);
 
-const businesses = await sanityClient.fetch<Business[]>(`*[_type == "business"]`);
+function createPromises(documents: SanityDocument[], contentGenerator: (doc) => string) {
+	return documents.map(async (document) => {
+		const id = document._id;
+		const content = contentGenerator(document);
+		const checksum = crypto.createHash("md5").update(content).digest("hex");
+		const created_at = document._createdAt;
 
-const promises = businesses.map(async (business) => {
-	const id = business._id;
-	const content = businessContentGenerator(business);
-	const checksum = crypto.createHash("md5").update(content).digest("hex");
-	const created_at = business._createdAt;
+		const { data } = await supabaseClient.from("documents").select("*").eq("id", id).single();
 
-	const { data } = await supabaseClient.from("documents").select("*").eq("id", id).single();
-
-	if (!data) {
-		const embeddings = await openaiClient
-			.createEmbedding({
-				input: content,
-				model: "text-embedding-ada-002",
-			})
-			.then((res) => res.data.data);
-
-		const { error } = await supabaseClient.from("documents").insert([
-			{
-				id,
-				content,
-				checksum,
-				created_at,
-				embedding: embeddings[0].embedding,
-			},
-		]);
-
-		if (error) {
-			console.error(error);
-			return;
-		}
-	} else {
-		if (data.checksum !== checksum) {
+		if (!data) {
 			const embeddings = await openaiClient
 				.createEmbedding({
 					input: content,
 					model: "text-embedding-ada-002",
 				})
-				.then((res) => res.data);
+				.then((res) => res.data.data);
 
-			const { error } = await supabaseClient
-				.from("documents")
-				.update({
-					content,
+			const { error } = await supabaseClient.from("documents").insert([
+				{
+					id,
 					checksum,
 					created_at,
-					embedding: embeddings.data[0].embedding,
-				})
-				.eq("id", id);
+					embedding: embeddings[0].embedding,
+				},
+			]);
 
 			if (error) {
 				console.error(error);
 				return;
 			}
 		} else {
-			console.log("No changes");
-		}
-	}
-});
+			if (data.checksum !== checksum) {
+				const embeddings = await openaiClient
+					.createEmbedding({
+						input: content,
+						model: "text-embedding-ada-002",
+					})
+					.then((res) => res.data);
 
-await Promise.all(promises);
+				const { error } = await supabaseClient
+					.from("documents")
+					.update({
+						checksum,
+						created_at,
+						embedding: embeddings.data[0].embedding,
+					})
+					.eq("id", id);
+
+				if (error) {
+					console.error(error);
+					return;
+				}
+			} else {
+				console.log("No changes");
+			}
+		}
+	});
+}
+
+const businesses = await sanityClient.fetch<Business[]>(`*[_type == "business"]`);
+const projects = await sanityClient.fetch<VolunteeringProject[]>(`*[_type == "volunteeringProject"]`);
+
+console.log(businesses.length, projects.length)
+
+const businessPromises = createPromises(businesses, businessContentGenerator);
+const projectPromises = createPromises(projects, projectContentGenerator);
+
+await Promise.all([...projectPromises, ...businessPromises]);
 console.log("Done");

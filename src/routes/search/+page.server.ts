@@ -1,12 +1,12 @@
 import { error } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 import { openai } from "$lib/utils/openai";
-import { supabase } from "$lib/utils/supabase";
-import type { Business } from "$lib/types/SanitySchema";
+import type { Business, VolunteeringProject } from "$lib/types/SanitySchema";
 import { sanity } from "$lib/utils/sanity";
 
 
-export const load = (async ({ url }) => {
+export const load = (async ({ url, locals }) => {
+	const supabase = locals.supabase;
 	const query = url.searchParams.get("query") as string;
 
 	if (!query) {
@@ -25,10 +25,11 @@ export const load = (async ({ url }) => {
 	});
 
 	if (supabaseError) {
+		console.log(supabaseError)
 		throw error(500, "Internal Server Error");
 	}
 
-	const documents = await sanity.fetch<Array<Business>>(`*[_id in $ids]`, { ids: matches.map((match: { id: string }) => match.id) });
+	const documents = await sanity.fetch<Array<Business | VolunteeringProject>>(`*[_id in $ids]`, { ids: matches.map((match: { id: string }) => match.id) });
 
 	// Order documents by matches order
 	const matchesIds: string[] = matches.map((match: { id: string }) => match.id);

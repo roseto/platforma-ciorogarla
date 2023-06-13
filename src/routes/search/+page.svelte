@@ -58,6 +58,16 @@
 					>
 						Rezultat de la {data?.documents[0].name}
 					</a>
+				{:else if data?.documents[0]._type === "volunteeringProject"}
+					<p>
+						{data?.documents[0].description}
+					</p>
+					<a
+						class="link link-hover text-sm opacity-50"
+						href="/businesses/{data?.documents[0].slug?.current}"
+					>
+						Rezultat de la {data?.documents[0].name}
+					</a>
 				{/if}
 			</Card>
 		{/if}
@@ -73,6 +83,15 @@
 								secondary={document.description}
 								button
 								img={urlFor(document.logo).width(64).height(64).url()}
+							/>
+						</a>
+					{:else if document._type === "volunteeringProject"}
+						<a href="/volunteering/{document.slug?.current}">
+							<ListItem
+								primary={document.name}
+								secondary={document.description}
+								button
+								img={urlFor(document.image).width(64).height(64).url()}
 							/>
 						</a>
 					{/if}

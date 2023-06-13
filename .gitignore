@@ -1,5 +1,9 @@
 .DS_Store
 node_modules
+dist-studio
+.sanity
+*.log
+*.pem
 /build
 /.svelte-kit
 /package

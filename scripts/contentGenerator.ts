@@ -21,8 +21,6 @@ export const businessContentGenerator = (business: Business) => {
 	const string = `
 		${business.name} este o afacere ${business.type} localizata in ${business.location?.address}.
 
-		Link la pagina afacerii: "https://ciorogarla.eu.org/businesses/${business.slug?.current}",
-	
 		Descriere: ${business.description},
 		Link la preturi: ${business.pricesLink || "none"},
 		Nivel Preturi: ${business.prices || "none"},
@@ -40,7 +38,6 @@ export const projectContentGenerator = (project: VolunteeringProject) => {
 	const string = `
 		${project.name} este un proiect de voluntariat localizat in ${project.location?.address}.
 
-		Link la pagina proiectului: "/volunteeringProject/${project.slug?.current}",
 	
 		Descriere: ${project.description},
 		Se desfasoara in: ${project.country || "none"},
