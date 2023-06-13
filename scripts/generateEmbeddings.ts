@@ -20,9 +20,9 @@ const supabaseClient = createSupabaseClient(
 	process.env.SUPABASE_SERVICE_KEY as string,
 	{
 		auth: {
-			persistSession: false
-		}
-	}
+			persistSession: false,
+		},
+	},
 );
 
 const openaiConfiguration = new Configuration({
@@ -91,9 +91,11 @@ function createPromises(documents: SanityDocument[], contentGenerator: (doc) => 
 }
 
 const businesses = await sanityClient.fetch<Business[]>(`*[_type == "business"]`);
-const projects = await sanityClient.fetch<VolunteeringProject[]>(`*[_type == "volunteeringProject"]`);
+const projects = await sanityClient.fetch<VolunteeringProject[]>(
+	`*[_type == "volunteeringProject"]`,
+);
 
-console.log(businesses.length, projects.length)
+console.log(businesses.length, projects.length);
 
 const businessPromises = createPromises(businesses, businessContentGenerator);
 const projectPromises = createPromises(projects, projectContentGenerator);

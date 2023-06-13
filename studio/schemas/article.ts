@@ -1,4 +1,4 @@
-import {BlockContentIcon} from "@sanity/icons";
+import { BlockContentIcon } from "@sanity/icons";
 import { defineType, defineField } from "sanity";
 
 export default defineType({
@@ -43,7 +43,6 @@ export default defineType({
 			type: "image",
 			options: {
 				hotspot: true,
-
 			},
 		}),
 		defineField({
@@ -61,4 +60,4 @@ export default defineType({
 			validation: (Rule) => Rule.required(),
 		}),
 	],
-})
+});

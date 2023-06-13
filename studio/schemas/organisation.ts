@@ -1,5 +1,5 @@
 import { defineType, defineField } from "sanity";
-import {contactField} from "./templates";
+import { contactField } from "./templates";
 
 export default defineType({
 	name: "organisation",
@@ -20,4 +20,4 @@ export default defineType({
 		}),
 		contactField,
 	],
-})
+});

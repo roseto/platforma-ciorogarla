@@ -4,12 +4,6 @@ import country from "./country";
 import volunteeringProject from "./volunteering-project";
 import article from "./article";
 
-export const schemaTypes = [
-	business,
-	volunteeringProject,
-	article,
-	country,
-	organisation,
-];
+export const schemaTypes = [business, volunteeringProject, article, country, organisation];
 
 export default schemaTypes;

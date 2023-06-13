@@ -1,23 +1,21 @@
-import {CaseIcon} from "@sanity/icons";
+import { CaseIcon } from "@sanity/icons";
 import { defineType, defineField } from "sanity";
 import { contactField, locationField } from "./templates";
 
-
-
 const businessTypes = [
-	{title: "Restaurant", value: "restaurant"},
-	{title: "Cafe", value: "cafe"},
-	{title: "Pub", value: "pub"},
-	{title: "Barbershop", value: "barbershop"},
-	{title: "ITP", value: "itp"},
-	{title: "Showroom", value: "showroom"},
-	{title: "Distributor", value: "distributor"},
-	{title: "Auto Parts", value: "autoParts"},
+	{ title: "Restaurant", value: "restaurant" },
+	{ title: "Cafe", value: "cafe" },
+	{ title: "Pub", value: "pub" },
+	{ title: "Barbershop", value: "barbershop" },
+	{ title: "ITP", value: "itp" },
+	{ title: "Showroom", value: "showroom" },
+	{ title: "Distributor", value: "distributor" },
+	{ title: "Auto Parts", value: "autoParts" },
 	// {title: "Bakery", value: "bakery"},
-	{title: "Market", value: "market"},
-	{title: "Pizza", value: "pizza"},
-	{title: "Hotel", value: "hotel"},
-	{title: "Cake Shop", value: "cakeShop"},
+	{ title: "Market", value: "market" },
+	{ title: "Pizza", value: "pizza" },
+	{ title: "Hotel", value: "hotel" },
+	{ title: "Cake Shop", value: "cakeShop" },
 ];
 
 const business = defineType({
@@ -95,7 +93,7 @@ const business = defineType({
 					name: "photo",
 					title: "Photo",
 					type: "image",
-				}
+				},
 			],
 			description: "The photos of the business",
 		}),
@@ -107,10 +105,10 @@ const business = defineType({
 			type: "string",
 			options: {
 				list: [
-					{title: "$", value: "$"},
-					{title: "$$", value: "$$"},
-					{title: "$$$", value: "$$$"},
-					{title: "$$$$", value: "$$$$"},
+					{ title: "$", value: "$" },
+					{ title: "$$", value: "$$" },
+					{ title: "$$$", value: "$$$" },
+					{ title: "$$$$", value: "$$$$" },
 				],
 				layout: "radio",
 			},
@@ -132,9 +130,9 @@ const business = defineType({
 			initialValue: false,
 			validation: (Rule) => Rule.required(),
 		}),
-		
+
 		locationField,
-		contactField
+		contactField,
 	],
 });
 

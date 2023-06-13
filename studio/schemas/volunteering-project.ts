@@ -1,10 +1,8 @@
-import {CalendarIcon} from "@sanity/icons";
+import { CalendarIcon } from "@sanity/icons";
 import { defineType, defineField } from "sanity";
-import {locationField} from "./templates";
+import { locationField } from "./templates";
 
-const projectTypes = [
-	{title: "Youth Exchange", value: "ye"},
-];
+const projectTypes = [{ title: "Youth Exchange", value: "ye" }];
 
 export default defineType({
 	name: "volunteeringProject",
@@ -129,7 +127,7 @@ export default defineType({
 					type: "date",
 					validation: (Rule) => Rule.required(),
 				}),
-			]
+			],
 		}),
 	],
 });

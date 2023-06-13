@@ -27,11 +27,10 @@ export const locationField = defineField({
 			description: "Location Street View",
 			validation: (Rule) => Rule.required(),
 		}),
-	]
+	],
 	// Can be online
 	// validation: (Rule) => Rule.required(),
-})
-
+});
 
 export const contactField = defineField({
 	name: "contact",
@@ -62,26 +61,28 @@ export const contactField = defineField({
 			title: "Facebook",
 			type: "url",
 			description: "The Facebook page",
-			validation: (Rule) => Rule.custom((value: string | undefined) => {
-				if (!value) return true;
+			validation: (Rule) =>
+				Rule.custom((value: string | undefined) => {
+					if (!value) return true;
 
-				return value.startsWith("https://facebook.com/")
-					? true
-					: "Must be a valid Facebook page URL"
-			}),
+					return value.startsWith("https://facebook.com/")
+						? true
+						: "Must be a valid Facebook page URL";
+				}),
 		},
 		{
 			name: "instagram",
 			title: "Instagram",
 			type: "url",
 			description: "The Instagram page",
-			validation: (Rule) => Rule.custom((value: string | undefined) => {
-				if (!value) return true;
+			validation: (Rule) =>
+				Rule.custom((value: string | undefined) => {
+					if (!value) return true;
 
-				return value.startsWith("https://instagram.com/")
-					? true
-					: "Must be a valid Instagram page URL"
-			}),
+					return value.startsWith("https://instagram.com/")
+						? true
+						: "Must be a valid Instagram page URL";
+				}),
 		},
 	],
-})
+});
