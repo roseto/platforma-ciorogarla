@@ -4,7 +4,7 @@ import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 import { SanityDocument, createClient as createSanityClient } from "@sanity/client";
 import { Configuration, OpenAIApi } from "openai";
 import { businessContentGenerator, projectContentGenerator } from "./contentGenerator";
-import { Business, VolunteeringProject } from "../src/lib/types/SanitySchema";
+import { Business, VolunteeringProject } from "../app/src/lib/types/SanitySchema";
 
 dotenv.config();
 

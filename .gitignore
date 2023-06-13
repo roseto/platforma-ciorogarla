@@ -4,9 +4,9 @@ dist
 .sanity
 *.log
 *.pem
-/build
-/.svelte-kit
-/package
+build
+.svelte-kit
+package
 .env
 .env.*
 !.env.example
