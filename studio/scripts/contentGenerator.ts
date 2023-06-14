@@ -1,4 +1,4 @@
-import { Business, Organisation, VolunteeringProject } from "../app/src/lib/types/SanitySchema";
+import { Business, Organisation, VolunteeringProject } from "../../app/src/lib/types/SanitySchema";
 
 export const cleanString = (str: string) => {
 	// Remove indents

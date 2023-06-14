@@ -4,7 +4,7 @@ import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 import { SanityDocument, createClient as createSanityClient } from "@sanity/client";
 import { Configuration, OpenAIApi } from "openai";
 import { businessContentGenerator, projectContentGenerator } from "./contentGenerator";
-import { Business, VolunteeringProject } from "../app/src/lib/types/SanitySchema";
+import { Business, VolunteeringProject } from "../../app/src/lib/types/SanitySchema";
 
 dotenv.config();
 
@@ -31,7 +31,7 @@ const openaiConfiguration = new Configuration({
 
 const openaiClient = new OpenAIApi(openaiConfiguration);
 
-function createPromises(documents: SanityDocument[], contentGenerator: (doc) => string) {
+function createPromises(documents: SanityDocument[], contentGenerator: (doc: any) => string) {
 	return documents.map(async (document) => {
 		const id = document._id;
 		const content = contentGenerator(document);
@@ -58,6 +58,7 @@ function createPromises(documents: SanityDocument[], contentGenerator: (doc) => 
 			]);
 
 			if (error) {
+				console.error("Error updating document ", id);
 				console.error(error);
 				return;
 			}
@@ -80,11 +81,12 @@ function createPromises(documents: SanityDocument[], contentGenerator: (doc) => 
 					.eq("id", id);
 
 				if (error) {
+					console.error("Error updating document ", id);
 					console.error(error);
 					return;
 				}
 			} else {
-				console.log("No changes");
+				console.log("No changes for ", id);
 			}
 		}
 	});
@@ -95,7 +97,8 @@ const projects = await sanityClient.fetch<VolunteeringProject[]>(
 	`*[_type == "volunteeringProject"]`,
 );
 
-console.log(businesses.length, projects.length);
+console.log("Creating embeddings for ", businesses.length, " businesses");
+console.log("Creating embeddings for ", projects.length, " projects");
 
 const businessPromises = createPromises(businesses, businessContentGenerator);
 const projectPromises = createPromises(projects, projectContentGenerator);

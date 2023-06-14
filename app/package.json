@@ -1,5 +1,5 @@
 {
-	"name": "platforma-ciorogarla",
+	"name": "app",
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
@@ -10,12 +10,7 @@
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
 		"format": "prettier --plugin-search-dir . --write .",
 		"storybook": "storybook dev -p 6006",
-		"storybook:build": "storybook build",
-		"generate-embeddings": "tsx ./scripts/generateEmbeddings.ts",
-		"studio:dev": "cd studio && npm run dev",
-		"studio:build": "cd studio && npm run build",
-		"studio:start": "cd studio && npm run start",
-		"studio:codegen": "cd studio && npm run codegen"
+		"storybook:build": "storybook build"
 	},
 	"devDependencies": {
 		"@prgm/sveltekit-progress-bar": "^1.0.0",
