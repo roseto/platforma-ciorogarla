@@ -1,0 +1,19 @@
+# Create a Github workflow that installs the dependencies in the subfolder "studio" and then runs npm run studio:codegen
+# Run it once every 6 hours but also allow for manual triggering
+
+name: Generate Embeddings
+
+on:
+    schedule:
+        - cron: "0 */6 * * *"
+    workflow_dispatch:
+
+jobs:
+    generate-embeddings:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - name: Install dependencies
+              run: npm install --prefix studio
+            - name: Generate Embeddings
+              run: npm run studio:codegen --prefix studio
