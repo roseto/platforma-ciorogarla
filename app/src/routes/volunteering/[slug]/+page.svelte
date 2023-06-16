@@ -23,7 +23,7 @@
 	title={data.project.name || "Proiect"}
 	back
 	themeColor={notypecheck(data.project?.image)?.asset?.metadata?.palette?.dominant.background}
-	color={notypecheck(data.project?.image)?.asset?.metadata?.palette?.dominant.foreground}
+	emphasizeButtons
 	noHeading
 />
 

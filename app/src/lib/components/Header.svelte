@@ -9,7 +9,7 @@
 	export let noNav: boolean = false;
 	export let noHeading: boolean = false;
 	export let themeColor: string = "";
-	export let color: string = "";
+	export let emphasizeButtons: boolean = false;
 	export let favicon: string = "";
 	export let actions: {
 		href?: string;
@@ -69,8 +69,9 @@
 			<div class="flex-none">
 				<button
 					on:click={handleBack}
-					class="btn btn-ghost btn-circle text-neutral-content"
-					style:color={!scrollTrigger ? color : undefined}
+					class="btn btn-circle text-neutral-content"
+					class:btn-neutral={!scrollTrigger && emphasizeButtons}
+					class:btn-ghost={scrollTrigger || !emphasizeButtons}
 				>
 					<Icon name="arrow_back" />
 				</button>
@@ -79,7 +80,6 @@
 		<div class="flex-1">
 			<span
 				class="text-xl transition text-neutral-content line-clamp-1"
-				style:color={!scrollTrigger ? color : undefined}
 				class:ml-4={!back}
 				class:opacity-0={!scrollTrigger}
 			>
@@ -92,11 +92,12 @@
 					this={action.href ? "a" : "button"}
 					href={action.href}
 					on:click={action.onClick}
-					class="btn btn-ghost btn-circle text-neutral-content"
-					style:color={!scrollTrigger ? color : undefined}
+					class="btn btn-circle text-neutral-content"
+					class:btn-neutral={!scrollTrigger && emphasizeButtons}
+					class:btn-ghost={scrollTrigger || !emphasizeButtons}
 				>
 					{#if action.icon}
-						<Icon name={action.icon} {color} />
+						<Icon name={action.icon} />
 					{:else if action.img}
 						<img src={action.img} alt="" class="w-8 h-8 mask mask-hexagon" />
 					{/if}

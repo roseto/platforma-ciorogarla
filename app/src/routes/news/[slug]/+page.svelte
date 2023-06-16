@@ -17,7 +17,7 @@
 	title={data.article.title || "Articol"}
 	back
 	themeColor={notypecheck(data.article?.cover)?.asset?.metadata?.palette?.dominant.background}
-	color={notypecheck(data.article?.cover)?.asset?.metadata?.palette?.dominant.foreground}
+	emphasizeButtons
 	noHeading
 />
 

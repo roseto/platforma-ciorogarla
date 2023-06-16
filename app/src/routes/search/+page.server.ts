@@ -19,9 +19,11 @@ export const load = (async ({ url, locals }) => {
 		})
 		.then((res) => res.data.data);
 
+	// Maximum of 25 matches
+	// Can be lower if there are not enough matches
 	const { data: matches, error: supabaseError } = await supabase.rpc("match_documents", {
 		query_embedding: queryEmbedding[0].embedding,
-		match_count: 10,
+		match_count: 25,
 		match_threshold: 0.75,
 	});
 
@@ -35,8 +37,8 @@ export const load = (async ({ url, locals }) => {
 	});
 
 	// Order documents by matches order
+	// since sanity scrambles the order of the documents
 	const matchesIds: string[] = matches.map((match: { id: string }) => match.id);
-
 	documents.sort((a, b) => matchesIds.indexOf(a._id) - matchesIds.indexOf(b._id));
 
 	return {

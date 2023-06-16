@@ -35,7 +35,7 @@
 		? urlFor(business.logo).width(64).height(64).url()
 		: undefined}
 	themeColor={notypecheck(business?.cover)?.asset?.metadata?.palette?.dominant.background}
-	color={notypecheck(business?.cover)?.asset?.metadata?.palette?.dominant.foreground}
+	emphasizeButtons
 />
 
 <img
