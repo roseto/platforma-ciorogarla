@@ -7,6 +7,7 @@
     "app:storybook": "npm run storybook --prefix app",
     "studio:dev": "npm run dev --prefix studio",
     "studio:build": "npm run build --prefix studio",
+    "studio:codegen": "npm run codegen --prefix studio",
     "studio:generate-embeddings": "npm run generate-embeddings --prefix studio"
   },
   "license": "AGPL-3.0"

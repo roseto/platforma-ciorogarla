@@ -3,7 +3,7 @@ import crypto from "crypto";
 import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 import { SanityDocument, createClient as createSanityClient } from "@sanity/client";
 import { Configuration, OpenAIApi } from "openai";
-import { businessContentGenerator, projectContentGenerator } from "./contentGenerator";
+import { businessContentGenerator, knowledgeContentGenerator, projectContentGenerator } from "./contentGenerator";
 import { Business, VolunteeringProject } from "../../app/src/lib/types/SanitySchema";
 
 dotenv.config();
@@ -58,7 +58,7 @@ function createPromises(documents: SanityDocument[], contentGenerator: (doc: any
 			]);
 
 			if (error) {
-				console.error("Error updating document ", id);
+				console.error("Error creating document ", id);
 				console.error(error);
 				return;
 			}
@@ -94,14 +94,22 @@ function createPromises(documents: SanityDocument[], contentGenerator: (doc: any
 
 const businesses = await sanityClient.fetch<Business[]>(`*[_type == "business"]`);
 const projects = await sanityClient.fetch<VolunteeringProject[]>(
-	`*[_type == "volunteeringProject"]`,
+	`*[_type == "volunteeringProject"] { 
+		...,
+		organisation -> {...}, 
+		country -> {...}, 
+		participatingCountries[] -> {...} 
+	}`,
 );
+const knowledge = await sanityClient.fetch<VolunteeringProject[]>(`*[_type == "knowledge"]`);
 
 console.log("Creating embeddings for ", businesses.length, " businesses");
 console.log("Creating embeddings for ", projects.length, " projects");
+console.log("Creating embeddings for ", knowledge.length, " knowledge");
 
 const businessPromises = createPromises(businesses, businessContentGenerator);
 const projectPromises = createPromises(projects, projectContentGenerator);
+const knowledgePromises = createPromises(knowledge, knowledgeContentGenerator);
 
-await Promise.all([...projectPromises, ...businessPromises]);
-console.log("Done");
+await Promise.all([...projectPromises, ...businessPromises, ...knowledgePromises]);
+console.log("Done for", businesses.length + projects.length + knowledge.length, "documents");

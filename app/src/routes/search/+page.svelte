@@ -7,11 +7,26 @@
 	import Card from "$lib/components/Card.svelte";
 	import ListItem from "$lib/components/ListItem.svelte";
 	import { urlFor } from "$lib/utils/sanity";
+	import { openModal } from "$lib/utils/modal";
 	import Icon from "$lib/components/Icon.svelte";
 	import type { PageData } from "./$types";
 	import Button from "$lib/components/Button.svelte";
+	import type { Knowledge } from "$lib/types/SanitySchema";
+	import Badge from "$lib/components/Badge.svelte";
+	import Dialog from "$lib/components/Dialog.svelte";
 
 	export let data: PageData;
+
+	$: docsKnowledge = (data?.documents?.filter((document) => document._type === "knowledge") ||
+		[]) as Knowledge[];
+	$: docsExcludingKnowledge =
+		data?.documents?.filter((document) => document._type !== "knowledge") || [];
+
+	const checkIfFirst = (id: string) => {
+		return data.documents?.[0]?._id === id;
+
+		return false;
+	};
 </script>
 
 <Header title={data?.query ? `"${data?.query}"` : "Cautare"} noHeading back />
@@ -58,6 +73,7 @@
 					>
 						Rezultat de la {data?.documents[0].name}
 					</a>
+					<!-- Volunteering Project -->
 				{:else if data?.documents[0]._type === "volunteeringProject"}
 					<p>
 						{data?.documents[0].description}
@@ -68,13 +84,43 @@
 					>
 						Rezultat de la {data?.documents[0].name}
 					</a>
+					<!-- Knowledge -->
+				{:else if data?.documents[0]._type === "knowledge"}
+					<div class="prose text-accent-content prose-a:text-accent-content">
+						<SvelteMarkdown source={data?.documents[0].content} />
+					</div>
+					<p class="text-sm opacity-50">Cunostintele sunt oferite de Profitery</p>
 				{/if}
 			</Card>
 		{/if}
 
 		{#if data?.documents}
-			<Card>
-				{#each data?.documents as document}
+			<Card title="Rezultate">
+				{#each docsKnowledge as document}
+					<ListItem
+						primary={document.title}
+						secondary="Cunostinte"
+						icon="help"
+						button
+						on:click={() => openModal("knowledge-" + document._id)}
+					>
+						{#if checkIfFirst(document._id)}
+							<div class="tooltip tooltip-left tooltip-accent" data-tip="Rezultat principal">
+								<Badge class="badge-sm" color="accent" />
+							</div>
+						{/if}
+					</ListItem>
+					<Dialog id="knowledge-{document._id}">
+						<h1 class="text-2xl">{document.title}</h1>
+						<div class="prose">
+							<SvelteMarkdown source={document.content} />
+						</div>
+					</Dialog>
+				{/each}
+				{#if docsKnowledge.length > 0 && docsExcludingKnowledge.length > 0}
+					<div class="divider" />
+				{/if}
+				{#each docsExcludingKnowledge as document}
 					<!-- Business -->
 					{#if document._type === "business"}
 						<a href="/businesses/{document.slug?.current}">
@@ -83,8 +129,16 @@
 								secondary={document.description}
 								button
 								img={urlFor(document.logo).width(64).height(64).url()}
-							/>
+							>
+								<!-- Check if is first in data.documents -->
+								{#if checkIfFirst(document._id)}
+									<div class="tooltip tooltip-left tooltip-accent" data-tip="Rezultat principal">
+										<Badge class="badge-sm" color="accent" />
+									</div>
+								{/if}
+							</ListItem>
 						</a>
+						<!-- Volunteering Project -->
 					{:else if document._type === "volunteeringProject"}
 						<a href="/volunteering/{document.slug?.current}">
 							<ListItem
@@ -92,7 +146,14 @@
 								secondary={document.description}
 								button
 								img={urlFor(document.image).width(64).height(64).url()}
-							/>
+							>
+								<!-- Check if is first in data.documents -->
+								{#if checkIfFirst(document._id)}
+									<div class="tooltip tooltip-left tooltip-accent" data-tip="Rezultat principal">
+										<Badge class="badge-sm" color="accent" />
+									</div>
+								{/if}
+							</ListItem>
 						</a>
 					{/if}
 				{/each}

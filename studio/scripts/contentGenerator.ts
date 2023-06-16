@@ -1,4 +1,4 @@
-import { Business, Organisation, VolunteeringProject } from "../../app/src/lib/types/SanitySchema";
+import { Business, Knowledge, Organisation, VolunteeringProject } from "../../app/src/lib/types/SanitySchema";
 
 export const cleanString = (str: string) => {
 	// Remove indents
@@ -38,7 +38,6 @@ export const projectContentGenerator = (project: VolunteeringProject) => {
 	const string = `
 		${project.name} este un proiect de voluntariat localizat in ${project.location?.address}.
 
-	
 		Descriere: ${project.description},
 		Se desfasoara in: ${project.country || "none"},
 		Link la infopack: ${project.infopack || "none"},
@@ -48,4 +47,8 @@ export const projectContentGenerator = (project: VolunteeringProject) => {
 	`;
 
 	return cleanString(string);
+};
+
+export const knowledgeContentGenerator = (knowledge: Knowledge) => {
+	return cleanString(knowledge.content);
 };

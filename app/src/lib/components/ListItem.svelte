@@ -8,19 +8,23 @@
 	export let img: string = "";
 	export let imgClass: string = "";
 	export let button: boolean = false;
+	export let disabled: boolean = false;
 </script>
 
 <svelte:element
 	this={button ? "button" : "div"}
+	{...$$restProps}
+	{disabled}
 	on:click
-	class="flex flex-row gap-4 items-center p-2 rounded-lg text-left w-full {$$props.class}"
+	class="flex flex-row gap-4 items-center p-2 rounded-lg text-left w-full {$$props.class || ''}"
+	class:opacity-50={disabled}
 	class:btn-animation={button}
 	class:btn-ghost={button}
 >
 	{#if icon}
 		<Icon name={icon} />
 	{:else if iconElement}
-		<div class="w-6 h-6 fill-current">
+		<div class="w-10 h-10 fill-current">
 			<svelte:component this={iconElement} />
 		</div>
 	{:else if img}

@@ -1,7 +1,7 @@
 import { error } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 import { openai } from "$lib/utils/openai";
-import type { Business, VolunteeringProject } from "$lib/types/SanitySchema";
+import type { Business, Knowledge, VolunteeringProject } from "$lib/types/SanitySchema";
 import { sanity } from "$lib/utils/sanity";
 
 export const load = (async ({ url, locals }) => {
@@ -32,8 +32,12 @@ export const load = (async ({ url, locals }) => {
 		throw error(500, "Internal Server Error");
 	}
 
-	const documents = await sanity.fetch<Array<Business | VolunteeringProject>>(`*[_id in $ids]`, {
+	const allowedTypes = ["business", "volunteeringProject", "knowledge"];
+	type PossibleResult = Business | VolunteeringProject | Knowledge;
+
+	const documents = await sanity.fetch<Array<PossibleResult>>(`*[_id in $ids && _type in $allowedTypes]`, {
 		ids: matches.map((match: { id: string }) => match.id),
+		allowedTypes,
 	});
 
 	// Order documents by matches order
