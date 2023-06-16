@@ -8,12 +8,16 @@
 	import Toast from "$lib/components/Toast.svelte";
 	import Footer from "$lib/components/Footer.svelte";
 	import { ProgressBar } from "@prgm/sveltekit-progress-bar";
+	import { handleServiceWorker } from "$lib/utils/sw";
+	import { MAIN_DOMAIN } from "$lib/utils/details";
 
 	export let data: LayoutData;
 
 	const { session, supabase } = data;
 
 	onMount(async () => {
+		handleServiceWorker();
+
 		const {
 			data: { subscription },
 		} = supabase.auth.onAuthStateChange((_, _session) => {
@@ -33,7 +37,9 @@
 </script>
 
 <svelte:head>
-	<link rel="manifest" href="/manifest.json" />
+	{#if globalThis.location && globalThis.location.hostname === MAIN_DOMAIN}
+		<link rel="manifest" href="/manifest.json" />
+	{/if}
 </svelte:head>
 
 <ProgressBar class="text-primary" />
