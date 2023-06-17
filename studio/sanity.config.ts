@@ -37,8 +37,10 @@ export default defineConfig({
 					types: ["article"],
 					limit: 7,
 				}),
-				catsWidget({
-					layout: { width: "small" },
+				documentListWidget({
+					title: "Knowledge Base",
+					types: ["knowledge"],
+					limit: 7,
 				}),
 				projectInfoWidget(),
 				projectUsersWidget({ layout: { width: "medium" } }),

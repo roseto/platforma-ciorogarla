@@ -70,7 +70,8 @@ body::after {
 }
 
 .card,
-.btn:not(.btn-outline, .btn-ghost, .glass) {
+.btn:not(.btn-outline, .btn-ghost, .glass),
+.input {
 	@apply grainy;
 }
 
