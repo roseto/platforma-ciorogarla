@@ -1,6 +1,6 @@
 {
   "name": "platforma-ciorogarla",
-  "author": "Profitery",
+  "author": "profitery",
   "scripts": {
     "app:dev": "npm run dev --prefix app",
     "app:build": "npm run build --prefix app",
