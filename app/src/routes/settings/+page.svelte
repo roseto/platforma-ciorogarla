@@ -7,6 +7,7 @@
 	import { umamiEnabled } from "$lib/utils/umami";
 	import type { PageData } from "./$types";
 	import Card from "$lib/components/Card.svelte";
+	import { version } from "$app/environment";
 
 	export let data: PageData;
 
@@ -62,5 +63,12 @@
 		<a href="/privacy-policy">
 			<ListItem button icon="policy" primary="Politica de confidențialitate" />
 		</a>
+
+		<div class="divider" />
+
+		<ListItem 
+			primary="Versiune"
+			secondary={version}
+		/>
 	</Stack>
 </Container>
