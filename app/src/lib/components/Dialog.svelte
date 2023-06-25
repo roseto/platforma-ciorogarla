@@ -7,8 +7,6 @@
 
 <dialog {...$$restProps} {id} class="modal modal-bottom {$$props.class}">
 	<form method="dialog" class="modal-box text-base-content">
-		<!-- eslint-disable-next-line svelte/no-unused-svelte-ignore -->
-		<!-- svelte-ignore -->
 		<button class="btn btn-sm btn-circle btn-ghost absolute top-0 right-0">
 			<Icon name="close" />
 		</button>

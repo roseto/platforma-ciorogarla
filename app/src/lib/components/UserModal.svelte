@@ -25,7 +25,7 @@
 			{:else}
 				<ListItem
 					img={user.user_metadata?.avatar_url}
-					imgClass="mask mask-hexagon"
+					imgClass="!rounded-full"
 					primary={user.user_metadata?.full_name}
 					secondary={user.email}
 					on:click={() => signOut()}

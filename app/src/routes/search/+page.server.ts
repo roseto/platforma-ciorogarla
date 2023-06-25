@@ -35,10 +35,13 @@ export const load = (async ({ url, locals }) => {
 	const allowedTypes = ["business", "volunteeringProject", "knowledge"];
 	type PossibleResult = Business | VolunteeringProject | Knowledge;
 
-	const documents = await sanity.fetch<Array<PossibleResult>>(`*[_id in $ids && _type in $allowedTypes]`, {
-		ids: matches.map((match: { id: string }) => match.id),
-		allowedTypes,
-	});
+	const documents = await sanity.fetch<Array<PossibleResult>>(
+		`*[_id in $ids && _type in $allowedTypes]`,
+		{
+			ids: matches.map((match: { id: string }) => match.id),
+			allowedTypes,
+		},
+	);
 
 	// Order documents by matches order
 	// since sanity scrambles the order of the documents

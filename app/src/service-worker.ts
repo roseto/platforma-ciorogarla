@@ -9,16 +9,13 @@ const sw = self as unknown as ServiceWorkerGlobalScope;
 
 const CACHE_NAME = `cache-${version}`;
 
-const ASSETS = [
-	...build,
-	...files
-]
+const ASSETS = [...build, ...files];
 
 sw.addEventListener("install", (event) => {
 	const addFilesToCache = async () => {
 		const cache = await caches.open(CACHE_NAME);
 		await cache.addAll(ASSETS);
-	}
+	};
 
 	event.waitUntil(addFilesToCache());
 });
@@ -42,8 +39,7 @@ sw.addEventListener("fetch", (event) => {
 		const cache = await caches.open(CACHE_NAME);
 
 		if (ASSETS.includes(url.pathname)) {
-			return cache.match(event.request)
-				.then((response) => response || fetch(event.request));
+			return cache.match(event.request).then((response) => response || fetch(event.request));
 		}
 
 		const response = await cache.match(event.request);
@@ -54,7 +50,7 @@ sw.addEventListener("fetch", (event) => {
 		}
 
 		return fetch(event.request);
-	}
+	};
 
 	event.respondWith(respond());
 });

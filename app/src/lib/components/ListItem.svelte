@@ -24,7 +24,7 @@
 	{#if icon}
 		<Icon name={icon} />
 	{:else if iconElement}
-		<div class="w-10 h-10 fill-current">
+		<div class="w-6 h-6 fill-current">
 			<svelte:component this={iconElement} />
 		</div>
 	{:else if img}

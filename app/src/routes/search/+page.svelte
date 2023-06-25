@@ -24,8 +24,6 @@
 
 	const checkIfFirst = (id: string) => {
 		return data.documents?.[0]?._id === id;
-
-		return false;
 	};
 </script>
 
@@ -86,7 +84,7 @@
 					</a>
 					<!-- Knowledge -->
 				{:else if data?.documents[0]._type === "knowledge"}
-					<div class="prose text-accent-content prose-a:text-accent-content">
+					<div class="prose max-w-none text-accent-content prose-a:text-accent-content">
 						<SvelteMarkdown source={data?.documents[0].content} />
 					</div>
 					<p class="text-sm opacity-50">Cunostintele sunt oferite de Profitery</p>

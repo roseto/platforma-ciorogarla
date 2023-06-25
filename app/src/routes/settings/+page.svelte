@@ -35,7 +35,7 @@
 					primary={session?.user.user_metadata?.full_name}
 					secondary={session?.user.email}
 					class="join-item"
-					imgClass="mask mask-hexagon"
+					imgClass="!rounded-full"
 				/>
 				<ListItem
 					icon="logout"
@@ -48,6 +48,7 @@
 		</Card>
 		<ListItem
 			primary="Analitica"
+			icon="analytics"
 			secondary={$umamiEnabled ? "Dezactiveaza analitica anonima" : "Activeaza analitica anonima"}
 			button
 			on:click={() => ($umamiEnabled = !$umamiEnabled)}
@@ -66,9 +67,6 @@
 
 		<div class="divider" />
 
-		<ListItem 
-			primary="Versiune"
-			secondary={version}
-		/>
+		<ListItem primary="Versiune" secondary={version} />
 	</Stack>
 </Container>

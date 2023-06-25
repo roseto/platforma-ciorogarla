@@ -11,7 +11,7 @@ import { documentListWidget } from "sanity-plugin-dashboard-widget-document-list
 import { catsWidget } from "sanity-plugin-dashboard-widget-cats";
 
 export default defineConfig({
-	name: "Platforma_Ciorogârla",
+	name: "platforma-ciorogarla",
 	title: "Platforma Ciorogârla",
 
 	projectId: "xxgdop45",

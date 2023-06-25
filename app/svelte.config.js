@@ -1,12 +1,9 @@
 import adapter from "@sveltejs/adapter-netlify";
 import { vitePreprocess } from "@sveltejs/kit/vite";
-import child_process from "child_process"
+import child_process from "child_process";
 
 // Only 7 characters of the commit hash are needed
-const commitHash = child_process.execSync("git rev-parse HEAD")
-	.toString()
-	.trim()
-	.slice(0, 7);
+const commitHash = child_process.execSync("git rev-parse HEAD").toString().trim().slice(0, 7);
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -23,8 +20,8 @@ const config = {
 			publicPrefix: "PUBLIC_",
 		},
 		version: {
-			name: commitHash
-		}
+			name: commitHash,
+		},
 	},
 };
 

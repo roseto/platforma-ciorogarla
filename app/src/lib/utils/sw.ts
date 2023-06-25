@@ -1,6 +1,5 @@
-import { dev } from '$app/environment';
-import { MAIN_DOMAIN } from './details';
-
+import { dev } from "$app/environment";
+import { MAIN_DOMAIN } from "./details";
 
 export const handleServiceWorker = () => {
 	const IS_OFFICIAL_DOMAIN = globalThis.location.hostname === MAIN_DOMAIN;
@@ -9,7 +8,7 @@ export const handleServiceWorker = () => {
 
 	if (!IS_OFFICIAL_DOMAIN) return;
 
-	if ('serviceWorker' in navigator) {
-		navigator.serviceWorker.register('/service-worker.js');
+	if ("serviceWorker" in navigator) {
+		navigator.serviceWorker.register("/service-worker.js");
 	}
 };

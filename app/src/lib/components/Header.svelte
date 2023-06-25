@@ -99,7 +99,7 @@
 					{#if action.icon}
 						<Icon name={action.icon} />
 					{:else if action.img}
-						<img src={action.img} alt="" class="w-8 h-8 mask mask-hexagon" />
+						<img src={action.img} alt="" class="w-8 h-8 rounded-full" />
 					{/if}
 				</svelte:element>
 			{/each}
