@@ -16,7 +16,7 @@
 
 	export let data: PageData;
 
-	const windowWidth = globalThis.innerWidth || 0;
+	const windowWidth = globalThis.innerWidth || 1024;
 </script>
 
 <Header

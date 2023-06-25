@@ -20,7 +20,7 @@
 
 	$: ({ business, isStandalone } = data);
 
-	const windowWidth = globalThis.innerWidth || 0;
+	const windowWidth = globalThis.innerWidth || 1024;
 </script>
 
 <svelte:head>

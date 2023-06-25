@@ -8,7 +8,7 @@ import { markdownSchema } from "sanity-plugin-markdown";
 import { schemaTypes } from "./schemas";
 import { dashboardTool, projectInfoWidget, projectUsersWidget } from "@sanity/dashboard";
 import { documentListWidget } from "sanity-plugin-dashboard-widget-document-list";
-import { catsWidget } from "sanity-plugin-dashboard-widget-cats";
+import ArticlePreview from "./components/Preview";
 
 export default defineConfig({
 	name: "platforma-ciorogarla",
@@ -46,7 +46,15 @@ export default defineConfig({
 				projectUsersWidget({ layout: { width: "medium" } }),
 			],
 		}),
-		deskTool(),
+		deskTool({
+			// `defaultDocumentNode is responsible for adding a “Preview” tab to the document pane.
+			defaultDocumentNode: (S, { schemaType }) => {
+				if (['article', 'business', 'volunteeringProject'].includes(schemaType)) {
+					return S.document().views([S.view.form(), S.view.component(ArticlePreview).title('Preview')]);
+				}
+				return null;
+			},
+		}),
 		visionTool(),
 		unsplashImageAsset(),
 		markdownSchema(),

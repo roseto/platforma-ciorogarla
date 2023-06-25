@@ -10,7 +10,7 @@
 
 	export let data: PageData;
 
-	const windowWidth = globalThis.innerWidth;
+	const windowWidth = globalThis.innerWidth || 1024;
 </script>
 
 <Header
@@ -36,7 +36,7 @@
 	<Stack>
 		<h1 class="text-3xl mt-2">{data.article.title}</h1>
 		<p class="text-sm opacity-50">{new Date(data.article._createdAt).toLocaleDateString("ro")}</p>
-		<div class="flex flex-row gap-1">
+		<div class="flex flex-row gap-1 flex-wrap">
 			{#each data.article.tags || [] as tag}
 				<Badge color="secondary" outline>#{tag}</Badge>
 			{/each}

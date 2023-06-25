@@ -1,17 +1,28 @@
-import { env } from "$env/dynamic/public";
+import { PUBLIC_SANITY_DATASET, PUBLIC_SANITY_PROJECT_ID } from "$env/static/public";
 import { createClient } from "@sanity/client";
 import imageUrlBuilder from "@sanity/image-url";
 
 export const sanity = createClient({
-	dataset: env.PUBLIC_SANITY_DATASET,
-	projectId: env.PUBLIC_SANITY_PROJECT_ID,
+	dataset: PUBLIC_SANITY_DATASET,
+	projectId: PUBLIC_SANITY_PROJECT_ID,
 	apiVersion: "2021-03-25",
 	useCdn: true,
 });
 
+export const createSanityPreviewClient = (token: string) =>
+	createClient({
+		dataset: PUBLIC_SANITY_DATASET,
+		projectId: PUBLIC_SANITY_PROJECT_ID,
+		apiVersion: "2021-03-25",
+		useCdn: false,
+		token,
+	});
+
 const builder = imageUrlBuilder(sanity);
 
-// deno-lint-ignore no-explicit-any
+export const groqAndId = (id?: string | null) => ` && _id == "${id}"`;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function urlFor(source: any) {
 	return builder.image(source);
 }
