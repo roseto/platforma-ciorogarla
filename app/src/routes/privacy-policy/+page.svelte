@@ -37,8 +37,8 @@
 	<h3>Ștergere</h3>
 
 	<p>
-		Pentru ștergerea unui cont, contactați-ne la <a href="mailto:contact@profitery.eu.org"
-			>contact@profitery.eu.org</a
+		Pentru ștergerea unui cont, contactați-ne la <a href="mailto:hello@profitery.eu.org"
+			>hello@profitery.eu.org</a
 		>.
 	</p>
 
