@@ -20,7 +20,7 @@ export const createSanityPreviewClient = (token: string) =>
 
 const builder = imageUrlBuilder(sanity);
 
-export const groqAndId = (id?: string | null) => ` && _id == "${id}"`;
+export const groqAndId = (id?: string | null) => id ? ` && _id == "${id}"` : "";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function urlFor(source: any) {

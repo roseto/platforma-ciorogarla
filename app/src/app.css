@@ -64,15 +64,43 @@ body::after {
 
 /* Add grainy effect to some elements */
 .grainy {
-	background-image: url("/noise.svg");
+	background-image: url("/noise-light.svg");
+	background-repeat: repeat;
+	background-size: 512px 512px;
+}
+
+@media (prefers-color-scheme: dark) {
+	.grainy {
+		background-image: url("/noise-dark.svg");
+	}
+}
+
+.grainy-dark {
+	background-image: url("/noise-dark.svg");
+	background-repeat: repeat;
+	background-size: 512px 512px;
+}
+
+.grainy-light {
+	background-image: url("/noise-dark.svg");
 	background-repeat: repeat;
 	background-size: 512px 512px;
 }
 
 .card,
-.btn:not(.btn-outline, .btn-ghost, .glass),
+.btn:not(.btn-primary, .btn-outline, .btn-ghost, .glass),
 .input {
 	@apply grainy;
+}
+
+.btn-primary {
+	@apply grainy-dark;
+}
+
+@media (prefers-color-scheme: dark) {
+	.btn-primary {
+		@apply grainy-light;
+	}
 }
 
 .btn-animation {
