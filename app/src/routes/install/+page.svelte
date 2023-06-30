@@ -68,7 +68,7 @@
 				Descarca pe AppGallery
 			</Button>
 		</a>
-		<a href="https://paquet.shop/app/013c536e-4a2d-4bce-90fd-c33c954bdc04">
+		<a href="https://paquet.app/app/013c536e-4a2d-4bce-90fd-c33c954bdc04">
 			<Button fullWidth outline>
 				<div class="w-4 h-4 fill-current">
 					<PaquetIcon />
