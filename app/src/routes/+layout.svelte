@@ -10,6 +10,7 @@
 	import { ProgressBar } from "@prgm/sveltekit-progress-bar";
 	import { handleServiceWorker } from "$lib/utils/sw";
 	import { MAIN_DOMAIN } from "$lib/utils/details";
+	import { page } from "$app/stores";
 
 	export let data: LayoutData;
 
@@ -49,4 +50,7 @@
 	<Toast />
 </main>
 
-<Footer />
+<!-- For the standalone mode (ex. businesses) -->
+{#if !$page.data.isStandalone}
+	<Footer />
+{/if}

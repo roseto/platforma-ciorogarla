@@ -18,7 +18,7 @@
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-is": "^18.2.0",
-		"sanity": "^3.11.1",
+		"sanity": "^3.14.1",
 		"sanity-codegen": "^0.9.8",
 		"sanity-plugin-asset-source-unsplash": "^1.0.6",
 		"sanity-plugin-dashboard-widget-cats": "^2.0.1",

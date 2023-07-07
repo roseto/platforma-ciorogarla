@@ -21,6 +21,7 @@
 <div
 	class="toast toast-bottom toast-center opacity-0 transition-opacity"
 	class:opacity-100={$toast.open}
+	class:pointer-events-none={!$toast.open}
 >
 	<div
 		class="alert"

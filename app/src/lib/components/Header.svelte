@@ -60,7 +60,7 @@
 	<nav
 		class="navbar top-0 left-0 right-0 fixed z-50 transition gap-1 {scrollTrigger &&
 			isIos() &&
-			'bg-base-100/95'}"
+			'bg-base-100/80'}"
 		class:bg-base-100={scrollTrigger && !isIos()}
 		class:backdrop-blur-xl={scrollTrigger && isIos()}
 		class:shadow-lg={scrollTrigger}
