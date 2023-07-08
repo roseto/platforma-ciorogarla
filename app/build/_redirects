@@ -1,5 +1,0 @@
-https://app.ciorogarlaunita.eu.org/*	https://ciorogarla.eu.org/:splat				301!
-https://mazga.ciorogarla.eu.org/*		https://ciorogarla.eu.org/businesses/mazga		200!
-https://marstef.ciorogarla.eu.org/*		https://ciorogarla.eu.org/businesses/marstef	200!
-
-* /.netlify/functions/sveltekit-render 200
