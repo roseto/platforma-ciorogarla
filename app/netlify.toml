@@ -9,3 +9,21 @@
 		max-age=31536000,
 		immutable
 		'''
+
+[[redirects]]
+	from = "https://app.ciorogarlaunita.eu.org/*"
+	to = "https://ciorogarla.eu.org/:splat"
+	status = 301
+	force = true
+
+[[redirects]]
+	from = "https://mazga.ciorogarla.eu.org/*"
+	to = "https://ciorogarla.eu.org/businesses/mazga"
+	status = 200
+	force = true
+
+[[redirects]]
+	from = "https://marstef.ciorogarlaunita.eu.org/*"
+	to = "https://ciorogarla.eu.org/businesses/marstef"
+	status = 200
+	force = true
