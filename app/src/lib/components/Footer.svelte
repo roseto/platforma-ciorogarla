@@ -13,7 +13,7 @@
 		</div>
 		<div>
 			<span class="footer-title"> Link-uri utile </span>
-			<a href="https://github.com/profiteri/platforma-ciorogarla" class="link link-hover">GitHub</a>
+			<a href="https://github.com/profiteriteam/platforma-ciorogarla" class="link link-hover">GitHub</a>
 			<a
 				href="https://play.google.com/store/apps/details?id=org.eu.ciorogarlaunita.app"
 				class="link link-hover">Google Play</a
