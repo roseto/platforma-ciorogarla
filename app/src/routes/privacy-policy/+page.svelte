@@ -37,8 +37,8 @@
 	<h3>Ștergere</h3>
 
 	<p>
-		Pentru ștergerea unui cont, contactați-ne la <a href="mailto:hello@profitery.eu.org"
-			>hello@profitery.eu.org</a
+		Pentru ștergerea unui cont, contactați-ne la <a href="mailto:hello@profiteri.eu.org"
+			>hello@profiteri.eu.org</a
 		>.
 	</p>
 
@@ -74,7 +74,7 @@
 	<p>
 		Aceste date sunt folosite strict pentru analitică. Aceste date sunt folosite pentru a îmbunătăți
 		performanța și utilitatea platformei noastre. Folosind aceste date putem identifica ce tipuri de
-		dispozitive accesează produsele Profitery, ce scor de performanță atinge aplicația noastră, ce
+		dispozitive accesează produsele Profiteri, ce scor de performanță atinge aplicația noastră, ce
 		caracteristici de accesibilitate trebuie să adăugăm și unde, pentru a îmbunătăți experiența și
 		accesibilitatea utilizatorilor noștrii.
 	</p>

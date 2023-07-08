@@ -2,8 +2,8 @@
 	<div class="footer max-w-screen-lg mx-auto p-10">
 		<div>
 			<h2>Platforma Ciorogârla</h2>
-			<a href="https://profitery.eu.org" class="link link-hover opacity-50">
-				Facut cu &hearts; de Profitery
+			<a href="https://profiteri.eu.org" class="link link-hover opacity-50">
+				Facut cu &hearts; de Profiteri
 			</a>
 		</div>
 		<div>
@@ -13,7 +13,7 @@
 		</div>
 		<div>
 			<span class="footer-title"> Link-uri utile </span>
-			<a href="https://github.com/profitery/platforma-ciorogarla" class="link link-hover">GitHub</a>
+			<a href="https://github.com/profiteri/platforma-ciorogarla" class="link link-hover">GitHub</a>
 			<a
 				href="https://play.google.com/store/apps/details?id=org.eu.ciorogarlaunita.app"
 				class="link link-hover">Google Play</a

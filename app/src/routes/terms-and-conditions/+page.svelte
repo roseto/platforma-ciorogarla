@@ -12,7 +12,7 @@
 	</p>
 
 	<blockquote>
-		"Noi", "Echipa Ciorogârla Unită" se referă la parteneriatul neincorporat (colectivul) Profitery.
+		"Noi", "Echipa Profiteri" se referă la parteneriatul neincorporat (colectivul) Profiteri.
 		"Platforma", "Platforma Ciorogârla" se referă la produsul oferit.
 	</blockquote>
 
@@ -24,7 +24,7 @@
 		totuși codul sursă trebuie redistribuit sub aceeași licență, codul sursă trebuie să fie public.
 		Contribuitorii codului sursă primesc drepturi speciale de deținere a codului sursă adăugat sau
 		modificat. Pentru mai multe detalii, va rugăm să consultați
-		<a href="https://github.com/profitery/platforma-ciorogarla/blob/main/LICENSE" target="_blank"
+		<a href="https://github.com/profiteri/platforma-ciorogarla/blob/main/LICENSE" target="_blank"
 			>licența AGPL-3.0</a
 		>
 	</p>
@@ -58,7 +58,7 @@
 	</ul>
 
 	<blockquote>
-		stergerea unui continut va rugam sa <a href="https://profitery.eu.org/contact" target="_blank"
+		stergerea unui continut va rugam sa <a href="https://profiteri.eu.org/contact" target="_blank"
 			>ne contactati</a
 		>
 	</blockquote>
