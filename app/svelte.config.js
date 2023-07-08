@@ -15,7 +15,6 @@ const config = {
 		serviceWorker: {
 			register: false,
 		},
-		adapter: adapter(),
 		env: {
 			publicPrefix: "PUBLIC_",
 		},

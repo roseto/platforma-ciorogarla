@@ -4,7 +4,6 @@ dist
 .sanity
 *.log
 *.pem
-!app/build/_redirects
 build
 .svelte-kit
 package
