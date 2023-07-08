@@ -6,7 +6,8 @@ const allowedWithoutAccept = ["/terms-and-conditions", "/privacy-policy", "/welc
 export const load = (async ({ locals, cookies, url }) => {
 	const session = await locals.getSession();
 	const acceptedTerms = cookies.get("accepted-terms");
-	const isSubdomain = url.origin.endsWith(".ciorogarla.eu.org") || url.searchParams.get("utm_source") === "subdomain";
+	const isSubdomain = url.origin.endsWith(".ciorogarla.eu.org");
+	const comesFromSubdomain = url.searchParams.get("utm_source") === "subdomain";
 
 
 	// Since we can't use Netlify redirects, we have to do this here
@@ -19,7 +20,7 @@ export const load = (async ({ locals, cookies, url }) => {
 	}
 
 	// Takes care to redirect to the welcome page if the user hasn't accepted the terms
-	if (!allowedWithoutAccept.includes(url.pathname) && !acceptedTerms && !isSubdomain) {
+	if (!allowedWithoutAccept.includes(url.pathname) && !acceptedTerms && !isSubdomain && !comesFromSubdomain) {
 		throw redirect(301, "/welcome?redirect=" + encodeURIComponent(url.pathname));
 	}
 
