@@ -11,7 +11,9 @@
 	import BackgroundGlow from "$lib/components/BackgroundGlow.svelte";
 	import UserModal from "$lib/components/UserModal.svelte";
 	import { getModal } from "$lib/utils/modal";
+	import { isInstalled } from "$lib/utils/device";
 	import TextField from "$lib/components/TextField.svelte";
+	import { browser } from "$app/environment";
 
 	export let data: PageData;
 
@@ -66,11 +68,13 @@
 			</a>
 		</div>
 
+		{#if browser && !isInstalled}
 		<a href="/install">
 			<Alert icon="download" outline button>
 				Pare ca nu ai instalat aplicația. Apasa aici pentru a o instala.
 			</Alert>
 		</a>
+		{/if}
 
 		<br />
 
