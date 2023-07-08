@@ -51,6 +51,4 @@
 </main>
 
 <!-- For the standalone mode (ex. businesses) -->
-{#if !$page.data.isStandalone}
-	<Footer />
-{/if}
+<Footer />
