@@ -40,6 +40,5 @@ export const load = (async ({ params, url }) => {
 
 	return {
 		business,
-		isStandalone: isPreview || url.origin.endsWith(".ciorogarla.eu.org"),
 	};
 }) satisfies PageServerLoad;

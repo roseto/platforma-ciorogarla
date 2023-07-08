@@ -18,7 +18,7 @@
 
 	export let data: PageData;
 
-	$: ({ business, isStandalone } = data);
+	$: ({ business } = data);
 
 	const windowWidth = globalThis.innerWidth || 1024;
 </script>
@@ -28,12 +28,9 @@
 </svelte:head>
 
 <Header
-	back={!isStandalone}
+	back
 	title={business.name || "Afacere"}
 	noHeading
-	favicon={isStandalone && business.logo
-		? urlFor(business.logo).width(64).height(64).url()
-		: undefined}
 	themeColor={notypecheck(business?.cover)?.asset?.metadata?.palette?.dominant.background}
 	emphasizeButtons
 />
@@ -127,14 +124,12 @@
 			instagram={business.contact?.instagram}
 		/>
 
-		{#if !isStandalone}
-			<Alert icon="info">
-				Facem tot posibilul să ținem detaliile despre această afacere actualizate. Dacă observi că
-				ceva nu este corect, te rugăm să ne anunți la adresa de email
-				<a href="mailto:afacere@ciorogarlaunita.eu.org" target="_blank" class="link">
-					afacere@ciorogarlaunita.eu.org
-				</a>
-			</Alert>
-		{/if}
+		<Alert icon="info">
+			Facem tot posibilul să ținem detaliile despre această afacere actualizate. Dacă observi că
+			ceva nu este corect, te rugăm să ne anunți la adresa de email
+			<a href="mailto:afacere@ciorogarlaunita.eu.org" target="_blank" class="link">
+				afacere@ciorogarlaunita.eu.org
+			</a>
+		</Alert>
 	</Stack>
 </Container>
