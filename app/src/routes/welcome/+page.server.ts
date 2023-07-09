@@ -11,8 +11,6 @@ export const load = (async ({ cookies }) => {
 
 export const actions = {
 	default: async ({ request, cookies, url }) => {
-		console.log("default action", request, cookies, url);
-
 		const form = await request.formData();
 		const acceptedTerms = form.get("terms");
 
