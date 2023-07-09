@@ -58,7 +58,7 @@
 
 {#if !noNav}
 	<nav
-		class="navbar top-0 left-0 right-0 fixed z-50 transition gap-1 {scrollTrigger &&
+		class="navbar top-0 left-0 right-0 pt-[env(safe-area-inset-top)] fixed z-50 transition gap-1 {scrollTrigger &&
 			isIos() &&
 			'bg-base-100/80'}"
 		class:bg-base-100={scrollTrigger && !isIos()}
