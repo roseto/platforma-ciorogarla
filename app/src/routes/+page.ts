@@ -3,30 +3,14 @@ import type { Article, Business, VolunteeringProject } from "$lib/types/SanitySc
 import type { PageLoad } from "./$types";
 
 export const load = (async () => {
-	const urgentArticlePromise = sanity.fetch<Article>(
-		`*[_type == "article" && isUrgent] | order(_createdAt desc)[0]`,
-	);
-	const articlesPromise = sanity.fetch<Article[]>(
-		`*[_type == "article"] | order(_createdAt desc)[0...3]`,
-	);
-	const businessesPromise = sanity.fetch<Business[]>(
-		`*[_type == "business"] | order(_createdAt desc)[0...3]`,
-	);
-	const projectsPromise = sanity.fetch<VolunteeringProject[]>(
-		`*[_type == "volunteeringProject" && dateTime(period.fromDate + 'T00:00:00Z') > dateTime(now())] | order(_createdAt desc)[0...3]`,
-	);
+	const data = await sanity.fetch<{ urgentArticle: Article, articles: Article[], businesses: Business[], projects: VolunteeringProject[] }>(`
+		{
+			"urgentArticle": *[_type == "article" && isUrgent] | order(_createdAt desc)[0],
+			"articles": *[_type == "article"] | order(_createdAt desc)[0...3],
+			"businesses": *[_type == "business"] | order(_createdAt desc)[0...3],
+			"projects": *[_type == "volunteeringProject" && dateTime(period.fromDate + 'T00:00:00Z') > dateTime(now())] | order(_createdAt desc)[0...3]
+		}
+	`);
 
-	const [urgentArticle, articles, businesses, projects] = await Promise.all([
-		urgentArticlePromise,
-		articlesPromise,
-		businessesPromise,
-		projectsPromise,
-	]);
-
-	return {
-		urgentArticle,
-		articles,
-		businesses,
-		projects,
-	};
+	return data;
 }) satisfies PageLoad;

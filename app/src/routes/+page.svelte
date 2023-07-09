@@ -68,7 +68,7 @@
 			</a>
 		</div>
 
-		{#if browser && !isInstalled}
+		{#if browser && !isInstalled()}
 		<a href="/install">
 			<Alert icon="download" outline button>
 				Pare ca nu ai instalat aplicația. Apasa aici pentru a o instala.
