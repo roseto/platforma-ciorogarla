@@ -108,7 +108,6 @@
 			</div>
 		{/if}
 
-		<!--
 		{#if business.location}
 			<MapsEmbed
 				streetViewLocation={business.location.locationStreetview}
@@ -116,7 +115,6 @@
 				address={business.location.address}
 			/>
 		{/if}
-		-->
 
 		<ContactList
 			website={business.contact?.website}
