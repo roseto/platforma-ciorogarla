@@ -127,8 +127,8 @@
 		<Alert icon="info">
 			Facem tot posibilul să ținem detaliile despre această afacere actualizate. Dacă observi că
 			ceva nu este corect, te rugăm să ne anunți la adresa de email
-			<a href="mailto:afacere@ciorogarlaunita.eu.org" target="_blank" class="link">
-				afacere@ciorogarlaunita.eu.org
+			<a href="mailto:hello@profiteri.eu.org" target="_blank" class="link">
+				mailto:hello@profiteri.eu.org
 			</a>
 		</Alert>
 	</Stack>
