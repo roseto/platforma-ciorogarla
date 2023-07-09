@@ -104,3 +104,16 @@ body::after {
 .material-symbols-rounded {
 	font-variation-settings: "opsz" 48, "wght" 700, "FILL" 0, "GRAD" 200;
 }
+
+.svelte-progress-bar {
+	height: calc(env(safe-area-inset-top) + 2px)!important;
+}
+
+.svelte-progress-bar-hiding {
+	transition: top 0.8s ease;
+	top: calc(-1 * env(safe-area-inset-top) - 2px)!important;
+}
+
+.svelte-progress-bar-leader {
+	height: calc(env(safe-area-inset-top) + 3px)!important;
+}

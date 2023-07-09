@@ -42,7 +42,7 @@
 	{/if}
 </svelte:head>
 
-<ProgressBar class="text-primary mt-[env(safe-area-inset-top)]" />
+<ProgressBar class="text-primary progress-bar" />
 
 <main class="mb-2 flex-1">
 	<slot />
