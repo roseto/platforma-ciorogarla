@@ -16,4 +16,4 @@ jobs:
             - name: Install dependencies
               run: npm install --prefix studio
             - name: Generate Embeddings
-              run: npm run studio:codegen --prefix studio
+              run: npm run generate-embeddings --prefix studio

@@ -3,7 +3,12 @@ import type { Article, Business, VolunteeringProject } from "$lib/types/SanitySc
 import type { PageLoad } from "./$types";
 
 export const load = (async () => {
-	const data = await sanity.fetch<{ urgentArticle: Article, articles: Article[], businesses: Business[], projects: VolunteeringProject[] }>(`
+	const data = await sanity.fetch<{
+		urgentArticle: Article;
+		articles: Article[];
+		businesses: Business[];
+		projects: VolunteeringProject[];
+	}>(`
 		{
 			"urgentArticle": *[_type == "article" && isUrgent] | order(_createdAt desc)[0],
 			"articles": *[_type == "article"] | order(_createdAt desc)[0...3],

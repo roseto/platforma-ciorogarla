@@ -1,4 +1,4 @@
-import { error, redirect } from '@sveltejs/kit';
+import { error, redirect } from "@sveltejs/kit";
 
 export const GET = async ({ url }) => {
 	const origin = url.origin;
@@ -15,16 +15,16 @@ export const GET = async ({ url }) => {
 	console.log("token", token);
 
 	if (type === "business") {
-		throw redirect(307, `${origin}/businesses/${slug}?preview=true&id=${id}&token=${token}`,);
+		throw redirect(307, `${origin}/businesses/${slug}?preview=true&id=${id}&token=${token}`);
 	}
 
 	if (type === "article") {
-		throw redirect(307, `${origin}/news/${slug}?preview=true&id=${id}&token=${token}`,);
+		throw redirect(307, `${origin}/news/${slug}?preview=true&id=${id}&token=${token}`);
 	}
 
 	if (type === "volunteeringProject") {
-		throw redirect(307, `${origin}/volunteering/${slug}?preview=true&id=${id}&token=${token}`,);
+		throw redirect(307, `${origin}/volunteering/${slug}?preview=true&id=${id}&token=${token}`);
 	}
 
 	throw error(400, "Invalid type");
-}
+};
