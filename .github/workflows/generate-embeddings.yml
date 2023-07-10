@@ -8,6 +8,13 @@ on:
         - cron: "0 */6 * * *"
     workflow_dispatch:
 
+env:
+  PUBLIC_SANITY_PROJECT_ID: ${{ secrets.PUBLIC_SANITY_PROJECT_ID }}
+  PUBLIC_SANITY_DATASET: ${{ secrets.PUBLIC_SANITY_DATASET }}
+  PUBLIC_SUPABASE_URL: ${{ secrets.PUBLIC_SUPABASE_URL }}
+  SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+  OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
+
 jobs:
     generate-embeddings:
         runs-on: ubuntu-latest
