@@ -23,7 +23,8 @@
 <UserModal user={session?.user} signOut={supabase.auth.signOut} />
 
 <Header
-	title="Ciorogârla"
+	title="Platforma Ciorogârla"
+	noHeading
 	actions={[
 		{
 			onClick: () => getModal("user_modal")?.showModal(),
@@ -37,36 +38,40 @@
 
 <Container>
 	<Stack>
-		<form action="/search" method="get">
-			<TextField
-				name="query"
-				placeholder="Caută orice..."
-				fullWidth
-				icon="auto_awesome"
-				autocomplete="off"
-			/>
-			<Button class="mt-2" type="submit" icon="search" fullWidth>Caută</Button>
-		</form>
+		<Stack class="md:py-24">
+			<h1 class="text-center text-6xl sm:text-7xl mb-2 pt-16">
+				Ciorogârla
+			</h1>
+			<form action="/search" method="get">
+				<TextField
+					name="query"
+					placeholder="Caută orice..."
+					fullWidth
+					icon="auto_awesome"
+					autocomplete="off"
+				/>
+				<Button class="mt-2" type="submit" icon="search" fullWidth>Caută</Button>
+			</form>
+			<div class="grid grid-cols-2 gap-4">
+				<a
+					href="https://431.ciorogarla.eu.org"
+					target="_blank"
+					class="btn btn-ghost flex-col text-primary"
+					>
+					<Icon name="schedule" />
+					Orar 431
+				</a>
 
-		<div class="grid grid-cols-2 gap-4">
-			<a
-				href="https://431.ciorogarla.eu.org"
-				target="_blank"
-				class="btn btn-ghost flex-col text-primary"
-			>
-				<Icon name="schedule" />
-				Orar 431
-			</a>
-
-			<a
-				href="https://facebook.com/groups/ciorogarla"
-				target="_blank"
-				class="btn btn-ghost flex-col text-primary"
-			>
-				<Icon name="group" />
-				Facebook
-			</a>
-		</div>
+				<a
+					href="https://facebook.com/groups/ciorogarla"
+					target="_blank"
+					class="btn btn-ghost flex-col text-primary"
+					>
+					<Icon name="group" />
+					Facebook
+				</a>
+			</div>
+		</Stack>
 
 		{#if browser && !isInstalled()}
 			<a href="/install">

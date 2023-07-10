@@ -13,7 +13,6 @@ declare global {
 		interface PageData {
 			supabase?: SupabaseClient;
 			session?: Session;
-			visited?: boolean;
 		}
 		// interface Platform {}
 	}

@@ -6,7 +6,7 @@
 </script>
 
 <dialog {...$$restProps} {id} class="modal modal-bottom {$$props.class}">
-	<form method="dialog" class="modal-box text-base-content">
+	<form method="dialog" class="modal-box text-base-content max-w-screen-md mx-auto">
 		<button class="btn btn-sm btn-circle btn-ghost absolute top-0 right-0">
 			<Icon name="close" />
 		</button>
