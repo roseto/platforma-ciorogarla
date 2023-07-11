@@ -1,7 +1,7 @@
 import { createSanityPreviewClient, groqAndId, sanity } from "$lib/utils/sanity";
 import { redirect } from "@sveltejs/kit";
-import type { VolunteeringProject } from "$lib/types/SanitySchema";
-import type { PageServerLoad } from "./$types";
+import type { Article } from "$lib/types/SanitySchema";
+import type { PageLoad } from "./$types";
 
 export const load = (async ({ params, url }) => {
 	const isPreview = url.searchParams.get("preview") === "true";
@@ -17,27 +17,24 @@ export const load = (async ({ params, url }) => {
 
 	const sanityClient = isPreview && token ? createSanityPreviewClient(token) : sanity;
 
-	const project = await sanityClient
-		.fetch<VolunteeringProject>(
-			`*[_type == "volunteeringProject" && slug.current == $slug ${groqAndId(id)}][0] {
+	const article = await sanityClient
+		.fetch<Article>(
+			`*[_type == "article" && slug.current == $slug ${groqAndId(id)}][0] {
 		...,
-		image {
+		cover {
 			..., 
 			asset -> {..., metadata}
 		}, 
-		organisation -> {...},
-		participatingCountries[] -> {...},
-		country -> {...}
 		}`,
 			{ slug },
 		)
 		.catch(() => null);
 
-	if (!project) {
-		throw redirect(307, "/volunteeringProject");
+	if (!article) {
+		throw redirect(307, "/news");
 	}
 
 	return {
-		project,
+		article,
 	};
-}) satisfies PageServerLoad;
+}) satisfies PageLoad;

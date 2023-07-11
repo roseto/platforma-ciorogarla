@@ -9,6 +9,13 @@ export const sanity = createClient({
 	useCdn: true,
 });
 
+export const sanityEager = createClient({
+	dataset: PUBLIC_SANITY_DATASET,
+	projectId: PUBLIC_SANITY_PROJECT_ID,
+	apiVersion: "2021-03-25",
+	useCdn: false,
+});
+
 export const createSanityPreviewClient = (token: string) =>
 	createClient({
 		dataset: PUBLIC_SANITY_DATASET,

@@ -1,7 +1,7 @@
 import { createSanityPreviewClient, groqAndId, sanity } from "$lib/utils/sanity";
 import { redirect } from "@sveltejs/kit";
 import type { Business } from "$lib/types/SanitySchema";
-import type { PageServerLoad } from "./$types";
+import type { PageLoad } from "./$types";
 
 export const load = (async ({ params, url }) => {
 	const isPreview = url.searchParams.get("preview") === "true";
@@ -11,6 +11,7 @@ export const load = (async ({ params, url }) => {
 
 	if (isPreview) {
 		if (!id || !token) {
+			console.error("Missing id or token");
 			throw redirect(307, "/businesses");
 		}
 	}
@@ -41,4 +42,4 @@ export const load = (async ({ params, url }) => {
 	return {
 		business,
 	};
-}) satisfies PageServerLoad;
+}) satisfies PageLoad;

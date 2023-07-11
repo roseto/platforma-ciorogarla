@@ -28,6 +28,16 @@ const discussion = defineType({
 			validation: (Rule) => Rule.required(),
 		}),
 		defineField({
+			name: "upvotes",
+			title: "Upvotes",
+			type: "array",
+			of: [
+				{
+					type: "string",
+				}
+			],
+		}),
+		defineField({
 			name: "relevantDocument",
 			title: "Relevant Document",
 			type: "reference",
@@ -38,9 +48,20 @@ const discussion = defineType({
 			],
 		}),
 		defineField({
-			name: "media",
-			title: "Media",
-			type: "file",
+			name: "approved",
+			title: "Approved",
+			type: "boolean",
+		}),
+		defineField({
+			name: "locked",
+			title: "Locked",
+			type: "boolean",
+			initialValue: false,
+		}),
+		defineField({
+			name: "image",
+			title: "Image",
+			type: "image",
 		}),
 		defineField({
 			name: "comments",

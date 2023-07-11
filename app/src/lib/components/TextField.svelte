@@ -24,8 +24,9 @@
 		/>
 	{/if}
 	<input
+		{...$$restProps}
 		use:typeAction
-		class="input input-bordered bg-neutral text-neutral-content placeholder:text-neutral-content placeholder:opacity-50 transition-all focus:input-primary"
+		class="input input-bordered bg-neutral text-neutral-content placeholder:text-neutral-content placeholder:opacity-50 transition-all focus:input-primary {$$props.class || ''}"
 		class:pl-12={icon}
 		class:input-primary={focus}
 		class:w-full={fullWidth}
@@ -34,6 +35,5 @@
 		bind:value
 		{disabled}
 		{placeholder}
-		{...$$restProps}
 	/>
 </div>
