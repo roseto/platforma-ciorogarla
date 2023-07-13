@@ -199,24 +199,27 @@
 				<h3 class="text-xl text-center">Nu exista comentarii</h3>
 			{/if}
 
-			{#each comments as comment (comment._id)}
-				<div class="chat chat-start" animate:flip>
-					<div class="chat-image avatar">
-						<div class="w-10 rounded-full">
-							<img 
-								src={comment.user.avatar_url}
-								alt={comment.user.full_name + " avatar"}
-							/>
+			<!-- For some reason if we don't use a div wrapper, comments fuck up on webkit -->
+			<div>
+				{#each comments as comment (comment._id)}
+					<div class="chat chat-start" animate:flip>
+						<div class="chat-image avatar">
+							<div class="w-10 rounded-full">
+								<img 
+									src={comment.user.avatar_url}
+									alt={comment.user.full_name + " avatar"}
+								/>
+							</div>
+						</div>
+						<div class="chat-header">
+							{comment.user.full_name}
+						</div>
+						<div class="chat-bubble">
+							{comment.content}
 						</div>
 					</div>
-					<div class="chat-header">
-						{comment.user.full_name}
-					</div>
-					<div class="chat-bubble">
-						{comment.content}
-					</div>
-				</div>
-			{/each}
+				{/each}
+			</div>
 
 		</Stack>
 	</Stack>
