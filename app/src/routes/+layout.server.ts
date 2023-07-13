@@ -4,7 +4,7 @@ import type { LayoutServerLoad } from "./$types";
 
 export const load = (async ({ locals, url }) => {
 	const session = await locals.getSession();
-	const isDevDeploy = url.origin === "dev.ciorogarla.eu.org"
+	const isDevDeploy = url.host === "dev.ciorogarla.eu.org"
 	const isSubdomain = url.origin.endsWith(".ciorogarla.eu.org");
 
 	// Since we can't use Netlify redirects, we have to do this here
