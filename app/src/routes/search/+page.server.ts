@@ -12,6 +12,21 @@ export const load = (async ({ url, locals }) => {
 		return;
 	}
 
+	const results = await openai
+		.createModeration({
+			model: "text-moderation-latest",
+			input: query,
+		})
+		.then((res) => res.data.results)
+		.catch((err) => {
+			console.log(err);
+			throw error(500, "Could not check query");
+		});
+
+	if (results[0]?.flagged) {
+		throw error(400, "Bad Request");
+	}
+
 	const queryEmbedding = await openai
 		.createEmbedding({
 			model: "text-embedding-ada-002",
@@ -33,10 +48,27 @@ export const load = (async ({ url, locals }) => {
 	}
 
 	const allowedTypes = ["business", "volunteeringProject", "knowledge"];
-	type PossibleResult = Business | VolunteeringProject | Knowledge;
+	type PossibleResult = {
+		_type: "business" | "volunteeringProject" | "knowledge";
+		_id: string;
+		title: string;
+		image: Business["logo"] | VolunteeringProject["image"];
+		description: Business["description"] | VolunteeringProject["description"];
+		content: Knowledge["content"];
+		url: string;
+	};
 
 	const documents = await sanity.fetch<Array<PossibleResult>>(
-		`*[_id in $ids && _type in $allowedTypes]`,
+		`*[_id in $ids && _type in $allowedTypes] {
+			...,
+			"title": coalesce(title, name),
+			"image": coalesce(logo, image),
+			"description": coalesce(description, "Cunostinte"),
+			"url": select(
+				_type == "volunteeringProject" => "/projects/" + slug.current,
+				_type == "business" => "/businesses/" + slug.current,
+			)
+		}`,
 		{
 			ids: matches.map((match: { id: string }) => match.id),
 			allowedTypes,

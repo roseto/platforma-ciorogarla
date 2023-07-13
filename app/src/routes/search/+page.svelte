@@ -11,14 +11,13 @@
 	import Icon from "$lib/components/Icon.svelte";
 	import type { PageData } from "./$types";
 	import Button from "$lib/components/Button.svelte";
-	import type { Knowledge } from "$lib/types/SanitySchema";
 	import Badge from "$lib/components/Badge.svelte";
 	import Dialog from "$lib/components/Dialog.svelte";
 
 	export let data: PageData;
 
 	$: docsKnowledge = (data?.documents?.filter((document) => document._type === "knowledge") ||
-		[]) as Knowledge[];
+		[]);
 	$: docsExcludingKnowledge =
 		data?.documents?.filter((document) => document._type !== "knowledge") || [];
 
@@ -60,34 +59,21 @@
 
 		{#if data?.documents?.[0]}
 			<Card bgColor="accent">
-				<!-- Business -->
-				{#if data?.documents[0]._type === "business"}
-					<p>
-						{data?.documents[0].description}
-					</p>
-					<a
-						class="link link-hover text-sm opacity-50"
-						href="/businesses/{data?.documents[0].slug?.current}"
-					>
-						Rezultat de la {data?.documents[0].name}
-					</a>
-					<!-- Volunteering Project -->
-				{:else if data?.documents[0]._type === "volunteeringProject"}
-					<p>
-						{data?.documents[0].description}
-					</p>
-					<a
-						class="link link-hover text-sm opacity-50"
-						href="/businesses/{data?.documents[0].slug?.current}"
-					>
-						Rezultat de la {data?.documents[0].name}
-					</a>
-					<!-- Knowledge -->
-				{:else if data?.documents[0]._type === "knowledge"}
+				{#if data?.documents[0]._type === "knowledge"}
 					<div class="prose max-w-none text-accent-content prose-a:text-accent-content">
 						<SvelteMarkdown source={data?.documents[0].content} />
 					</div>
 					<p class="text-sm opacity-50">Cunostintele sunt oferite de Profiteri</p>
+				{:else}
+					<p>
+						{data?.documents[0].description}
+					</p>
+					<a
+						class="link link-hover text-sm opacity-50"
+						href={data?.documents?.[0].url}
+					>
+						Rezultat de la {data?.documents[0].title}
+					</a>
 				{/if}
 			</Card>
 		{/if}
@@ -120,27 +106,9 @@
 				{/if}
 				{#each docsExcludingKnowledge as document}
 					<!-- Business -->
-					{#if document._type === "business"}
-						<a href="/businesses/{document.slug?.current}">
+						<a href={document.url}>
 							<ListItem
-								primary={document.name}
-								secondary={document.description}
-								button
-								img={urlFor(document.logo).width(64).height(64).url()}
-							>
-								<!-- Check if is first in data.documents -->
-								{#if checkIfFirst(document._id)}
-									<div class="tooltip tooltip-left tooltip-accent" data-tip="Rezultat principal">
-										<Badge class="badge-sm" color="accent" />
-									</div>
-								{/if}
-							</ListItem>
-						</a>
-						<!-- Volunteering Project -->
-					{:else if document._type === "volunteeringProject"}
-						<a href="/volunteering/{document.slug?.current}">
-							<ListItem
-								primary={document.name}
+								primary={document.title}
 								secondary={document.description}
 								button
 								img={urlFor(document.image).width(64).height(64).url()}
@@ -153,7 +121,6 @@
 								{/if}
 							</ListItem>
 						</a>
-					{/if}
 				{/each}
 			</Card>
 		{/if}

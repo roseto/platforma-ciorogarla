@@ -3,24 +3,19 @@
 	import Container from "$lib/components/Container.svelte";
 	import Header from "$lib/components/Header.svelte";
 	import Stack from "$lib/components/Stack.svelte";
-	import GoogleIcon from "$lib/resources/icons/google.svelte";
-	import TwitterIcon from "$lib/resources/icons/twitter.svelte";
+	import GoogleLoginIcon from "$lib/resources/google-login.svelte";
+	import TwitterLoginIcon from "$lib/resources/twitter-login.svelte";
 	import GitHubIcon from "$lib/resources/icons/github.svelte";
 	import type { PageData } from "./$types";
-	import TextField from "$lib/components/TextField.svelte";
-	import { openModal } from "$lib/utils/modal";
-	import Dialog from "$lib/components/Dialog.svelte";
-	import Icon from "$lib/components/Icon.svelte";
 	import { setToast } from "$lib/utils/toast";
-	import { page } from "$app/stores";
+	import DiscordLoginIcon from "$lib/resources/discord-login.svelte";
+	import SlackLoginIcon from "$lib/resources/slack-login.svelte";
 
 	export let data: PageData;
 
 	$: ({ supabase } = data);
 
-	let email = "";
-
-	const handleOAuthLogin = (provider: "google" | "github" | "twitter") => {
+	const handleOAuthLogin = (provider: "google" | "github" | "twitter" | "discord" | "slack") => {
 		supabase.auth
 			.signInWithOAuth({
 				provider,
@@ -37,80 +32,43 @@
 				});
 			});
 	};
-
-	const handleEmailLogin = () => {
-		supabase.auth
-			.signInWithOtp({
-				email,
-				options: {
-					emailRedirectTo: window.location.origin + "/login",
-				},
-			})
-			.catch((error) => {
-				console.error(error);
-
-				setToast({
-					type: "error",
-					content: "A	apărut o eroare. Vă rugăm să încercați din nou.",
-				});
-			})
-			.then(() => {
-				openModal("email_confirm_modal");
-			});
-	};
 </script>
 
 <Header title="Conectare" back />
 
 <Container>
 	<Stack>
-		<Button on:click={() => handleOAuthLogin("google")}>
-			<div class="w-4 h-4 fill-primary-content">
-				<GoogleIcon />
-			</div>
+		<Button outline color="neutral" on:click={() => handleOAuthLogin("google")}>
+			<GoogleLoginIcon />
 			Conectare cu Google
 		</Button>
 
-		<Button on:click={() => handleOAuthLogin("twitter")}>
-			<div class="w-4 h-4 fill-primary-content">
-				<TwitterIcon />
+		<Button outline color="neutral" on:click={() => handleOAuthLogin("twitter")}>
+			<div class="w-6 h-6 flex justify-center items-center">
+				<TwitterLoginIcon />
 			</div>
 			Conectare cu Twitter
 		</Button>
 
-		<Button on:click={() => handleOAuthLogin("github")}>
-			<div class="w-4 h-4 fill-primary-content">
+		<Button outline color="neutral" class="fill-base-content hover:fill-base-300" on:click={() => handleOAuthLogin("github")}>
+			<div class="w-6 h-6 flex justify-center items-center">
 				<GitHubIcon />
 			</div>
 			Conectare cu GitHub
 		</Button>
 
-		<div class="divider py-8">sau</div>
+		<Button outline color="neutral" on:click={() => handleOAuthLogin("discord")}>
+			<div class="w-6 h-6 flex justify-center items-center">
+				<DiscordLoginIcon />
+			</div>
+			Conectare cu Discord
+		</Button>
 
-		<form class="flex flex-col space-y-2" on:submit={handleEmailLogin}>
-			<TextField type="email" placeholder="Adresa de email" bind:value={email} fullWidth />
-
-			<Button color="neutral" type="submit" fullWidth>Conectare</Button>
-		</form>
-		<p class="text-center text-sm">
-			Powered by <a
-				class="link"
-				target="_blank"
-				rel="noopener noreferrer"
-				href="https://supabase.io">Supabase <Icon name="bolt" size={12} /></a
-			>
-		</p>
+		<Button outline color="neutral" on:click={() => handleOAuthLogin("slack")}>
+			<div class="w-12 h-12 -m-2 flex justify-center items-center">
+				<SlackLoginIcon />
+			</div>
+			Conectare cu Slack
+		</Button>
 	</Stack>
 </Container>
-
-<Dialog id="email_confirm_modal" class="modal">
-	<p class="text-lg font-bold">Verificare email</p>
-	<p class="text-sm">
-		Un email de verificare a fost trimis la adresa <span class="font-bold">{email}</span>.
-	</p>
-	<p class="text-sm">
-		Verifică-ți email-ul și apasă pe link-ul din email pentru a-ți confirma adresa de email.
-	</p>
-
-	<Button slot="actions" class="btn btn-primary">Închide</Button>
-</Dialog>
