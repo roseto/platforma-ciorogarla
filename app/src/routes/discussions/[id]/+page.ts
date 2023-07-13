@@ -51,7 +51,7 @@ export const load = (async ({ params, parent }) => {
 		.eq("id", authorUserId)
 		.single();
 
-	const upvoted = discussion.upvotes?.some(upvote => upvote === authorUserId) || false;
+	const upvoted = discussion.upvotes?.some(upvote => upvote === session?.user?.id) || false;
 	const userIds = discussion.comments?.map(comment => notypecheck(comment).userId) || [];
 
 	const { data: usersData } = await supabase.from("profiles").select("id, full_name, avatar_url")
