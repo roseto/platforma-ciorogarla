@@ -12,6 +12,7 @@
 	import Dialog from "$lib/components/Dialog.svelte";
 	import Icon from "$lib/components/Icon.svelte";
 	import { setToast } from "$lib/utils/toast";
+	import { page } from "$app/stores";
 
 	export let data: PageData;
 

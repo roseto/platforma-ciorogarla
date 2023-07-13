@@ -5,6 +5,7 @@
 	import Icon from "$lib/components/Icon.svelte";
 	import ListItem from "$lib/components/ListItem.svelte";
 	import Stack from "$lib/components/Stack.svelte";
+	import { urlFor } from "$lib/utils/sanity";
 	import { notypecheck } from "$lib/utils/typecheck";
 	import type { PageData } from "./$types";
 
@@ -38,6 +39,7 @@
 						<ListItem
 							primary={discussion.title}
 							secondary={"⬆" + (notypecheck(discussion).upvotesCount || 0) + " · " + discussion.description}
+							img={discussion.image ? urlFor(discussion.image).width(64).height(64).url() : undefined}
 							button
 						/>
 					</a>
@@ -52,6 +54,7 @@
 					<ListItem
 						primary={discussion.title}
 						secondary={"⬆" + (notypecheck(discussion).upvotesCount || 0) + " · " + discussion.description}
+						img={discussion.image ? urlFor(discussion.image).width(64).height(64).url() : undefined}
 						button
 					/>
 				</a>

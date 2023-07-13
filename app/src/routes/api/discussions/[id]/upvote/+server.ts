@@ -21,10 +21,14 @@ export const POST = async ({ request, params }) => {
 	}
 
 	// Check if document is a discussion
-	const { _type, upvotes } = await sanitySudo.fetch(`*[_id == "${documentId}"][0] { _type, upvotes }`);
+	const { _type, locked, upvotes } = await sanitySudo.fetch(`*[_id == "${documentId}"][0] { _type, locked, upvotes }`);
 
 	if (_type !== "discussion") {
 		throw error(400, "Document is not a discussion");
+	}
+
+	if (locked) {
+		throw error(400, "Discussion is locked");
 	}
 
 	// Check if user has already upvoted

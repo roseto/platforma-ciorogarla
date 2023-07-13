@@ -14,6 +14,7 @@
 	import { isInstalled } from "$lib/utils/device";
 	import TextField from "$lib/components/TextField.svelte";
 	import { browser } from "$app/environment";
+	import { notypecheck } from "$lib/utils/typecheck";
 
 	export let data: PageData;
 
@@ -82,6 +83,29 @@
 		{/if}
 
 		<br />
+
+		{#if data.discussions.length > 0}
+			<br />
+			<Stack>
+				<h2 class="text-sm opacity-50">Discutii recente</h2>
+				{#each data.discussions as discussion}
+					<a href={`/discussions/${discussion._id}`}>
+						<ListItem
+							button
+							primary={discussion.title}
+							secondary={"⬆" + (notypecheck(discussion).upvotesCount || 0) + " · " + discussion.description}
+							img={discussion.image ? urlFor(discussion.image).width(64).height(64).url() : undefined}
+						/>
+					</a>
+				{/each}
+				<a href="/discussions">
+					<Button color="secondary" outline fullWidth>
+						Toate discutiile
+						<Icon name="arrow_forward" />
+					</Button>
+				</a>
+			</Stack>
+		{/if}
 
 		<Stack>
 			<h2 class="text-sm opacity-50">Ultimele știri</h2>

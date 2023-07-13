@@ -6,8 +6,9 @@ import { supabase } from "$lib/utils/supabase";
 import type { UserProfile } from "$lib/types/UserProfile";
 import { notypecheck } from "$lib/utils/typecheck";
 
-export const load = (async ({ params, data }) => {
+export const load = (async ({ params, parent }) => {
 	const id = params.id;
+	const data = await parent();
 	const session = data?.session;
 
 
