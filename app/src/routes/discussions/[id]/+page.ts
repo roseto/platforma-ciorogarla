@@ -10,11 +10,12 @@ export const load = (async ({ params, data }) => {
 	const id = params.id;
 	const session = data?.session;
 
-	
+
 	if (!id) {
 		throw redirect(307, "/discussions");
 	}
 
+	// TODO: Rename urlBase
 	const discussion = await sanityEager.fetch<Discussion>(`*[_type == "discussion" && _id == $id][0] {
 		...,
 		comments[] -> {...},
