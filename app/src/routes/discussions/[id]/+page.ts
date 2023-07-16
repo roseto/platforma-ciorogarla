@@ -46,10 +46,33 @@ export const load = (async ({ params, parent }) => {
 		throw redirect(307, "/discussions");
 	}
 
-	const { data: userData } = await supabase.from("profiles")
-		.select("id, full_name, avatar_url")
-		.eq("id", authorUserId)
-		.single();
+	let authorData: UserProfile | null = null;
+
+	// Here we check if the author is the current user, if so we don't need to fetch the author data
+	// This results in a faster page load
+	if (authorUserId === session?.user?.id) {
+		authorData = {
+			id: session.user.id,
+			full_name: session.user.user_metadata.full_name,
+			avatar_url: session.user.user_metadata.avatar_url,
+			// We suppose that the current user is not banned
+			// otherwise he wouldn't be able to create a discussion
+			// Either way, it doesn't matter the authorData is only 
+			// to display the author of the discussion
+			discussion_ban: false
+		};
+	} else {
+		const { data: userData } = await supabase.from("profiles")
+			.select("id, full_name, avatar_url, discussion_ban")
+			.eq("id", authorUserId)
+			.single();
+
+		if (!userData) {
+			throw redirect(307, "/discussions");
+		}
+
+		authorData = userData as UserProfile;
+	}
 
 	const upvoted = discussion.upvotes?.some(upvote => upvote === session?.user?.id) || false;
 	const userIds = discussion.comments?.map(comment => notypecheck(comment).userId) || [];
@@ -60,7 +83,7 @@ export const load = (async ({ params, parent }) => {
 	return {
 		upvoted,
 		discussion,
-		author: userData as UserProfile,
+		author: authorData,
 		users: usersData as UserProfile[] || [],
 	};
 }) satisfies PageLoad;
