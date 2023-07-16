@@ -20,14 +20,14 @@ export const load = (async ({ params, url }) => {
 	const project = await sanityClient
 		.fetch<VolunteeringProject>(
 			`*[_type == "volunteeringProject" && slug.current == $slug ${groqAndId(id)}][0] {
-		...,
-		image {
-			..., 
-			asset -> {..., metadata}
-		}, 
-		organisation -> {...},
-		participatingCountries[] -> {...},
-		country -> {...}
+			...,
+			image {
+				..., 
+				asset -> {..., metadata}
+			}, 
+			organisation -> {...},
+			participatingCountries[] -> {...},
+			country -> {...}
 		}`,
 			{ slug },
 		)

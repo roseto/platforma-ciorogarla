@@ -10,7 +10,7 @@
 	import MapsEmbed from "$lib/components/MapsEmbed.svelte";
 	import Stack from "$lib/components/Stack.svelte";
 	import { projectTypes } from "$lib/utils/projectTypes";
-	import { urlFor } from "$lib/utils/sanity";
+	import { urlFor, urlForFile } from "$lib/utils/sanity";
 	import { notypecheck } from "$lib/utils/typecheck";
 	import type { PageData } from "./$types";
 
@@ -95,18 +95,24 @@
 		/>
 
 		{#if data.project.infopack}
-			<ListItem
-				primary="Infopack"
-				icon="description"
-				secondary="Descarca informatiile despre acest proiect"
-			/>
+			<a href={urlForFile(data.project.infopack)} target="_blank" rel="noopener noreferrer">
+				<ListItem
+					button
+					primary="Infopack"
+					icon="description"
+					secondary="Descarca informatiile despre acest proiect"
+				/>
+			</a>
 		{/if}
 		{#if data.project.infoLink}
-			<ListItem
-				primary="Link"
-				icon="link"
-				secondary="Afla mai multe informatii despre acest proiect"
-			/>
+			<a href={data.project.infoLink} target="_blank" rel="noopener noreferrer">
+				<ListItem
+					button
+					primary="Link"
+					icon="link"
+					secondary="Afla mai multe informatii despre acest proiect"
+				/>
+			</a>
 		{/if}
 
 		<ContactList

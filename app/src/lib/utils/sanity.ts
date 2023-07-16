@@ -1,5 +1,5 @@
 import { PUBLIC_SANITY_DATASET, PUBLIC_SANITY_PROJECT_ID } from "$env/static/public";
-import { createClient } from "@sanity/client";
+import { createClient, type SanityReference } from "@sanity/client";
 import imageUrlBuilder from "@sanity/image-url";
 
 export const sanity = createClient({
@@ -15,6 +15,12 @@ export const sanityEager = createClient({
 	apiVersion: "2021-03-25",
 	useCdn: false,
 });
+
+export const urlForFile = (file: { asset: SanityReference }) => {
+	const ref = file.asset._ref;
+	const [_file, id, extension] = ref.split('-');
+	return `https://cdn.sanity.io/files/${PUBLIC_SANITY_PROJECT_ID}/${PUBLIC_SANITY_DATASET}/${id}.${extension}`
+}
 
 export const createSanityPreviewClient = (token: string) =>
 	createClient({
