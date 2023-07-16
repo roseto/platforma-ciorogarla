@@ -15,6 +15,7 @@
 	import Alert from "$lib/components/Alert.svelte";
 	import ContactList from "$lib/components/ContactList.svelte";
 	import { notypecheck } from "$lib/utils/typecheck";
+	import CreateDiscussionButton from "$lib/components/CreateDiscussionButton.svelte";
 
 	export let data: PageData;
 
@@ -115,6 +116,8 @@
 				address={business.location.address}
 			/>
 		{/if}
+
+		<CreateDiscussionButton docId={business._id} docType={business._type} />
 
 		<ContactList
 			website={business.contact?.website}

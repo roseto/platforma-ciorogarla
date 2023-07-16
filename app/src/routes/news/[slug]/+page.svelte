@@ -7,6 +7,7 @@
 	import { urlFor } from "$lib/utils/sanity";
 	import { notypecheck } from "$lib/utils/typecheck";
 	import type { PageData } from "./$types";
+	import CreateDiscussionButton from "$lib/components/CreateDiscussionButton.svelte";
 
 	export let data: PageData;
 
@@ -47,5 +48,8 @@
 		<div class="prose max-w-none">
 			<SvelteMarkdown source={data.article.content} />
 		</div>
+		
+		<CreateDiscussionButton docId={data.article._id} docType={data.article._type} />
+
 	</Stack>
 </Container>
