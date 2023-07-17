@@ -21,6 +21,19 @@ const discussionComment = defineType({
 			type: "text",
 			validation: (Rule) => Rule.required(),
 		}),
+		defineField({
+			name: "discussion",
+			title: "Discussion",
+			type: "reference",
+			to: [{ type: "discussion" }],
+			validation: (Rule) => Rule.required(),
+		}),
+		defineField({
+			name: "replyTo",
+			title: "Reply To",
+			type: "reference",
+			to: [{ type: "discussionComment" }],
+		}),
 	]
 });
 

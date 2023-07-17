@@ -63,17 +63,6 @@ const discussion = defineType({
 			title: "Image",
 			type: "image",
 		}),
-		defineField({
-			name: "comments",
-			title: "Comments",
-			type: "array",
-			of: [
-				{ 
-					type: "reference",
-					to: [{ type: "discussionComment" }],
-				}
-			],
-		}),
 	]
 });
 

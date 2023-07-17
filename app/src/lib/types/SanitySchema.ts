@@ -606,13 +606,6 @@ export interface Discussion extends SanityDocument {
     crop?: SanityImageCrop;
     hotspot?: SanityImageHotspot;
   };
-
-  /**
-   * Comments — `array`
-   *
-   *
-   */
-  comments?: Array<SanityKeyedReference<DiscussionComment>>;
 }
 
 /**
@@ -636,6 +629,20 @@ export interface DiscussionComment extends SanityDocument {
    *
    */
   content?: string;
+
+  /**
+   * Discussion — `reference`
+   *
+   *
+   */
+  discussion?: SanityReference<Discussion>;
+
+  /**
+   * Reply To — `reference`
+   *
+   *
+   */
+  replyTo?: SanityReference<DiscussionComment>;
 }
 
 export type Documents =

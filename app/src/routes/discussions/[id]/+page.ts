@@ -1,7 +1,7 @@
 import { sanityEager } from "$lib/utils/sanity";
 import { redirect } from "@sveltejs/kit";
 import type { PageLoad } from "./$types";
-import type { Discussion } from "$lib/types/SanitySchema";
+import type { Discussion, DiscussionComment } from "$lib/types/SanitySchema";
 import { supabase } from "$lib/utils/supabase";
 import type { UserProfile } from "$lib/types/UserProfile";
 import { notypecheck } from "$lib/utils/typecheck";
@@ -17,30 +17,35 @@ export const load = (async ({ params, parent }) => {
 	}
 
 	// TODO: Rename urlBase
-	const discussion = await sanityEager.fetch<Discussion>(`*[_type == "discussion" && _id == $id][0] {
-		...,
-		comments[] -> {...},
-		media { ..., "url": asset->url },
-		"upvotesCount": count(upvotes) - count(upvotes[@ == $userId]),
-		relevantDocument -> {
+	const discussionData = await sanityEager.fetch<{comments: DiscussionComment[], discussion: Discussion}>(`{
+		"comments": *[_type == "discussionComment" && discussion._ref == $id] | order(_createdAt asc) {
 			...,
-			"title": coalesce(title, name),
-			"image": coalesce(logo, cover, image),
-			"description": coalesce(description),
-			"urlBase": select(
-				_type == "volunteeringProject" => "/projects/" + slug.current,
-				_type == "business" => "/businesses/" + slug.current,
-				_type == "article" => "/news/" + slug.current,
-			)
+			replyTo -> {...}
+		},
+		"discussion": *[_type == "discussion" && _id == $id][0] {
+			...,
+			media { ..., "url": asset->url },
+			"upvotesCount": count(upvotes) - count(upvotes[@ == $userId]),
+			relevantDocument -> {
+				...,
+				"title": coalesce(title, name),
+				"image": coalesce(logo, cover, image),
+				"description": coalesce(description),
+				"urlBase": select(
+					_type == "volunteeringProject" => "/projects/" + slug.current,
+					_type == "business" => "/businesses/" + slug.current,
+					_type == "article" => "/news/" + slug.current,
+				)
+			}
 		}
 	}`, { id, userId: session?.user?.id || "" });
 
 
-	if (!discussion) {
+	if (!discussionData) {
 		throw redirect(307, "/discussions");
 	}
 
-	const authorUserId = discussion.userId;
+	const authorUserId = discussionData.discussion.userId;
 
 	if (!authorUserId) {
 		throw redirect(307, "/discussions");
@@ -74,15 +79,16 @@ export const load = (async ({ params, parent }) => {
 		authorData = userData as UserProfile;
 	}
 
-	const upvoted = discussion.upvotes?.some(upvote => upvote === session?.user?.id) || false;
-	const userIds = discussion.comments?.map(comment => notypecheck(comment).userId) || [];
+	const upvoted = discussionData.discussion.upvotes?.some(upvote => upvote === session?.user?.id) || false;
+	const userIds = discussionData.comments?.map(comment => notypecheck(comment).userId) || [];
 
 	const { data: usersData } = await supabase.from("profiles").select("id, full_name, avatar_url")
 		.in("id", userIds || []);
 
 	return {
 		upvoted,
-		discussion,
+		discussion: discussionData.discussion,
+		comments: discussionData.comments,
 		author: authorData,
 		users: usersData as UserProfile[] || [],
 	};

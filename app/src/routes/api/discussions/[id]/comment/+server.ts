@@ -6,7 +6,9 @@ import { error } from "@sveltejs/kit";
 export const POST = async ({ request, params }) => {
 	const jwt = request.headers.get("Authorization")?.split(" ")[1];
 	const documentId = params.id;
-	const commentText = await request.json().then((body) => body.content);
+	const body = await request.json();
+	const commentText = body.content;
+	const replyTo = body.replyTo;
 
 	if (!jwt) {
 		throw error(400, "No JWT provided");
@@ -60,21 +62,29 @@ export const POST = async ({ request, params }) => {
 		throw error(400, "Discussion is locked");
 	}
 
+	if (replyTo) {
+		const { _type: replyType } = await sanitySudo.fetch(`*[_id == "${replyTo}"][0] { _type }`);
+
+		if (replyType !== "discussionComment") {
+			throw error(400, "Reply is not a discussion comment");
+		}
+	}
+
 	try {
-		const comment = await sanitySudo
+		await sanitySudo
 			.create({
 				_type: "discussionComment",
 				userId: user.id,
 				content: commentText,
+				discussion: {
+					_ref: documentId,
+					_type: "reference",
+				},
+				replyTo: replyTo ? {
+					_ref: replyTo,
+					_type: "reference",
+				} : undefined,
 			})
-
-		await sanitySudo
-			.patch(documentId)
-			.setIfMissing({ comments: [] })
-			.append("comments", [{ _key: comment._id, _ref: comment._id, _type: "reference" }])
-			.commit({
-				autoGenerateArrayKeys: true,
-			});
 
 		return new Response(null, {
 			status: 200,
