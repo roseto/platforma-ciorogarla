@@ -33,7 +33,7 @@
 		content: comment.content,
 		replyTo: comment.replyTo as { _id: string, _createdAt: string, content: string } | undefined,
 		user: data.users.find(user => user.id === comment.userId),
-	})).reverse() || [];
+	})) || [];
 
 	let commentDisabled = false;
 

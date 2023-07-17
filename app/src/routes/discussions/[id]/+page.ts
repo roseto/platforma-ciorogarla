@@ -18,7 +18,7 @@ export const load = (async ({ params, parent }) => {
 
 	// TODO: Rename urlBase
 	const discussionData = await sanityEager.fetch<{comments: DiscussionComment[], discussion: Discussion}>(`{
-		"comments": *[_type == "discussionComment" && discussion._ref == $id] | order(_createdAt asc) {
+		"comments": *[_type == "discussionComment" && discussion._ref == $id] | order(_createdAt desc) {
 			...,
 			replyTo -> {...}
 		},
