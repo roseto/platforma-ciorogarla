@@ -18,12 +18,11 @@
 
 	export let data: PageData;
 
-	let upvoted = data.upvoted;
+	let upvoted = notypecheck(data.discussion).upvotedByUser;
 	
 	let replyToCommentId: string = "";
 
 	$: replyToComment = comments.find(comment => comment._id === replyToCommentId);
-
 	$: upvotesCount = notypecheck(data.discussion).upvotesCount + (upvoted ? 1 : 0);
 
 	const relevantDocument = notypecheck(data.discussion.relevantDocument);
@@ -31,6 +30,8 @@
 		_id: comment._id,
 		_createdAt: comment._createdAt,
 		content: comment.content,
+		upvotesCount: notypecheck(comment).upvotesCount,
+		upvotedByUser: notypecheck(comment).upvotedByUser,
 		replyTo: comment.replyTo as { _id: string, _createdAt: string, content: string } | undefined,
 		user: data.users.find(user => user.id === comment.userId),
 	})) || [];
@@ -98,6 +99,8 @@
 			_createdAt: new Date().toISOString(),
 			content: formData.get("comment") as string,
 			replyTo: replyToComment as typeof comments[0]["replyTo"] | undefined,
+			upvotesCount: 0,
+			upvotedByUser: false,
 			user: {
 				id: data.session.user.id,
 				full_name: data.session.user.user_metadata.full_name,
@@ -172,7 +175,7 @@
 			<Card bgColor="secondary">
 				<h2 class="text-lg font-semibold">Relevant</h2>
 				<a
-					href={relevantDocument.urlBase}
+					href={relevantDocument.url}
 					target="_blank"
 					rel="noopener noreferrer"
 				>
@@ -223,6 +226,8 @@
 							openCommentDialog={openCommentDialog}
 							replyTo={comment.replyTo}
 							createdAt={comment._createdAt}
+							upvotes={notypecheck(comment).upvotesCount}
+							upvotedByUser={notypecheck(comment).upvotedByUser}
 							commentDisabled={commentDisabled || data.discussion.locked}
 						/>
 					</div>

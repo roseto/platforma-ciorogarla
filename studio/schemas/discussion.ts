@@ -23,7 +23,7 @@ const discussion = defineType({
 		}),
 		defineField({
 			name: "userId",
-			title: "User ID",
+			title: "Author User ID",
 			type: "string",
 			validation: (Rule) => Rule.required(),
 		}),

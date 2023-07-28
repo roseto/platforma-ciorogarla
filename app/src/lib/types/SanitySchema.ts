@@ -561,7 +561,7 @@ export interface Discussion extends SanityDocument {
   description?: string;
 
   /**
-   * User ID — `string`
+   * Author User ID — `string`
    *
    *
    */
@@ -643,6 +643,13 @@ export interface DiscussionComment extends SanityDocument {
    *
    */
   replyTo?: SanityReference<DiscussionComment>;
+
+  /**
+   * Upvotes — `array`
+   *
+   *
+   */
+  upvotes?: Array<SanityKeyed<string>>;
 }
 
 export type Documents =

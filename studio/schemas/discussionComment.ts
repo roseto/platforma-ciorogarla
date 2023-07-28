@@ -34,6 +34,12 @@ const discussionComment = defineType({
 			type: "reference",
 			to: [{ type: "discussionComment" }],
 		}),
+		defineField({
+			name: "upvotes",
+			title: "Upvotes",
+			type: "array",
+			of: [{ type: "string" }]
+		})
 	]
 });
 

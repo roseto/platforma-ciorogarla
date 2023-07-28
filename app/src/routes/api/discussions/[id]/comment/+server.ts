@@ -1,6 +1,7 @@
 import { openai } from "$lib/utils/openai";
 import { sanitySudo } from "$lib/utils/sanitySudo";
 import { supabaseSudo } from "$lib/utils/supabaseSudo";
+import { notypecheck } from "$lib/utils/typecheck";
 import { error } from "@sveltejs/kit";
 
 export const POST = async ({ request, params }) => {
@@ -90,6 +91,6 @@ export const POST = async ({ request, params }) => {
 			status: 200,
 		});
 	} catch (err) {
-		throw error(400, err.message);
+		throw error(400, notypecheck(err).message);
 	}
 };

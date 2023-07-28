@@ -1,17 +1,20 @@
 <script lang="ts">
 	import type { UserProfile } from "$lib/types/UserProfile";
-	import { onMount } from "svelte";
 	import Button from "./Button.svelte";
 	import Card from "./Card.svelte";
-	import ContactList from "./ContactList.svelte";
 
 	export let id: string;
 	export let user: UserProfile | undefined = undefined;
 	export let content: string = "";
-	export let createdAt: string = "";
+	export let createdAt: string;
 	export let openCommentDialog: (replyTo?: string) => void;
 	export let replyTo: { _id: string, content: string } | undefined = undefined;
 	export let commentDisabled: boolean = false;
+	export let upvotes: number = 0;
+
+	export let upvotedByUser: boolean = false;
+
+	$: upvotesCount = upvotes + (upvotedByUser ? 1 : 0);
 
 	const currentDate = new Date();
 	const isToday = new Date(createdAt).getDate() === currentDate.getDate() &&
@@ -62,8 +65,8 @@
 					on:keydown={(e) => e.key === "Enter" && scrollToAnchor("#" + replyTo?._id)}
 					on:click={() => scrollToAnchor("#" + replyTo?._id)} 
 				>
-					<Card>
-						<p class="opacity-50">
+					<Card class="cursor-pointer">
+						<p class="opacity-50 text-sm">
 							{user?.full_name}
 						</p>
 						{replyTo.content}
@@ -72,7 +75,21 @@
 			{/if}
 			{content}
 		</div>
-		<Button disabled={commentDisabled} ghost icon="reply" on:click={() => openCommentDialog(id)}/>
+		<div 
+			class="flex-nowrap bg-neutral rounded-full join join-horizontal m-1"
+			class:opacity-50={commentDisabled}
+		>
+			<Button disabled={commentDisabled} color="neutral" class="join-item btn-sm" icon="reply" on:click={() => openCommentDialog(id)}/>
+			<Button 
+				color={upvotedByUser ? "primary" : "neutral"}
+				disabled={commentDisabled} 
+				class="join-item btn-sm" 
+				icon="arrow_upward" 
+				on:click={() => openCommentDialog(id)}
+			>
+				{upvotesCount > 0 ? upvotesCount : ""}
+			</Button>
+		</div>
 	</div>
 	<div class="chat-footer">
 		{#if isToday}

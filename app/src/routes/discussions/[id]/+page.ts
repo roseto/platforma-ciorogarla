@@ -18,20 +18,23 @@ export const load = (async ({ params, parent }) => {
 
 	// TODO: Rename urlBase
 	const discussionData = await sanityEager.fetch<{comments: DiscussionComment[], discussion: Discussion}>(`{
-		"comments": *[_type == "discussionComment" && discussion._ref == $id] | order(_createdAt desc) {
+		"comments": *[_type == "discussionComment" && discussion._ref == $id] {
 			...,
+			"upvotesCount": count(upvotes) - count(upvotes[@ == $userId]),
+			"upvotedByUser": count(upvotes[@ == $userId]) > 0,
 			replyTo -> {...}
-		},
+		} | order(upvotesCount asc),
 		"discussion": *[_type == "discussion" && _id == $id][0] {
 			...,
 			media { ..., "url": asset->url },
 			"upvotesCount": count(upvotes) - count(upvotes[@ == $userId]),
+			"upvotedByUser": count(upvotes[@ == $userId]) > 0,
 			relevantDocument -> {
 				...,
 				"title": coalesce(title, name),
 				"image": coalesce(logo, cover, image),
 				"description": coalesce(description),
-				"urlBase": select(
+				"url": select(
 					_type == "volunteeringProject" => "/projects/" + slug.current,
 					_type == "business" => "/businesses/" + slug.current,
 					_type == "article" => "/news/" + slug.current,
@@ -39,7 +42,6 @@ export const load = (async ({ params, parent }) => {
 			}
 		}
 	}`, { id, userId: session?.user?.id || "" });
-
 
 	if (!discussionData) {
 		throw redirect(307, "/discussions");
@@ -79,14 +81,12 @@ export const load = (async ({ params, parent }) => {
 		authorData = userData as UserProfile;
 	}
 
-	const upvoted = discussionData.discussion.upvotes?.some(upvote => upvote === session?.user?.id) || false;
 	const userIds = discussionData.comments?.map(comment => notypecheck(comment).userId) || [];
 
 	const { data: usersData } = await supabase.from("profiles").select("id, full_name, avatar_url")
 		.in("id", userIds || []);
 
 	return {
-		upvoted,
 		discussion: discussionData.discussion,
 		comments: discussionData.comments,
 		author: authorData,

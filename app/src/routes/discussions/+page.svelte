@@ -1,5 +1,6 @@
 <script lang="ts">
-	import Card from "$lib/components/Card.svelte";
+	import Alert from "$lib/components/Alert.svelte";
+import Card from "$lib/components/Card.svelte";
 	import Container from "$lib/components/Container.svelte";
 	import Header from "$lib/components/Header.svelte";
 	import Icon from "$lib/components/Icon.svelte";
@@ -20,15 +21,25 @@
 <Container>
 	<Stack>
 		<a href="/discussions/new">
-			<ListItem
-				icon="add"
-				primary="Creeaza o discutie"
-				button
-			/>
+			{#if data.hasUnapprovedDiscussion}
+				<Alert
+					icon="schedule"
+					error
+					outline
+				>
+					Ai o discutie in asteptare de aprobare. Apasa aici pentru a o edita.
+				</Alert>
+			{:else}
+					<ListItem
+						icon="add"
+						primary="Creeaza o discutie"
+						button
+					/>
+			{/if}
 		</a>
 
 		{#if data.activeDiscussions.length !== 0}
-			<Card>
+			<Card bgColor="accent">
 				<h2 class="text-xl">
 					<Icon name="mode_heat" size={18}/>
 					Discutii active
@@ -51,12 +62,14 @@
 			{#each data.allDiscussions as discussion}
 				<a href="/discussions/{discussion._id}">
 					<!-- upvotesCount is added manually -->
-					<ListItem
-						primary={discussion.title}
+					<Card
+						title={discussion.title}
 						secondary={"⬆" + (notypecheck(discussion).upvotesCount || 0) + " · " + discussion.description}
-						img={discussion.image ? urlFor(discussion.image).width(64).height(64).url() : undefined}
+						img={discussion.image ? urlFor(discussion.image).width(768).height(128).url() : undefined}
 						button
-					/>
+					>
+						{"⬆" + (notypecheck(discussion).upvotesCount || 0) + " · " + discussion.description}
+					</Card>
 				</a>
 			{/each}
 		{/if}
