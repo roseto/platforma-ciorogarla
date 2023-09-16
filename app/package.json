@@ -27,8 +27,6 @@
 		"@supabase/auth-helpers-shared": "^0.4.1",
 		"@supabase/auth-helpers-sveltekit": "^0.10.1",
 		"@supabase/supabase-js": "^2.25.0",
-		"@sveltejs/adapter-auto": "^2.0.0",
-		"@sveltejs/adapter-netlify": "^2.0.7",
 		"@sveltejs/kit": "^1.5.0",
 		"@tailwindcss/typography": "^0.5.9",
 		"@types/ua-parser-js": "^0.7.36",
@@ -60,5 +58,8 @@
 		"ua-parser-js": "^1.0.35",
 		"vite": "^4.3.0"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"@sveltejs/adapter-cloudflare": "^2.3.3"
+	}
 }
