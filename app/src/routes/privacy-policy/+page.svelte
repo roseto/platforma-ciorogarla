@@ -37,8 +37,8 @@
 	<h3>Ștergere</h3>
 
 	<p>
-		Pentru ștergerea unui cont, contactați-ne la <a href="mailto:hello@profiteri.eu.org"
-			>hello@profiteri.eu.org</a
+		Pentru ștergerea unui cont, contactați-ne la <a href="mailto:hello@roseto.space"
+			>hello@roseto.space</a
 		>.
 	</p>
 
