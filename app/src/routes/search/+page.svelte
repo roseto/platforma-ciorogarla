@@ -16,8 +16,7 @@
 
 	export let data: PageData;
 
-	$: docsKnowledge = (data?.documents?.filter((document) => document._type === "knowledge") ||
-		[]);
+	$: docsKnowledge = data?.documents?.filter((document) => document._type === "knowledge") || [];
 	$: docsExcludingKnowledge =
 		data?.documents?.filter((document) => document._type !== "knowledge") || [];
 
@@ -63,15 +62,12 @@
 					<div class="prose max-w-none text-accent-content prose-a:text-accent-content">
 						<SvelteMarkdown source={data?.documents[0].content} />
 					</div>
-					<p class="text-sm opacity-50">Cunostintele sunt oferite de Profiteri</p>
+					<p class="text-sm opacity-50">Cunostintele sunt oferite de Roseto</p>
 				{:else}
 					<p>
 						{data?.documents[0].description}
 					</p>
-					<a
-						class="link link-hover text-sm opacity-50"
-						href={data?.documents?.[0].url}
-					>
+					<a class="link link-hover text-sm opacity-50" href={data?.documents?.[0].url}>
 						Rezultat de la {data?.documents[0].title}
 					</a>
 				{/if}
@@ -106,21 +102,21 @@
 				{/if}
 				{#each docsExcludingKnowledge as document}
 					<!-- Business -->
-						<a href={document.url}>
-							<ListItem
-								primary={document.title}
-								secondary={document.description}
-								button
-								img={urlFor(document.image).width(64).height(64).url()}
-							>
-								<!-- Check if is first in data.documents -->
-								{#if checkIfFirst(document._id)}
-									<div class="tooltip tooltip-left tooltip-accent" data-tip="Rezultat principal">
-										<Badge class="badge-sm" color="accent" />
-									</div>
-								{/if}
-							</ListItem>
-						</a>
+					<a href={document.url}>
+						<ListItem
+							primary={document.title}
+							secondary={document.description}
+							button
+							img={urlFor(document.image).width(64).height(64).url()}
+						>
+							<!-- Check if is first in data.documents -->
+							{#if checkIfFirst(document._id)}
+								<div class="tooltip tooltip-left tooltip-accent" data-tip="Rezultat principal">
+									<Badge class="badge-sm" color="accent" />
+								</div>
+							{/if}
+						</ListItem>
+					</a>
 				{/each}
 			</Card>
 		{/if}

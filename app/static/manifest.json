@@ -2,7 +2,7 @@
 	"name": "Platforma Ciorogârla",
 	"short_name": "Ciorogârla",
 	"description": "Hai să ne modernizăm!",
-	"author": "Profiteri",
+	"author": "Roseto",
 	"id": "eu.org.ciorogarla",
 	"theme_color": "#053b21",
 	"background_color": "#053b21",
@@ -40,7 +40,11 @@
 	"display": "standalone",
 	"orientation": "portrait",
 	"scope": "/",
-	"categories": ["education", "news", "social"],
+	"categories": [
+		"education",
+		"news",
+		"social"
+	],
 	"lang": "ro",
 	"iarc_rating_id": "78d71c91-c221-476e-96b0-56dbebbf4242",
 	"prefer_related_applications": true,
