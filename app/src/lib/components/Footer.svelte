@@ -23,7 +23,7 @@
 			<a href="https://appgallery.huawei.com/app/C108094061" class="link link-hover"
 				>Huawei AppGallery</a
 			>
-			<a href="https://paquet.app/app/013c536e-4a2d-4bce-90fd-c33c954bdc04" class="link link-hover"
+			<a href="https://paquet.app/app/org.eu.ciorogarla" class="link link-hover"
 				>Paquet</a
 			>
 		</div>
