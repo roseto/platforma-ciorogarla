@@ -2,8 +2,8 @@
 	<div class="footer max-w-screen-lg mx-auto p-10">
 		<div>
 			<h2>Platforma Ciorogârla</h2>
-			<a href="https://profiteri.eu.org" class="link link-hover opacity-50">
-				Facut cu &hearts; de Profiteri
+			<a href="https://roseto.space" class="link link-hover opacity-50">
+				Facut cu &hearts; de Roseto
 			</a>
 		</div>
 		<div>
@@ -13,7 +13,7 @@
 		</div>
 		<div>
 			<span class="footer-title"> Link-uri utile </span>
-			<a href="https://github.com/profiteriteam/platforma-ciorogarla" class="link link-hover"
+			<a href="https://github.com/roseto/platforma-ciorogarla" class="link link-hover"
 				>GitHub</a
 			>
 			<a
