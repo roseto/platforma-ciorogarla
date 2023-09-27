@@ -14,6 +14,7 @@
 	import { isInstalled } from "$lib/utils/device";
 	import TextField from "$lib/components/TextField.svelte";
 	import { browser } from "$app/environment";
+	import Card from "$lib/components/Card.svelte";
 
 	export let data: PageData;
 
@@ -81,6 +82,21 @@
 			</a>
 		{/if}
 
+		<Card>
+			<a
+				href="https://chat.whatsapp.com/B5dxooCfG9sCMMd7kea7m5"
+				target="_blank"
+				rel="noreferrer noopener"
+			>
+			<ListItem
+				button
+				icon="info"
+				primary="Am mutat sectiunea de Voluntariat"
+				secondary="Oportunitatile de voluntariat au fost mutate pe un grup de WhatsApp. Click aici pentru a accesa."
+			/>
+			</a>
+		</Card>
+
 		<br />
 
 		<Stack>
@@ -123,28 +139,5 @@
 				</Button>
 			</a>
 		</Stack>
-
-		{#if data.projects.length > 0}
-			<br />
-			<Stack>
-				<h2 class="text-sm opacity-50">Proiecte noi</h2>
-				{#each data.projects as project}
-					<a href={`/volunteering/${project.slug?.current}`}>
-						<ListItem
-							button
-							primary={project.name}
-							secondary={project.description}
-							img={urlFor(project.image).width(64).height(64).url()}
-						/>
-					</a>
-				{/each}
-				<a href="/volunteering">
-					<Button color="secondary" outline fullWidth>
-						Toate proiectele
-						<Icon name="arrow_forward" />
-					</Button>
-				</a>
-			</Stack>
-		{/if}
 	</Stack>
 </Container>
