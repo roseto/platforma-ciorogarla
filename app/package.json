@@ -40,7 +40,7 @@
 		"eslint-plugin-svelte": "^2.26.0",
 		"material-symbols": "^0.7.0",
 		"openai": "^3.2.1",
-		"postcss": "^8.4.24",
+		"postcss": "^8.4.31",
 		"prettier": "^2.8.0",
 		"prettier-plugin-svelte": "^2.8.1",
 		"sanity-codegen": "^0.9.8",
