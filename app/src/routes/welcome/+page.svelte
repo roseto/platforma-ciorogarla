@@ -135,7 +135,7 @@
 			<img 
 				src="https://taramulsupereroilor.ro/files/dynamicContent/sites/euy5pk/images/ro/webpage_13/lpoi7x2i/element_319/rwdMode_1/334x157/Untitled_Artwork.webp" 
 				alt="Tărâmul Supereroilor"
-				class="rounded-lg mx-auto mt-4 object-cover h-32 md:h-64"
+				class="rounded-lg mx-auto mt-4 object-cover h-32 md:h-64 invert dark:invert-0"
 			/>
 		</a>
 
