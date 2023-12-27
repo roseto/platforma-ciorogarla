@@ -3,7 +3,7 @@ import { sanity } from "$lib/utils/sanity";
 import type { PageLoad } from "./$types";
 
 export const load = ( async () => {
-	const data = await sanity.fetch<Business[]>("*[_type == 'business'] | order(_createdAt desc)[0...3]");
+	const data = await sanity.fetch<Business[]>("*[_type == 'business'] | order(_createdAt desc)[0...5]");
 
 	return {
 		businesses: data

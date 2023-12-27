@@ -1,7 +1,7 @@
 import { error } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 import { openai } from "$lib/utils/openai";
-import type { Business, Knowledge, VolunteeringProject } from "$lib/types/SanitySchema";
+import type { Business, Knowledge } from "$lib/types/SanitySchema";
 import { sanity } from "$lib/utils/sanity";
 
 export const load = (async ({ url, locals }) => {
@@ -36,7 +36,7 @@ export const load = (async ({ url, locals }) => {
 
 	// Maximum of 25 matches
 	// Can be lower if there are not enough matches
-	const { data: matches, error: supabaseError } = await supabase.rpc("match_documents", {
+	const { data: matches, error: supabaseError } = await supabase.rpc("match_documents_platforma_ciorogarla", {
 		query_embedding: queryEmbedding[0].embedding,
 		match_count: 25,
 		match_threshold: 0.75,
@@ -52,8 +52,8 @@ export const load = (async ({ url, locals }) => {
 		_type: "business" | "volunteeringProject" | "knowledge";
 		_id: string;
 		title: string;
-		image: Business["logo"] | VolunteeringProject["image"];
-		description: Business["description"] | VolunteeringProject["description"];
+		image: Business["logo"];
+		description: Business["description"];
 		content: Knowledge["content"];
 		url: string;
 	};
@@ -62,7 +62,7 @@ export const load = (async ({ url, locals }) => {
 		`*[_id in $ids && _type in $allowedTypes] {
 			...,
 			"title": coalesce(title, name),
-			"image": coalesce(logo, image),
+			"image": coalesce(logo),
 			"description": coalesce(description, "Cunostinte"),
 			"url": select(
 				_type == "volunteeringProject" => "/projects/" + slug.current,
