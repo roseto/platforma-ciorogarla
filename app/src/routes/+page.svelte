@@ -74,6 +74,21 @@
 			</div>
 		</Stack>
 
+		<a
+			href="/welcome"
+		>
+			<Card
+				img="/welcome/samurcasesti.jpg"
+				title="Descoperă Ciorogarla, Ilfov"
+			>
+				<p
+					class="text-sm"
+				>
+					Apasă aici pentru a afla mai multe despre Ciorogarla.
+				</p>
+			</Card>
+		</a>
+
 		{#if browser && !isInstalled()}
 			<a href="/install">
 				<Alert icon="download" outline button>
@@ -84,16 +99,16 @@
 
 		<Card>
 			<a
-				href="https://chat.whatsapp.com/B5dxooCfG9sCMMd7kea7m5"
+				href="https://roseto.link/whatsapp"
 				target="_blank"
 				rel="noreferrer noopener"
 			>
-			<ListItem
-				button
-				icon="info"
-				primary="Am mutat sectiunea de Voluntariat"
-				secondary="Oportunitatile de voluntariat au fost mutate pe un grup de WhatsApp. Click aici pentru a accesa."
-			/>
+				<ListItem
+					button
+					icon="info"
+					primary="Am mutat sectiunea de Voluntariat"
+					secondary="Oportunitatile de voluntariat au fost mutate pe un grup de WhatsApp. Click aici pentru a accesa."
+				/>
 			</a>
 		</Card>
 
