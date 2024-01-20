@@ -56,7 +56,7 @@
 		"typescript": "^5.0.0",
 		"typescript-svelte-plugin": "^0.3.26",
 		"ua-parser-js": "^1.0.35",
-		"vite": "^4.3.0"
+		"vite": "^4.5.2"
 	},
 	"type": "module",
 	"dependencies": {
