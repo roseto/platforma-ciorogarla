@@ -3,8 +3,6 @@
 	import Header from "$lib/components/Header.svelte";
 	import ListItem from "$lib/components/ListItem.svelte";
 	import Stack from "$lib/components/Stack.svelte";
-	import Toggle from "$lib/components/Toggle.svelte";
-	import { umamiEnabled } from "$lib/utils/umami";
 	import type { PageData } from "./$types";
 	import Card from "$lib/components/Card.svelte";
 
@@ -45,15 +43,6 @@
 				/>
 			{/if}
 		</Card>
-		<ListItem
-			primary="Analitica"
-			icon="analytics"
-			secondary={$umamiEnabled ? "Dezactiveaza analitica anonima" : "Activeaza analitica anonima"}
-			button
-			on:click={() => ($umamiEnabled = !$umamiEnabled)}
-		>
-			<Toggle bind:checked={$umamiEnabled} />
-		</ListItem>
 
 		<div class="divider" />
 
