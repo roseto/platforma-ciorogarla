@@ -58,7 +58,7 @@
 	</ul>
 
 	<blockquote>
-		stergerea unui continut va rugam sa <a href="https://roseto.space/contact" target="_blank"
+		stergerea unui continut va rugam sa <a href="https://roseto.co/contact" target="_blank"
 			>ne contactati</a
 		>
 	</blockquote>
