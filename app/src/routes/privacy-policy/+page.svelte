@@ -37,8 +37,8 @@
 	<h3>Ștergere</h3>
 
 	<p>
-		Pentru ștergerea unui cont, contactați-ne la <a href="mailto:hello@roseto.co"
-			>hello@roseto.co</a
+		Pentru ștergerea unui cont, contactați-ne la <a href="mailto:hello@roseto.dev"
+			>hello@roseto.dev</a
 		>.
 	</p>
 

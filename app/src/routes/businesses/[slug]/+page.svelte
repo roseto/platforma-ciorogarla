@@ -127,8 +127,8 @@
 		<Alert icon="info">
 			Facem tot posibilul să ținem detaliile despre această afacere actualizate. Dacă observi că
 			ceva nu este corect, te rugăm să ne anunți la adresa de email
-			<a href="mailto:hello@roseto.co" target="_blank" class="link">
-				hello@roseto.co
+			<a href="mailto:hello@roseto.dev" target="_blank" class="link">
+				hello@roseto.dev
 			</a>
 		</Alert>
 	</Stack>

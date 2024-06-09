@@ -2,7 +2,7 @@
 	<div class="footer max-w-screen-lg mx-auto p-10">
 		<div>
 			<h2>Platforma Ciorogârla</h2>
-			<a href="https://roseto.co" class="link link-hover opacity-50">
+			<a href="https://roseto.dev" class="link link-hover opacity-50">
 				Facut cu &hearts; de Roseto
 			</a>
 		</div>
